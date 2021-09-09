@@ -136,7 +136,7 @@ export const App: React.FC = () => {
                             <a href="https://nanolooker.com" target="_blank" rel="noreferrer noopener" title="Adv. Explorer">
                                 <FaRunning size="2rem"/>
                             </a>
-                            <a href="https://github.com/nanocafe/nanocafe" target="_blank" rel="noreferrer noopener" title="Github nanocafe repository">
+                            <a href="https://github.com/nanocafe/website" target="_blank" rel="noreferrer noopener" title="Github nanocafe repository">
                                 <FaGithub size="2rem"/>
                             </a>
                         </p>

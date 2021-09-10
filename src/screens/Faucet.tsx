@@ -131,7 +131,7 @@ export const FaucetScreen: React.FC = () => {
     </> : faucetMutation.isError ? <>
       <p>We only support one-time payment through this faucet, our system indicates you've already received Nano.</p>
     </> : <>
-      <p>Experience Nano entirely free! Make a Nano wallet <a href="https://nault.cc/configure-wallet" rel="noreferrer noopener" target="_blank">here </a>(desktop) or <a href="https://natrium.io" rel="noreferrer noopener" target="_blank">here </a>(mobile) and enter your address below to receive 0.001 Nano.</p>
+      <p>Experience Nano entirely free! Make a Nano wallet <a href="https://nault.cc/configure-wallet" rel="noreferrer noopener" target="_blank">here </a>(desktop) or <a href="https://natrium.io" rel="noreferrer noopener" target="_blank">here </a>(mobile) and enter your address below to receive 0.000133 Nano.</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           autoComplete="off"

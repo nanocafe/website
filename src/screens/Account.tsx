@@ -161,16 +161,18 @@ export const AccountScreen: React.FC = () => {
         })
   }
 
-  return <Indicator show={accountInfoQuery.isLoading || accountHistoryQuery.isLoading || pendingQuery.isLoading || quorumQuery.isLoading}>
+  return <Indicator>
     <main className={account}>
       <h2 style={{cursor: 'pointer',fontSize: '1.1rem'}} onClick={copyToClipBoardHandler}>
-        { address }
+        <h2>{ address }</h2>
+        <h3 style={{display: 'flex'}}>
         { (alias || isPR) && <sub>
           { isPR && <strong>Principal Representative</strong> }
           { isRep && <strong>Representative</strong>}
           { alias }
         </sub> }
-        <FaCopy style={{marginLeft: '1rem'}} />
+        <FaCopy style={{marginLeft: '1rem', marginTop: '.3rem'}} />
+        </h3>
       </h2>
       { accountHistoryQuery.isError
       ? <>

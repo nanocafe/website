@@ -314,12 +314,6 @@ export const Header: React.FC<IHeader> = ({dark,setDark}) => {
 
         <nav className={menuExpanded ? 'visible' : undefined}>
           <Menu/>
-          <div>
-            <a href="https://nano.org" target="_blank" rel="noreferrer noopener">What is Nano?</a>
-          </div>
-          <div>
-            Made 100% with Nano
-          </div>
         </nav>
       </aside>
 

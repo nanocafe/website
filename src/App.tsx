@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import styled from '@emotion/styled';
@@ -24,7 +24,7 @@ import {
     FaGithub,
     FaMoon, FaSun
 } from 'react-icons/fa';
-import Theme, {ThemeContext} from "./components/Theme";
+import Theme from "./components/Theme";
 import { useMediaQuery } from 'react-responsive'
 import {Toaster} from "react-hot-toast";
 
@@ -71,19 +71,19 @@ const Footer = styled.footer`
 
 export const App: React.FC = () => {
 
-    const { toggle } = useContext(ThemeContext);
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    // Enable dark mode accordding to device / browser configuration.
+    // Or if the user has changed the website to dark (saved in localStorage)
+    const matchMediaDark = window.matchMedia('(prefers-color-scheme: dark)')
+    const prefersDark = matchMediaDark.matches || localStorage.isDarkTheme;
+    useEffect(() => matchMediaDark.addEventListener('change', e => e.matches != dark ? setDark() : null), []);
 
     const [dark, setDarkColor] = useState(prefersDark);
+
+    const setDark = () => setDarkColor(!dark)
 
     const isSmallerThan600 = useMediaQuery({
         query: '(max-width: 600px)'
     })
-
-    const setDark = () => {
-        setDarkColor(!dark)
-        toggle();
-    }
 
     return <QueryClientProvider client={queryClient}>
         <Theme dark={dark} setDark={setDark}>

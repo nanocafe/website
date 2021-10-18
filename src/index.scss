@@ -6,22 +6,24 @@ $green: #4caf50;
 $red: #f44336;
 
 :root {
+
   --font: 'Lato', sans-serif;
   --font-mono: 'Fira Mono', monospace;
-  --bg: #{adjust-color(#FCF1CA, $saturation: -25%)};
-  --text: #333;
   --primary: #{$primary};
-  --primary-border: #dac39d;
-  --primary-transparent: #{adjust-color(#dac39d, $alpha: -0.8)};
   --nano: #{$nano};
   --green: #{$green};
   --red: #{$red};
-  --header: #fbf8ee;
   --news-reddit: orangered;
   --news-nano: var(--nano);
   --news-forum: #4caf50;
 
   --bp-mobile: 540px;
+
+  --light-primary-border: #dac39d;
+  --light-primary-transparent: #{adjust-color(#dac39d, $alpha: -0.8)};
+  --light-bg: #{adjust-color(#FCF1CA, $saturation: -25%)};
+  --light-text: #333;
+  --light-header: #fbf8ee;
 
   --dark-primary-border: #332d2f;
   --dark-primary-transparent: #{adjust-color(#332d2f, $alpha: -0.5)};
@@ -29,7 +31,15 @@ $red: #f44336;
   --dark-text: #cecece;
   --dark-header: var(--bg);
 
-  @media (prefers-color-scheme: dark) {
+  .light-mode {
+    --primary-border: var(--light-primary-border);
+    --primary-transparent: var(--light-primary-transparent);
+    --bg: var(--light-bg);
+    --text: var(--light-text);
+    --header: var(--light-header);
+  }
+
+  .dark-mode {
     --primary-border: var(--dark-primary-border);
     --primary-transparent: var(--dark-primary-transparent);
     --bg: var(--dark-bg);

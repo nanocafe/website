@@ -115,7 +115,7 @@ export const Search: React.FC = () => {
       spellCheck="false"
       className={[ errors.search ? 'invalid' : '',  ].join(' ')}
       type="text"
-      placeholder="Address/Block"
+      placeholder="Address / Block"
       { ...register(
         'search',
         { 

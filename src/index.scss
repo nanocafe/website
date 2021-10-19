@@ -1,6 +1,5 @@
 @import '../node_modules/reset-css/sass/reset';
 
-$primary: #c09a6b;
 $nano: #558cc9;
 $green: #4caf50;
 $red: #f44336;
@@ -9,7 +8,6 @@ $red: #f44336;
 
   --font: 'Lato', sans-serif;
   --font-mono: 'Fira Mono', monospace;
-  --primary: #{$primary};
   --nano: #{$nano};
   --green: #{$green};
   --red: #{$red};
@@ -19,19 +17,25 @@ $red: #f44336;
 
   --bp-mobile: 540px;
 
+  --light-primary: #0f1120;
+  --light-hover: #4b1f0e;
   --light-primary-border: #dac39d;
-  --light-primary-transparent: #{adjust-color(#dac39d, $alpha: -0.8)};
-  --light-bg: #{adjust-color(#FCF1CA, $saturation: -25%)};
+  --light-primary-transparent: #{adjust-color(#B7966B, $alpha: -0.8)};
+  --light-bg: #{adjust-color(#fff, $saturation: -25%)};
   --light-text: #333;
-  --light-header: #fbf8ee;
+  --light-header: #f7efe0;
 
+  --dark-primary: #616161;
+  --dark-hover: #{$nano};
   --dark-primary-border: #332d2f;
   --dark-primary-transparent: #{adjust-color(#332d2f, $alpha: -0.5)};
   --dark-bg: #0f1120;
   --dark-text: #cecece;
-  --dark-header: var(--bg);
+  --dark-header: var(--dark-bg);
 
   .light-mode {
+    --primary: var(--light-primary);
+    --hover: var(--light-hover);
     --primary-border: var(--light-primary-border);
     --primary-transparent: var(--light-primary-transparent);
     --bg: var(--light-bg);
@@ -40,6 +44,8 @@ $red: #f44336;
   }
 
   .dark-mode {
+    --primary: var(--dark-primary);
+    --hover: var(--dark-hover);
     --primary-border: var(--dark-primary-border);
     --primary-transparent: var(--dark-primary-transparent);
     --bg: var(--dark-bg);

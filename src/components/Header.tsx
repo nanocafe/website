@@ -1,16 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 
-import {ConfirmationQuorumPeer, Telemetry, useBinanceTicker, useConfirmationQuorum, useTelemetry, useTPS} from '../api';
-import {formatSI, safeRawToMega} from '../utils';
+import { ConfirmationQuorumPeer, Telemetry, useBinanceTicker, useConfirmationQuorum, useTelemetry, useTPS } from '../api';
+import { formatSI, safeRawToMega } from '../utils';
 import { Search } from './Search';
-import {FaMoon} from "react-icons/fa";
-import {FaSun} from "react-icons/fa";
-import {ThemeContext} from "./Theme";
-import {useMediaQuery} from "react-responsive";
-import {Toaster} from "react-hot-toast";
+import { FaMoon } from "react-icons/fa";
+import { FaSun } from "react-icons/fa";
+import { ThemeContext } from "./Theme";
+import { useMediaQuery } from "react-responsive";
+import { Toaster } from "react-hot-toast";
 import * as math from "mathjs";
 
 const header = css`
@@ -103,7 +103,7 @@ const header = css`
     
     span {
       font-size: 0.8rem;
-      color: var(--nano);
+      color: var(--primary);
       font-weight: bold;
       &.ticker {
         font-size: 1rem;
@@ -145,6 +145,7 @@ const header = css`
     align-items: center;
     align-self: stretch;
     position: relative;
+    color: var(--primary);
     text-decoration: none;
     top: 1px;
     border-bottom: 2px solid transparent;
@@ -161,6 +162,15 @@ const header = css`
       &:hover, &.active {
         border-left-color: var(--primary);
       }
+    }
+  }
+  button.modeToggle {
+    color: var(--primary);
+    padding: 0;
+    margin-right: 1rem;
+    &:hover {
+      color: var(--hover);
+      cursor: pointer;
     }
   }
   img {
@@ -192,16 +202,16 @@ function checkParent(target: HTMLElement): boolean {
 
 interface IHeader {
   dark: Boolean;
-  setDark : () => void;
+  setDark: () => void;
 }
 
 
-export const Header: React.FC<IHeader> = ({dark,setDark}) => {
+export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
 
-  const [ nanoEur, setNanoEur ] = useState<Number>(0);
-  const [nanoEurPriceChangePercent,setNanoEurPriceChangePercent] = useState<Number>(0)
-  const [nanoEurPriceChange,setNanoEurPriceChange] = useState<Number>(0)
-  const [ menuExpanded, setMenuExpanded ] = useState<Boolean>(false);
+  const [nanoEur, setNanoEur] = useState<Number>(0);
+  const [nanoEurPriceChangePercent, setNanoEurPriceChangePercent] = useState<Number>(0)
+  const [nanoEurPriceChange, setNanoEurPriceChange] = useState<Number>(0)
+  const [menuExpanded, setMenuExpanded] = useState<Boolean>(false);
   const tpsQuery = useTPS();
   const telemetryQuery = useTelemetry();
   const quorumQuery = useConfirmationQuorum();
@@ -236,99 +246,103 @@ export const Header: React.FC<IHeader> = ({dark,setDark}) => {
     return quorumQuery.data?.peers.find((peer) => peer.ip === `[${node.address}]:${node.port}`);
   }
 
-  const tpsData = tpsQuery.data ? Object.entries(tpsQuery.data).filter(([ node ]) => {
+  const tpsData = tpsQuery.data ? Object.entries(tpsQuery.data).filter(([node]) => {
     const telemetry = telemetryQuery.data?.metrics.find((telemetry) => telemetry.node_id === node);
     const quorumNode = telemetry ? getQuorumNode(telemetry) : undefined;
     const isPR = parseFloat(safeRawToMega(quorumNode?.weight)) / (parseFloat(safeRawToMega(quorumQuery.data?.online_stake_total)) || 1) * 100 > 0.01;
     return isPR;
-  }).map(([ _, tps ]) => tps) : [];
+  }).map(([_, tps]) => tps) : [];
 
   useEffect(() => {
     document.addEventListener('touchstart', hideMenu);
     document.addEventListener('touchmove', alwaysHideMenu);
     fetch('https://api.kraken.com/0/public/Ticker?pair=NANOEUR')
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          setNanoEur(+data.result['NANOEUR'].c[0])
-	  const currentPrice = +data.result['NANOEUR'].c[0];
-          const lastPrice = +data.result['NANOEUR'].o;
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setNanoEur(+data.result['NANOEUR'].c[0])
+        const currentPrice = +data.result['NANOEUR'].c[0];
+        const lastPrice = +data.result['NANOEUR'].o;
 
-          const priceChangePercent = (currentPrice - lastPrice) / currentPrice * 100;
-          const priceChange = (currentPrice - lastPrice);
+        const priceChangePercent = (currentPrice - lastPrice) / currentPrice * 100;
+        const priceChange = (currentPrice - lastPrice);
 
-          setNanoEurPriceChangePercent(priceChangePercent);
-          setNanoEurPriceChange(priceChange);
-	    
-        })
+        setNanoEurPriceChangePercent(priceChangePercent);
+        setNanoEurPriceChange(priceChange);
+
+      })
     return () => {
       document.removeEventListener('touchstart', hideMenu);
       document.removeEventListener('touchmove', alwaysHideMenu);
     };
   }, []);
 
-  console.log(nanoBtcTicker.data,'dfdsfsdfsdfsdfd')
+  console.log(nanoBtcTicker.data, 'dfdsfsdfsdfsdfd')
 
   return <header className={header}>
     <Toaster
-        position="top-center"
-        reverseOrder={false}
-        gutter={8}
-        containerClassName=""
-        containerStyle={{}}
-        toastOptions={{
-          // Define default options
-          className: '',
-          duration: 5000,
-          style: {
-            background: '#363636',
-            color: '#fff',
+      position="top-center"
+      reverseOrder={false}
+      gutter={8}
+      containerClassName=""
+      containerStyle={{}}
+      toastOptions={{
+        // Define default options
+        className: '',
+        duration: 5000,
+        style: {
+          background: '#363636',
+          color: '#fff',
+        },
+        // Default options for specific types
+        success: {
+          duration: 3000,
+          theme: {
+            primary: 'green',
+            secondary: 'black',
           },
-          // Default options for specific types
-          success: {
-            duration: 3000,
-            theme: {
-              primary: 'green',
-              secondary: 'black',
-            },
-          },
-        }}
+        },
+      }}
     />
     <nav>
       <Link to="/">
-        <img src={require('url:../../assets/logo.svg')}/>
+        {
+          dark
+            ? <img src={require('url:../../assets/logo_dark.svg')} />
+            : <img src={require('url:../../assets/logo.svg')} />
+        }
 
         <h1>Nanocafe</h1>
       </Link>
-      <Menu/>
+      <Menu />
 
       <aside>
-        <Search/>
+        <Search />
 
         <button onClick={() => setMenuExpanded(!menuExpanded)}>
-          { !menuExpanded
-            ? <AiOutlineMenu size="1.75rem" color="var(--primary)"/>
-            : <AiOutlineClose size="1.75rem" color="var(--primary)"/>
+          {!menuExpanded
+            ? <AiOutlineMenu size="1.75rem" color="var(--primary)" />
+            : <AiOutlineClose size="1.75rem" color="var(--primary)" />
           }
         </button>
 
         <nav className={menuExpanded ? 'visible' : undefined}>
-          <Menu/>
+          <Menu />
         </nav>
       </aside>
 
       {
         !isSmallerThan600 && (
-            dark ? (
-                <button style={{padding: 0}} onClick={setDark}>
-                  <FaMoon color={'#558BC9'} size={25} style={{marginRight: '1rem'}}/>
-                </button>
-            ) : (
-                <button style={{padding: 0}} onClick={setDark}>
-                  <FaSun color={'#558BC9'} size={25} style={{marginRight: '1rem'}}/>
-                </button>
+          dark ? (
+            <button className={"modeToggle"} onClick={setDark}>
+              <FaMoon size={25} />
+            </button>
+          ) : (
+            <button className={"modeToggle"} onClick={setDark}>
+              <FaSun size={25} />
+            </button>
 
-            )
+          )
         )
 
       }
@@ -336,41 +350,41 @@ export const Header: React.FC<IHeader> = ({dark,setDark}) => {
 
     </nav>
     <section>
-      { ticker.data ? <>
-		
-	<span style={{padding: '0 0 0 1rem'}} className="" title="The Estimated Transactions Per Second (PR weighted) For The Nano Network">Avg. TPS:</span>
+      {ticker.data ? <>
+
+        <span style={{ padding: '0 0 0 1rem' }} className="" title="The Estimated Transactions Per Second (PR weighted) For The Nano Network">Avg. TPS:</span>
         <em title="The Estimated Transactions Per Second (PR weighted) For The Nano Network">
-          { (tpsData && tpsData.length > 0) ? math.mean(tpsData).toFixed(2) : '...' }
+          {(tpsData && tpsData.length > 0) ? math.mean(tpsData).toFixed(2) : '...'}
         </em>
-		    
-        <span style={{padding: '0 0 0 1rem'}} className="">Market Cap:</span>
-        <em>${ formatSI(133248290 * parseFloat(ticker.data.weightedAvgPrice)) }</em>
-		    
-        <span style={{padding: '0 0 0 1rem'}} className="">Volume:</span>
-        <em>${ formatSI(parseFloat(ticker.data.volume) * parseFloat(ticker.data.weightedAvgPrice)) }</em>
+
+        <span style={{ padding: '0 0 0 1rem' }} className="">Market Cap:</span>
+        <em>${formatSI(133248290 * parseFloat(ticker.data.weightedAvgPrice))}</em>
+
+        <span style={{ padding: '0 0 0 1rem' }} className="">Volume:</span>
+        <em>${formatSI(parseFloat(ticker.data.volume) * parseFloat(ticker.data.weightedAvgPrice))}</em>
 
         <span className="ticker separated" title="NANO Currency">Nano: </span>
-        <em title="NANOUSDT Price">USDT ${ formatSI(parseFloat(ticker.data?.lastPrice)) }</em>
-        <em title="% Change in Price" className={ isPositive ? 'positive' : 'negative' }>
-          { isPositive ? '↑' : '↓' } { Number(ticker.data?.priceChange).toFixed(3)} { ticker.data?.priceChangePercent }%
+        <em title="NANOUSDT Price">USDT ${formatSI(parseFloat(ticker.data?.lastPrice))}</em>
+        <em title="% Change in Price" className={isPositive ? 'positive' : 'negative'}>
+          {isPositive ? '↑' : '↓'} {Number(ticker.data?.priceChange).toFixed(3)} {ticker.data?.priceChangePercent}%
         </em>
-		    
-	<span className="separated"/>
-	<em title="NANOEUR Price">Euro €{nanoEur ? nanoEur.toFixed(2) : '---'}</em>
-	<em title="% Change in Price" className={ nanoEurPriceChangePercent > 0 ? 'positive' : 'negative' }>
-          { nanoEurPriceChangePercent > 0 ? '↑' : '↓' } { (nanoEurPriceChange).toFixed(3) } { nanoEurPriceChangePercent.toFixed(3) }%
-        </em>
-		    
-	<span className="separated"/>
-        <em title="NANOBTC Price">BTC {parseFloat(nanoBtcTicker.data ? nanoBtcTicker.data?.lastPrice : "") }</em>
 
-        <em title="% Change in Price" className={ isPositiveNanoBtc ? 'positive' : 'negative' }>
-          { isPositiveNanoBtc ? '↑' : '↓' } {nanoBtcTicker.data?.priceChange} { nanoBtcTicker.data?.priceChangePercent }%
+        <span className="separated" />
+        <em title="NANOEUR Price">Euro €{nanoEur ? nanoEur.toFixed(2) : '---'}</em>
+        <em title="% Change in Price" className={nanoEurPriceChangePercent > 0 ? 'positive' : 'negative'}>
+          {nanoEurPriceChangePercent > 0 ? '↑' : '↓'} {(nanoEurPriceChange).toFixed(3)} {nanoEurPriceChangePercent.toFixed(3)}%
+        </em>
+
+        <span className="separated" />
+        <em title="NANOBTC Price">BTC {parseFloat(nanoBtcTicker.data ? nanoBtcTicker.data?.lastPrice : "")}</em>
+
+        <em title="% Change in Price" className={isPositiveNanoBtc ? 'positive' : 'negative'}>
+          {isPositiveNanoBtc ? '↑' : '↓'} {nanoBtcTicker.data?.priceChange} {nanoBtcTicker.data?.priceChangePercent}%
         </em>
 
       </> : <>
         ---
-      </> }
+      </>}
     </section>
   </header>;
 };

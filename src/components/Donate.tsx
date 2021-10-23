@@ -13,9 +13,12 @@ const Container = styled.div`
   & > button {
     cursor: pointer;
     font-size: 1rem;
-    color: var(--nano);
+    color: var(--primary);
     text-align: right;
     padding: 0;
+    &:hover {
+      color: var(--hover);
+    }
   }
 
   p {
@@ -77,11 +80,13 @@ const Container = styled.div`
         button {
           cursor: pointer;
           font-size: 1.2rem;
-          color: var(--nano);
+          color: var(--primary);
           padding-bottom: 1rem;
           box-sizing: border-box;
           margin: 0;
-
+          &:hover {
+            color: var(--hover);
+          }
           &.active {
             border-bottom: 2px solid var(--primary);
           }
@@ -145,7 +150,7 @@ export const Donate: React.FC = () => {
                     <p>Set your representative to Nanocafe.cc:</p>
                     <img src={qrRep}/>
                   <div style={{display: 'flex',alignItems: "center"}}>
-                    <a href="#">
+                    <a href="nano:nano_1cafe95a81ko3mq3oin4wnubsbw9z3w3tw5a95u47897wxy96r1zj9hxu1wb">
                         nano_1cafe95a81ko3mq3oin4wnubsbw9z3w3tw5a95u47897wxy96r1zj9hxu1wb
                     </a>
                        <FaCopy size={35} onClick={() => {

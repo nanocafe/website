@@ -1,17 +1,17 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import {QueryClient, QueryClientProvider} from 'react-query';
+import React, { useContext, useState, useEffect } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-import {Header} from './components/Header';
-import {AccountScreen} from './screens/Account';
-import {HomeScreen} from './screens/Home';
-import {NotFoundScreen} from './screens/NotFound';
-import {UnderConstruction} from './screens/UnderConstruction';
-import {BlockScreen} from './screens/Block';
-import {NetworkScreen} from './screens/Network';
-import {FaucetScreen} from './screens/Faucet';
-import {NodeScreen} from './screens/Node';
-import {Footer} from './components/Footer';
+import { Header } from './components/Header';
+import { AccountScreen } from './screens/Account';
+import { HomeScreen } from './screens/Home';
+import { NotFoundScreen } from './screens/NotFound';
+import { UnderConstruction } from './screens/UnderConstruction';
+import { BlockScreen } from './screens/Block';
+import { NetworkScreen } from './screens/Network';
+import { FaucetScreen } from './screens/Faucet';
+import { NodeScreen } from './screens/Node';
+import { Footer } from './components/Footer';
 
 import Theme from "./components/Theme";
 
@@ -33,17 +33,19 @@ export const App: React.FC = () => {
         <Theme dark={dark} setDark={setDark}>
 
             <BrowserRouter>
-                <Header dark={dark} setDark={setDark}/>
+                <Header dark={dark} setDark={setDark} />
 
                 <Switch>
-                    <Route path="/" exact component={HomeScreen}/>
-                    <Route path="/:address(nano_[a-zA-Z0-9]+)" component={AccountScreen}/>
-                    <Route path="/:address(xrb_[a-zA-Z0-9]+)" component={AccountScreen}/>
-                    <Route path="/:hash([a-fA-F0-9]{64})" component={BlockScreen}/>
-                    <Route path="/network" component={NetworkScreen}/>
-                    <Route path="/node" component={NodeScreen}/>
-                    <Route path="/faucet" component={FaucetScreen}/>
-                    <Route component={NotFoundScreen}/>
+                    <Route path="/" exact component={HomeScreen} />
+                    <Route path="/:address(nano_[a-zA-Z0-9]+)" component={AccountScreen} />
+                    <Route path="/:address(xrb_[a-zA-Z0-9]+)" component={AccountScreen} />
+                    <Route path="/:hash([a-fA-F0-9]{64})" component={BlockScreen} />
+                    <Route path="/network" component={NetworkScreen} />
+                    <Route path="/node" component={NodeScreen} />
+                    <Route path="/faucet" render={(props) => (
+                        <FaucetScreen theme={dark ? "dark" : "light"} />
+                    )} />
+                    <Route component={NotFoundScreen} />
                 </Switch>
 
                 <Footer dark={dark} setDark={setDark}></Footer>

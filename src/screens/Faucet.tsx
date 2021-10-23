@@ -10,10 +10,11 @@ import Loader from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import ReCAPTCHA from "react-google-recaptcha";
+import { Nanodrop, useScript } from '../components/Nanodrop';
 
 const Container = styled.div`
   text-align: center;
-  padding: 3rem;
+  padding: 3rem .5rem;
   flex: 1;
 
   h2 {
@@ -93,110 +94,11 @@ interface Form {
   recaptcha: boolean;
 }
 
-export const FaucetScreen: React.FC = () => {
-
-  const { register, reset,control, handleSubmit, formState: { errors, isValid } } = useForm<Form>({
-    defaultValues: {
-      address: '',
-    },
-  });
-
-  console.log(errors)
-
-  const faucetMutation = useFaucetMutation();
-  const recaptchaRef = useRef<ReCAPTCHA>();
-
-  function onSubmit(values: Form) {
-    console.log('onsubmit is called')
-    faucetMutation.mutate(values.address);
-    reset();
-  }
-
-  function onChange(value: any) {
-    console.log("Captcha value:", value);
-  }
+export const FaucetScreen: React.FC = (props) => {
 
   return <Container>
     <GiTap size="5rem" color="var(--primary)"/>
     <h2>Faucet</h2>
-    { faucetMutation.isLoading ? <div className="loading">
-      <Loader
-        type="MutatingDots"
-        color="var(--primary)"
-        secondaryColor="var(--nano)"
-        height={100}
-        width={100}/>
-    </div> : faucetMutation.isSuccess ? <>
-      <p>Your payout is being processed, you should receive it shortly!</p>
-    </> : faucetMutation.isError ? <>
-      <p>We only support one-time payment through this faucet, our system indicates you've already received Nano.</p>
-    </> : <>
-      <h2>Currently under maintenance!</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck="false"
-          className={[ errors.address ? 'invalid' : '',  ].join(' ')}
-          type="text"
-          placeholder="Enter your nano address here"
-          { ...register(
-            'address',
-            {
-              required: {
-                value: true,
-                message: "You must have to specify your nano address"
-              },
-              validate(value) {
-                return isNanoAddress(value, ['nano', 'xrb']) && value !== process.env.NODE_ADDRESS;
-              }
-            }
-          )}/>
-        <button >
-          <FaSearch/>
-        </button>
-
-
-          {errors.address && (
-              <ErrorMessageContainer>
-                Invalid Address
-              </ErrorMessageContainer>
-          )}
-
-
-        <RecaptchaContainer>
-          <Controller
-              control={control}
-              name="recaptcha"
-              rules={{
-                required: {
-                  value: true,
-                  message: 'You must complete the Google Recaptcha to claim the reward!',
-                }
-              }}
-              render={({
-                         field: { onChange, onBlur, value, name, ref },
-                         fieldState: { invalid, isTouched, isDirty, error },
-                         formState,
-                       }) => (
-                  <ReCAPTCHA
-                      sitekey="6LfUTnkbAAAAAJXo-g0Op4aVol-j-PdLag9B1POg"
-                      onChange={onChange}
-                  />
-              )}
-          />
-        </RecaptchaContainer>
-
-        {
-          errors.recaptcha && (
-              <ErrorMessageContainer>
-                {errors.recaptcha.message}
-              </ErrorMessageContainer>
-          )
-        }
-
-      </form>
-    </> }
+    <Nanodrop theme={props.theme}/>
   </Container>
 }

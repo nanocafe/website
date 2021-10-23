@@ -277,8 +277,6 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
     };
   }, []);
 
-  console.log(nanoBtcTicker.data, 'dfdsfsdfsdfsdfd')
-
   return <header className={header}>
     <Toaster
       position="top-center"

@@ -99,7 +99,8 @@ export const FaucetScreen: React.FC = (props) => {
   return <Container>
     <GiTap size="5rem" color="var(--primary)"/>
     <h2>Faucet</h2>
-    <h4>Experience Nano entirely free! Make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), place your address below and enjoy!</h4>
-    <Nanodrop theme={props.theme}/>
+    <p>Experience Nano entirely free! First make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>  
+     <Nanodrop theme={props.theme}/>
+     <p>Click <a href="https://nanodrop.io" target="_blank">here</a> to get more free Nano to experience or click <a href="https://playnano.online/faucets" target="_blank">here</a> to view a list of faucets</p>
   </Container>
 }

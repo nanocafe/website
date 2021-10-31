@@ -16,7 +16,8 @@ const Container = styled.main`
 
 export const HomeScreen: React.FC = () => {
   return <Container>
-    <h2>Nanocafe EOM beta release information coming soon!</h2>
+<p style="background-color:#FF0000; color: #FFFFFF
+; text-align:center; font-weight:light;">Nanocafe EOM beta release information coming soon!</p>
     <Visualization/>
     <News/>
   </Container>;

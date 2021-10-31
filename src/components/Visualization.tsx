@@ -104,7 +104,7 @@ export const Visualization: React.FC = () => {
   );
 
   return <Container>
-    <p style="background-color:#FF0000; color: #FFFFFF; text-align:center; font-weight:light;">Nanocafe EOM beta release information coming soon!</p>
+    <h2>Nanocafe EOM beta release information coming soon!</h2>
     <h2>Live network visualization:</h2>
     <div>
       { filtered?.map((tx) => <div className="tx" key={tx.link}>

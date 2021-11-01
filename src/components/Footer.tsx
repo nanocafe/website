@@ -85,7 +85,7 @@ export const Footer: React.FC<IHeader> = ({ dark, setDark }) => {
 
     return <footer className={footer}>
         <div style={{ textAlign: 'right' }}>
-            Made 100% with Nano
+            <a href="/node">Node Info</a>
         </div>
         <div style={{ textAlign: 'center' }}>
             <a href="https://nano.org" target="_blank" rel="noreferrer noopener">What is Nano?</a>

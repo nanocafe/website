@@ -58,7 +58,8 @@ const footer = css`
     flex-direction: column;
 
     & > div {
-      display: none;
+        display: block;
+      text-align: center !important;
     }
 
     & > main {

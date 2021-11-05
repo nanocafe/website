@@ -45,7 +45,9 @@ const Container = styled.div`
       color: var(--primary);
     }
   }
-
+  .extraLinks{
+    margin-top: 10%;
+  }
   input {
     margin-top: 1rem;
     border: 1px solid var(--primary-border);
@@ -99,8 +101,8 @@ export const FaucetScreen: React.FC = (props) => {
   return <Container>
     <GiTap size="5rem" color="var(--primary)"/>
     <h2>Faucet</h2>
-    <p>Experience Nano entirely free! First make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>  
+    <p>Experience Nano entirely free! First make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and receive 0.00001 Nano.</p>  
      <Nanodrop theme={props.theme}/>
-     <p>Click <a href="https://nanodrop.io" target="_blank">here</a> to use another Faucet or click <a href="https://playnano.online/faucets" target="_blank">here</a> to view a list of Faucets.</p>
+     <p className="extraLinks">Click <a href="https://nanodrop.io" target="_blank">here</a> to use another Faucet or click <a href="https://playnano.online/faucets" target="_blank">here</a> to view a list of Faucets.</p>
   </Container>
 }

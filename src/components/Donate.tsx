@@ -123,7 +123,7 @@ export const Donate: React.FC = () => {
 
 
     return <Container className="donate">
-        <button onClick={() => setActive(true)}>Donate / Set Representative</button>
+        <button onClick={() => setActive(true)}>Donate or Set Representative</button>
         <main className={active ? 'active' : undefined} onClick={hideDonationPanel}>
             <section>
                 <div>
@@ -131,7 +131,7 @@ export const Donate: React.FC = () => {
                             className={option === Option.DONATE ? 'active' : undefined}>Donate
                     </button>
                     <button onClick={() => setOption(Option.SET_REP)}
-                            className={option === Option.SET_REP ? 'active' : undefined}>Set representative
+                            className={option === Option.SET_REP ? 'active' : undefined}>Set Representative
                     </button>
                 </div>
                 <article className={option === Option.DONATE ? 'active' : undefined}>

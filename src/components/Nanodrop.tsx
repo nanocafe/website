@@ -86,20 +86,6 @@ function isHex(str: string): boolean {
     return /^[A-F0-9]+$/i.test(str)
 }
 
-export const useScript = url => {
-    useEffect(() => {
-        const script = document.createElement('script');
-
-        script.src = url;
-
-        document.body.appendChild(script);
-
-        return () => {
-            document.body.removeChild(script);
-        }
-    }, [url]);
-};
-
 export const Nanodrop: React.FC = (props) => {
 
     const [theme, setTheme] = useState("light")
@@ -120,9 +106,13 @@ export const Nanodrop: React.FC = (props) => {
         })
     }
 
-    useScript("https://drop.nanocafe.cc/api/api.js?render=explicit")
-
     useEffect(() => {
+
+        if (typeof (nanodrop) == 'undefined') {
+            const script = document.createElement('script');
+            script.src = 'https://drop.nanocafe.cc/api/api.js?render=explicit';
+            document.body.appendChild(script);
+        }
 
         awaitNanoDrop()
             .then(() => {
@@ -130,9 +120,11 @@ export const Nanodrop: React.FC = (props) => {
                     .then((res) => {
                         console.log("nanodrop checkbox loaded")
                     })
-                    .catch((err) => alert(err))
+                    .catch(err => alert(err))
             })
             .catch(err => alert(err))
+
+
     }, [])
 
 

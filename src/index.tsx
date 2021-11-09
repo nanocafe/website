@@ -19,5 +19,5 @@ ReactDOM.render(
 );
 
 window.onerror = function (...args) {
-  alert(JSON.stringify(args));
+  console.error(JSON.stringify(args));
 }

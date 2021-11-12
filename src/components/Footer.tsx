@@ -89,7 +89,7 @@ export const Footer: React.FC<IHeader> = ({ dark, setDark }) => {
             <a href="/node">Node Info</a>
         </div>
         <div style={{ textAlign: 'center' }}>
-            <a href="https://nano.org" target="_blank" rel="noreferrer noopener">What is Nano?</a>
+            <a href="https://nano.community/introduction/basics" target="_blank" rel="noreferrer noopener">What is Nano?</a>
         </div>
         <Donate />
         <main>
@@ -124,8 +124,10 @@ export const Footer: React.FC<IHeader> = ({ dark, setDark }) => {
                 </a>
             </p>
             <p style={{ fontSize: 10, marginTop: 20, opacity: .7 }}>
-                Copyright &copy; {dayjs().get('year')} Nanocafe.cc
+            Copyright &copy; {dayjs().get('year')} Nanocafe.cc
+            <a href="https://nanocafe.cc/privacy" target="_blank">Privacy Policy</a>
             </p>
+            
         </main>
     </footer>
 

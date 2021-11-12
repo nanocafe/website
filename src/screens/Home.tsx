@@ -13,7 +13,7 @@ const Container = styled.main`
     text-align: center;
   }
 `;
-const Paragraph = styled.main`
+/* const Paragraph = styled.main`
   color: #FFF;
   text-align: center;
   margin-top: 2rem;
@@ -21,10 +21,10 @@ const Paragraph = styled.main`
   font-weight: bold;
   padding: 5px;
   background-color: #f44336;
-`;
+`; */
 export const HomeScreen: React.FC = () => {
   return <Container>
-    <Paragraph>Nanocafe EOM Beta will be released Nov. 8th, entries will be open 11/08 - 11/10</Paragraph>
+    {/* <Paragraph>Nanocafe EOM Beta will be released Nov. 8th, entries will be open 11/08 - 11/10</Paragraph> */}
     <Visualization/>
     <News/>
   </Container>;

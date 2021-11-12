@@ -12,7 +12,6 @@ import { NetworkScreen } from './screens/Network';
 import { FaucetScreen } from './screens/Faucet';
 import { NodeScreen } from './screens/Node';
 import { Footer } from './components/Footer';
-
 import Theme from "./components/Theme";
 
 const queryClient = new QueryClient();

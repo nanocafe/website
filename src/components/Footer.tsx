@@ -126,6 +126,7 @@ export const Footer: React.FC<IHeader> = ({ dark, setDark }) => {
             <p style={{ fontSize: 10, marginTop: 20, opacity: .7 }}>
             Copyright &copy; {dayjs().get('year')} Nanocafe.cc
             <a href="https://nanocafe.cc/privacy" target="_blank">Privacy Policy</a>
+            <a href="https://nanocafe.cc/terms" target="_blank">Terms of Use</a>
             </p>
             
         </main>

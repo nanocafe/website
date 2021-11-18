@@ -104,7 +104,7 @@ const header = css`
     span {
       font-size: 0.8rem;
       color: var(--primary);
-      font-weight: bold;
+      font-weight: 600;
       &.ticker {
         font-size: 1rem;
         margin-left: 0;
@@ -360,7 +360,7 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         <span style={{ padding: '0 0 0 1rem' }} className="">Volume:</span>
         <em>${formatSI(parseFloat(ticker.data.volume) * parseFloat(ticker.data.weightedAvgPrice))}</em>
 
-        <span className="ticker separated" title="NANO Currency">Nano: </span>
+        <span className="ticker separated" title="Nano Currency">1 Ӿ: </span>
         <em title="NANOUSDT Price">USDT ${formatSI(parseFloat(ticker.data?.lastPrice))}</em>
         <em title="% Change in Price" className={isPositive ? 'positive' : 'negative'}>
           {isPositive ? '↑' : '↓'} {Number(ticker.data?.priceChange).toFixed(3)} {ticker.data?.priceChangePercent}%

@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { css } from '@emotion/css';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 
-import { ConfirmationQuorumPeer, Telemetry, useBinanceTicker, useConfirmationQuorum, useTelemetry, useTPS } from '../api';
+import { ConfirmationQuorumPeer, Telemetry, Transaction, useBinanceTicker, useConfirmationQuorum, useTelemetry, useTPS, useTransactions } from '../api';
 import { formatSI, safeRawToMega } from '../utils';
 import { Search } from './Search';
 import { FaMoon } from "react-icons/fa";
@@ -212,6 +212,18 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
   const [nanoEurPriceChange, setNanoEurPriceChange] = useState<Number>(0)
   const [menuExpanded, setMenuExpanded] = useState<Boolean>(false);
   const tpsQuery = useTPS();
+  const transactionCache = useRef<Transaction[]>([]);
+  const transactionsQuery = useTransactions((transactions) => {
+    const lastValue = transactionCache.current[transactionCache.current.length - 1];
+    const sorted = [ ...transactions ].filter((v) => !transactionCache.current.find((tx) => tx.link === v.link)).sort((a, b) => a.time.getTime() - b.time.getTime());
+
+    if (!lastValue) {
+      transactionCache.current = sorted;
+      return;
+    }
+
+    transactionCache.current.push(...sorted.filter((val) => val.time.getTime() > lastValue.time.getTime()));
+  });
   const telemetryQuery = useTelemetry();
   const quorumQuery = useConfirmationQuorum();
   const ticker = useBinanceTicker('NANOUSDT');
@@ -258,7 +270,6 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
     fetch('https://api.kraken.com/0/public/Ticker?pair=NANOEUR')
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setNanoEur(+data.result['NANOEUR'].c[0])
         const currentPrice = +data.result['NANOEUR'].c[0];
         const lastPrice = +data.result['NANOEUR'].o;
@@ -270,9 +281,17 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         setNanoEurPriceChange(priceChange);
 
       })
+    
+    const interval = setInterval(() => {
+      const twentyFourHours = 1000 * 60 * 60 * 24;
+      const t = Date.now() - twentyFourHours;
+      transactionCache.current = transactionCache.current.filter((tx) => tx.time.getTime() > t - 1000 * 4);
+    }, 1000);
+
     return () => {
       document.removeEventListener('touchstart', hideMenu);
       document.removeEventListener('touchmove', alwaysHideMenu);
+      clearInterval(interval);
     };
   }, []);
 
@@ -352,6 +371,11 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         <span style={{ padding: '0 0 0 1rem' }} className="" title="The Estimated Transactions Per Second (PR weighted) For The Nano Network">Avg. TPS:</span>
         <em title="The Estimated Transactions Per Second (PR weighted) For The Nano Network">
           {(tpsData && tpsData.length > 0) ? math.mean(tpsData).toFixed(2) : '...'}
+        </em>
+        
+        <span style={{ padding: '0 0 0 1rem' }} className="" title="Total Transactions Processed For The Nano Network from the last 24 hours.">Transactions:</span>
+        <em title="Total Transactions Processed For The Nano Network from the last 24 hours.">
+          {(transactionCache?.current && transactionCache.current.length > 0) ? transactionCache.current.length : '...'}
         </em>
 
         <span style={{ padding: '0 0 0 1rem' }} className="">Market Cap:</span>

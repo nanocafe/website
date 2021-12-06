@@ -13,18 +13,17 @@ const Container = styled.main`
     text-align: center;
   }
 `;
-/* const Paragraph = styled.main`
-  color: #FFF;
+ const Paragraph = styled.main`
+  color: #000;
   text-align: center;
   margin-top: 2rem;
   font-size: 16px;
-  font-weight: bold;
   padding: 5px;
-  background-color: #f44336;
-`; */
+  background-color: #F3695F;
+`; 
 export const HomeScreen: React.FC = () => {
   return <Container>
-    {/* <Paragraph>Nanocafe EOM Beta will be released Nov. 8th, entries will be open 11/08 - 11/10</Paragraph> */}
+     <Paragraph>Nano-Xmas is officially open, click <a href="https://xmas.nanos.cc/" target="_blank">here</a> to help fund a local charity and also experience Nano!</Paragraph>
     <Visualization/>
     <News/>
   </Container>;

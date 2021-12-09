@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+
+import ReactGA from 'react-ga';
 
 import { Header } from './components/Header';
 import { AccountScreen } from './screens/Account';
@@ -16,7 +18,20 @@ import Theme from "./components/Theme";
 
 const queryClient = new QueryClient();
 
-export const App: React.FC = () => {
+declare const process : {
+    env: { GA_UID: string }
+}
+
+function usePageViews() {
+
+    ReactGA.initialize(process.env.GA_UID)
+    const { pathname, search } = useLocation();
+    useEffect(() => {        
+        ReactGA.pageview(pathname + search);
+    }, [location]);
+  }
+
+const AppComponent: React.FC = () => {
 
     // Enable dark mode accordding to device / browser configuration.
     // Or if the user has changed the website to dark (saved in localStorage)
@@ -27,29 +42,32 @@ export const App: React.FC = () => {
     const [dark, setDarkColor] = useState(prefersDark);
 
     const setDark = () => setDarkColor(!dark)
-
-    return <QueryClientProvider client={queryClient}>
+    usePageViews();
+    return  <QueryClientProvider client={queryClient}>
         <Theme dark={dark} setDark={setDark}>
+            <Header dark={dark} setDark={setDark} />
 
-            <BrowserRouter>
-                <Header dark={dark} setDark={setDark} />
+            <Switch>
+                <Route path="/" exact component={HomeScreen} />
+                <Route path="/:address(nano_[a-zA-Z0-9]+)" component={AccountScreen} />
+                <Route path="/:address(xrb_[a-zA-Z0-9]+)" component={AccountScreen} />
+                <Route path="/:hash([a-fA-F0-9]{64})" component={BlockScreen} />
+                <Route path="/network" component={NetworkScreen} />
+                <Route path="/node" component={NodeScreen} />
+                <Route path="/faucet" render={(props) => (
+                    <FaucetScreen theme={dark ? "dark" : "light"} />
+                )} />
+                <Route component={NotFoundScreen} />
+            </Switch>
 
-                <Switch>
-                    <Route path="/" exact component={HomeScreen} />
-                    <Route path="/:address(nano_[a-zA-Z0-9]+)" component={AccountScreen} />
-                    <Route path="/:address(xrb_[a-zA-Z0-9]+)" component={AccountScreen} />
-                    <Route path="/:hash([a-fA-F0-9]{64})" component={BlockScreen} />
-                    <Route path="/network" component={NetworkScreen} />
-                    <Route path="/node" component={NodeScreen} />
-                    <Route path="/faucet" render={(props) => (
-                        <FaucetScreen theme={dark ? "dark" : "light"} />
-                    )} />
-                    <Route component={NotFoundScreen} />
-                </Switch>
-
-                <Footer dark={dark} setDark={setDark}></Footer>
-
-            </BrowserRouter>
+            <Footer dark={dark} setDark={setDark}></Footer>        
         </Theme>
     </QueryClientProvider>;
 };
+
+export const App: React.FC = () => {
+
+    return <BrowserRouter>
+            <AppComponent />
+    </BrowserRouter>;
+}

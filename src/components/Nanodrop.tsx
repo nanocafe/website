@@ -107,13 +107,6 @@ export const Nanodrop: React.FC = (props) => {
     }
 
     useEffect(() => {
-
-        if (typeof (nanodrop) == 'undefined') {
-            const script = document.createElement('script');
-            script.src = 'https://drop.nanocafe.cc/api/api.js?render=explicit';
-            document.body.appendChild(script);
-        }
-
         awaitNanoDrop()
             .then(() => {
                 nanodrop.render("nanodrop-checkbox")

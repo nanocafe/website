@@ -23,13 +23,13 @@ declare const process : {
 }
 
 function usePageViews() {
-
     ReactGA.initialize(process.env.GA_UID)
-    const { pathname, search } = useLocation();
-    useEffect(() => {        
-        ReactGA.pageview(pathname + search);
-    }, [location]);
-  }
+    const location = useLocation()
+    const { pathname, search } = location
+    useEffect(() => {
+        ReactGA.pageview(pathname + search)
+    }, [location])
+}
 
 const AppComponent: React.FC = () => {
 

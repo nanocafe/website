@@ -24,7 +24,7 @@ const Container = styled.main`
 
 export const HomeScreen: React.FC = () => {
   return <Container>
-    <Paragraph>Ticker data is currently not reflecting xno/usdt & xno/btc market rates due to reliance on the binance api, they will be updated ASAP to reflect market rates once binance completes their ticker change maintenance for nano/xno by 1/28.</Paragraph>
+    <Paragraph>Ticker data for XNO:USDT & XNO:BTC are currently not working due to reliance on the binance API, tickers will be fixed ASAP once binance finishes their scheduled ticker maintenance for nano/xno by 1/28. </Paragraph>
     <Visualization/>
     <News/>
   </Container>;

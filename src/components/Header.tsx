@@ -214,8 +214,8 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
   const tpsQuery = useTPS();
   const telemetryQuery = useTelemetry();
   const quorumQuery = useConfirmationQuorum();
-  const ticker = useBinanceTicker('NANOUSDT');
-  const nanoBtcTicker = useBinanceTicker('NANOBTC');
+  const ticker = useBinanceTicker('XNOUSDT');
+  const nanoBtcTicker = useBinanceTicker('XNOBTC');
 
   const isPositive = parseFloat(ticker.data?.priceChangePercent ?? '0') > 0;
   const isPositiveNanoBtc = parseFloat(nanoBtcTicker.data?.priceChangePercent ?? '0') > 0;

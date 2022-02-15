@@ -180,9 +180,12 @@ export const AccountScreen: React.FC = () => {
         <Card as="section">
           { isAddressValid
             ? <>
-              <p>This account isn't open.</p>
-              <p>The address is valid, but you won't see anything here until it publishes a block.</p>
-              <p>To open the account send some Nano to it and open your wallet app to publish a receive block.</p>
+              <h4>There are three reasons why you could have landed on this screen:</h4>
+              <p>(1) The account you're searching has recently been created and you have yet to receive a transaction into your account</p>
+              <p>(2) The transaction you're searching has yet to be fully received (meaning you have not entered your wallet and the transaction is still pending as "ready to receive".</p>
+              <p>(3) This account is invalid and does not exist.</p>
+              <p>You can also try searching the block hash if the account address isn't working.</p>
+              <p>IMPORTANT: When a transaction is pending "ready to receive", the transaction is inside your account, it is not lost or in any other account, simply open your wallet to confirm the pending "ready to receive".</p>
             </>
             : 'This address is invalid!' }
         </Card>

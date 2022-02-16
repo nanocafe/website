@@ -30,6 +30,7 @@
     "react-responsive": "^9.0.0-beta.2",
     "react-router-dom": "^5.2.0",
     "react-table": "^7.6.3",
+    "react-ts-tradingview-widgets": "^1.0.9",
     "reset-css": "^5.0.1",
     "rss-parser": "^3.12.0"
   },

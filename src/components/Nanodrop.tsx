@@ -150,6 +150,8 @@ export const Nanodrop = ({ theme = 'light' }: INanoDrop) => {
                 id="addNanoAddress"
                 onChange={handleChange}
                 onFocus={handleChange}
+                onBlur={handleChange}
+                onPaste={handleChange}
                 placeholder="Enter your Nano wallet address here"
                 disabled={disableInput}
             />

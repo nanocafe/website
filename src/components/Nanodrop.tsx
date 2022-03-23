@@ -154,7 +154,8 @@ export const Nanodrop = ({ theme = 'light' }: INanoDrop) => {
                 className={[false ? 'invalid' : '',].join(' ')}
                 type="text"
                 id="addNanoAddress"
-                onChange={e => handleChange(e)}
+                onChange={handleChange}
+                onFocus={handleChange}
                 placeholder="Enter your Nano wallet address here"
                 disabled={disableInput}
             />

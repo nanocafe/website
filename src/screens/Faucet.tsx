@@ -1,7 +1,7 @@
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import React, {useRef, useState} from 'react';
-import {set, useForm,Controller} from 'react-hook-form';
+import React, { useEffect, useRef, useState } from 'react';
+import { set, useForm, Controller } from 'react-hook-form';
 import isNanoAddress from 'nano-address-validator';
 import { GiTap } from 'react-icons/gi';
 import { useFaucetMutation } from '../api';
@@ -9,8 +9,7 @@ import { Indicator } from '../components/Indicator';
 import Loader from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
-import ReCAPTCHA from "react-google-recaptcha";
-import { Nanodrop, useScript } from '../components/Nanodrop';
+import { Nanodrop } from '../components/Nanodrop';
 
 const Container = styled.div`
   text-align: center;
@@ -78,31 +77,26 @@ const Container = styled.div`
   }
 `;
 
-const RecaptchaContainer = styled.div`
-  display: flex;
-  margin-top: 1rem;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-`;
-
 const ErrorMessageContainer = styled.div`
   margin-top: .5rem;
   color: red;
 `;
 
-interface Form {
-  address: string;
-  recaptcha: boolean;
-}
-
-export const FaucetScreen: React.FC = (props) => {
+export const FaucetScreen: React.FC = (props: any) => {
 
   return <Container>
-    <GiTap size="5rem" color="var(--primary)"/>
+    <GiTap size="5rem" color="var(--primary)" />
+    
     <h2>Faucet</h2>
-    <p>Experience Nano entirely free! First make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>  
-     <Nanodrop theme={props.theme}/>
-     <p className="extraLinks">Click <a href="https://nanodrop.io" target="_blank">here</a> to use another Faucet or click <a href="https://playnano.online/faucets" target="_blank">here</a> to view a list of Faucets.</p>
+    
+    <p>Experience Nano entirely free! First make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>
+    
+    <Nanodrop theme={props.theme} />
+
+    <iframe src="https://drop.nanocafe.cc/api/countries" width="940px" height="370"
+      style={{position: "relative", border: 0, maxWidth: "100%", marginTop: 5, marginBottom: 5}} > \
+    </iframe>
+
+    <p className="extraLinks">Click <a href="https://nanodrop.io" target="_blank">here</a> to use another Faucet or click <a href="https://playnano.online/faucets" target="_blank">here</a> to view a list of Faucets.</p>
   </Container>
 }

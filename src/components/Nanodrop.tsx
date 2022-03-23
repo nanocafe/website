@@ -85,76 +85,61 @@ interface Form {
 function isHex(str: string): boolean {
     return /^[A-F0-9]+$/i.test(str)
 }
+interface INanoDrop {
+    theme?: string
+}
 
-export const Nanodrop: React.FC = (props) => {
+export const Nanodrop = ({ theme = 'light' }: INanoDrop) => {
 
-    const [theme, setTheme] = useState("light")
-
-    function awaitNanoDrop(checkRendered = false) {
-        return new Promise(async function (resolve, reject) {
-            for (let i = 0; i < 600; i++) {
-                if (typeof (nanodrop) == "object" && nanodrop.loaded) {
-                    if (checkRendered) {
-                        if (nanodrop.rendered) return resolve(true)
-                    } else {
-                        return resolve(true)
-                    }
-                }
-                await sleep(100)
-            }
-            reject("timeout")
-        })
-    }
+    const [nanodrop, setNanoDrop] = useState<any>(null)
 
     useEffect(() => {
-        awaitNanoDrop()
-            .then(() => {
-                nanodrop.render("nanodrop-checkbox")
-                    .then((res) => {
-                        console.log("nanodrop checkbox loaded")
-                    })
-                    .catch(err => alert(err))
-            })
-            .catch(err => alert(err))
-
-
+        window.addEventListener("nanodropOnload", function (evt: any) {
+            setNanoDrop(evt.detail.nanodrop)
+            setDisableInput(false)
+            console.log("nanodrop loaded", evt.detail.nanodrop)
+        }, false);
     }, [])
 
+    useEffect(() => {
+        if (!nanodrop) return
+        nanodrop.render("nanodrop-checkbox")
+            .then((res: any) => {
+                console.log("nanodrop checkbox rendered")
+            })
+            .catch((err: any) => alert(err))
+    }, [nanodrop])
+
 
     useEffect(() => {
-        awaitNanoDrop(true).then(() => {
-            if (props.theme != theme) {
-                nanodrop.changeTheme(props.theme)
-                setTheme(props.theme)
-            }
-        })
-    }, [props.theme])
+        if (theme != theme && nanodrop) {
+            nanodrop.changeTheme(theme)
+        }
+    }, [theme])
 
-    const [nanoAddress, setNanoAddress] = useState('');
+    const [nanoAddress, setNanoAddress] = useState(null);
+    const [disableInput, setDisableInput] = useState<boolean>(true)
+    const validate = (value: string) => isNanoAddress(value, ['nano', 'xrb']) || (isHex(value) && value.length === 64);
 
-    const validate = (value) => isNanoAddress(value, ['nano', 'xrb']) || (isHex(value) && value.length === 64);
-
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 
-    function handleChange(e) {
+    function handleChange(e: any) {
         const val = e.target.value
-
         if (val == "") {
             e.target.parentNode.classList.remove("error")
             e.target.parentNode.classList.remove("ok")
-            awaitNanoDrop(true).then(() => nanodrop.setAccount(null))
+            nanodrop.setAccount(null)
         } else {
-
             if (validate(val)) {
                 setNanoAddress(val)
                 e.target.parentNode.classList.remove("error")
                 e.target.parentNode.classList.add("ok")
-                awaitNanoDrop(true).then(() => nanodrop.setAccount(val))
+                nanodrop.setAccount(val)
             } else {
                 e.target.parentNode.classList.remove("ok")
                 e.target.parentNode.classList.add("error")
-                awaitNanoDrop(true).then(() => nanodrop.setAccount(null))
+                nanodrop.setAccount(null)
             }
         }
     }
@@ -171,6 +156,7 @@ export const Nanodrop: React.FC = (props) => {
                 id="addNanoAddress"
                 onChange={e => handleChange(e)}
                 placeholder="Enter your Nano wallet address here"
+                disabled={disableInput}
             />
             <i className="icon-ok"><FaCheck /></i>
             <i className="icon-error"><FaExclamationCircle /></i>

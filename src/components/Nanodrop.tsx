@@ -78,10 +78,6 @@ input {
 }
 `;
 
-interface Form {
-    address: string;
-}
-
 function isHex(str: string): boolean {
     return /^[A-F0-9]+$/i.test(str)
 }
@@ -92,6 +88,8 @@ interface INanoDrop {
 export const Nanodrop = ({ theme = 'light' }: INanoDrop) => {
 
     const [nanodrop, setNanoDrop] = useState<any>(null)
+    const [nanoAddress, setNanoAddress] = useState(null);
+    const [disableInput, setDisableInput] = useState<boolean>(true)
 
     useEffect(() => {
         window.addEventListener("nanodropOnload", function (evt: any) {
@@ -105,6 +103,7 @@ export const Nanodrop = ({ theme = 'light' }: INanoDrop) => {
         if (!nanodrop) return
         nanodrop.render("nanodrop-checkbox")
             .then((res: any) => {
+                if (nanoAddress) nanodrop.setAccount(nanoAddress)
                 console.log("nanodrop checkbox rendered")
             })
             .catch((err: any) => alert(err))
@@ -117,12 +116,7 @@ export const Nanodrop = ({ theme = 'light' }: INanoDrop) => {
         }
     }, [theme])
 
-    const [nanoAddress, setNanoAddress] = useState(null);
-    const [disableInput, setDisableInput] = useState<boolean>(true)
     const validate = (value: string) => isNanoAddress(value, ['nano', 'xrb']) || (isHex(value) && value.length === 64);
-
-    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
 
     function handleChange(e: any) {
         const val = e.target.value

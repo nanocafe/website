@@ -92,6 +92,15 @@ export const Nanodrop = ({ theme = 'light' }: INanoDrop) => {
     const [disableInput, setDisableInput] = useState<boolean>(true)
 
     useEffect(() => {
+        const script = document.createElement("script");
+        script.src = 'https://drop.nanocafe.cc/api/api.js?render=explicit'; // new line
+        script.onload = function () {
+            console.log("nanodrop script loaded")
+        };
+        document.body.appendChild(script);
+    }, [])
+
+    useEffect(() => {
         window.addEventListener("nanodropOnload", function (evt: any) {
             setNanoDrop(evt.detail.nanodrop)
             setDisableInput(false)

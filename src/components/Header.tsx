@@ -139,8 +139,7 @@ const header = css`
       }
     }
   }
-  h1 {
-    text-align: center;
+  h2 {
     color: var(--green);
   
   }
@@ -391,6 +390,6 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         ---
       </>}
     </section>
-    <section><h1>New Update: Faucet now supports 5x weekly payout + View the payout map to see which regions receive the most payouts!</h1></section>
+    <section><h2>New Update: Faucet now supports 5x weekly payout + View the payout map to see which regions receive the most payouts!</h2></section>
   </header>;
 };

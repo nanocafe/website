@@ -8,7 +8,7 @@ import { useFaucetMutation } from '../api';
 import { Indicator } from '../components/Indicator';
 import Loader from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa';
+import { FaSearch, FaGlobe } from 'react-icons/fa';
 import { Nanodrop } from '../components/Nanodrop';
 
 const Container = styled.div`
@@ -22,7 +22,7 @@ const Container = styled.div`
   }
 
   h3 {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     font-size: 1.50rem;
   }
 
@@ -95,8 +95,9 @@ export const FaucetScreen: React.FC = (props: any) => {
     <p>Experience Nano entirely free! First make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>
     
     <Nanodrop theme={props.theme} />
+    <p>Click <a href="https://playnano.online/faucets" target="_blank">here</a> for a list of faucets.   ||   Weekly Payouts: 5x per IP &amp; 1x per Account.</p>
     
-    <p>Click <a href="https://playnano.online/faucets" target="_blank">here</a> for a list of faucets. || 5x Payout per IP &amp; 1x per Account Weekly</p>
+    <FaGlobe size="3rem" color="var(--primary)" />    
     <h3>Faucet Payout Map</h3>
     <iframe src="https://drop.nanocafe.cc/api/countries" width="940px" height="370"
       style={{position: "relative", border: 0, maxWidth: "100%", marginTop: 5, marginBottom: 5}} > \

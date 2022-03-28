@@ -22,14 +22,16 @@ const Container = styled.div`
   }
 
   h3 {
-    margin-top: 1rem;
+    margin-top: 2rem;
     font-size: 1.50rem;
   }
 
   p {
     margin-top: 1rem;
   }
-
+  .linkText{
+    margin-bottom: 2rem;
+  }
   form {
     position: relative;
     width: 50%;
@@ -95,7 +97,7 @@ export const FaucetScreen: React.FC = (props: any) => {
     <p>Experience Nano entirely free! First make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>
     
     <Nanodrop theme={props.theme} />
-    <p>Click <a href="https://playnano.online/faucets" target="_blank">here</a> for a list of faucets.   ||   Weekly Payouts: 5x per IP &amp; 1x per Account.</p>
+    <p class="linkText">Click <a href="https://playnano.online/faucets" target="_blank">here</a> for a list of faucets.   ||   Weekly Payouts: 5x per IP &amp; 1x per Account.</p>
     
     <FaGlobe size="3rem" color="var(--primary)" />    
     <h3>Faucet Payout Map</h3>

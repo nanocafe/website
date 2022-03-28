@@ -21,6 +21,11 @@ const Container = styled.div`
     font-size: 2rem;
   }
 
+  h3 {
+    margin-top: 0.5rem;
+    font-size: 1.50rem;
+  }
+
   p {
     margin-top: 1rem;
   }
@@ -44,9 +49,7 @@ const Container = styled.div`
       color: var(--primary);
     }
   }
-  .extraLinks{
-    margin-top: 10%;
-  }
+
   input {
     margin-top: 1rem;
     border: 1px solid var(--primary-border);
@@ -92,11 +95,11 @@ export const FaucetScreen: React.FC = (props: any) => {
     <p>Experience Nano entirely free! First make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>
     
     <Nanodrop theme={props.theme} />
-
+    
+    <p>Click <a href="https://playnano.online/faucets" target="_blank">here</a> for a list of faucets. || 5x Payout per IP &amp; 1x per Account Weekly</p>
+    <h3>Faucet Payout Map</h3>
     <iframe src="https://drop.nanocafe.cc/api/countries" width="940px" height="370"
       style={{position: "relative", border: 0, maxWidth: "100%", marginTop: 5, marginBottom: 5}} > \
     </iframe>
-
-    <p className="extraLinks">Click <a href="https://nanodrop.io" target="_blank">here</a> to use another Faucet or click <a href="https://playnano.online/faucets" target="_blank">here</a> to view a list of Faucets.</p>
   </Container>
 }

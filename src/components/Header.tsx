@@ -140,8 +140,8 @@ const header = css`
     }
   }
   h2 {
-    color: var(--green);
-  
+    color: var(--red);
+    font-weight: 500;   
   }
   a {
     display: flex;
@@ -390,6 +390,6 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         ---
       </>}
     </section>
-    <section><h2>New Update: Faucet now supports 5x weekly payout + View the payout map to see which regions receive the most payouts!</h2></section>
+    <section><h2>Notice: Faucet is currently under maintenance and not in service!</h2></section>
   </header>;
 };

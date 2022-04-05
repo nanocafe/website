@@ -1,5 +1,10 @@
 import React from 'react';
-import { rawToMega } from "nano-unit-converter";
+import BigNumber from 'bignumber.js'
+
+const TunedBigNumber : any = BigNumber.clone({
+    EXPONENTIAL_AT: 1e9,
+    DECIMAL_PLACES: 36,
+})
 
 const PREFIXES: Record<string, string> = {
   '24': 'Y',
@@ -20,6 +25,11 @@ const PREFIXES: Record<string, string> = {
   '-21': 'z',
   '-24': 'y'
 };
+
+export function rawToMega (raws: string | number) {
+  const megaNano = "1000000000000000000000000000000" //raws
+  return TunedBigNumber(raws).dividedBy(megaNano).toString(10)
+}
 
 export function formatSI(num: number | string ): string {
   if (+num === 0) {

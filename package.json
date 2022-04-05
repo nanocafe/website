@@ -12,6 +12,7 @@
     "@emotion/styled": "^11.3.0",
     "autoprefixer": "^10.3.1",
     "axios": "^0.26.0",
+    "bignumber.js": "^9.0.2",
     "chart.js": "^3.7.1",
     "circlepacker": "^1.1.4",
     "d3": "^6.6.2",

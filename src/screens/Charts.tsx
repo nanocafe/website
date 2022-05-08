@@ -65,7 +65,7 @@ const construction = css`
     margin-bottom: 2rem;
   }
 
-  .finance-container {
+  .charts-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 2rem;
@@ -118,7 +118,7 @@ const options = {
     },
 };
 
-export const FinanceScreen: React.FC = () => {
+export const ChartsScreen: React.FC = () => {
 
     const [data,setData] = useState<any>([]);
 
@@ -167,14 +167,8 @@ export const FinanceScreen: React.FC = () => {
     return (
         <div className={construction}>
 
-            <div className={'under-construction-container'}>
-                {/*<IoConstructOutline size="5rem" color="var(--primary)"/>*/}
-                <h2>Under Construction</h2>
-                <p>The Finance Page is currently under construction, expected to be released sometime February -
-                    March 2022.</p>
-            </div>
 
-            <div className="finance-container">
+            <div className="charts-container">
 
                 {/* Left side*/}
                 <div className={'left-side'}>

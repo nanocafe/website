@@ -12,7 +12,7 @@ import { UnderConstruction } from './screens/UnderConstruction';
 import { BlockScreen } from './screens/Block';
 import { NetworkScreen } from './screens/Network';
 import { FaucetScreen } from './screens/Faucet';
-import { FinanceScreen } from './screens/Finance';
+import { ChartsScreen } from './screens/Charts';
 import { EarnScreen } from './screens/Earn';
 import { NodeScreen } from './screens/Node';
 import { Footer } from './components/Footer';
@@ -56,7 +56,7 @@ const AppComponent: React.FC = () => {
                 <Route path="/:hash([a-fA-F0-9]{64})" component={BlockScreen} />
                 <Route path="/network" component={NetworkScreen} />
                 <Route path="/node" component={NodeScreen} />
-                <Route path="/finance" component={FinanceScreen} />      
+                <Route path="/charts" component={ChartsScreen} />      
                 <Route path="/earn" component={EarnScreen} />              
                 <Route path="/faucet" render={(props) => (
                     <FaucetScreen theme={dark ? "dark" : "light"} />

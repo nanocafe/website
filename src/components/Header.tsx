@@ -187,7 +187,7 @@ const header = css`
 
 const Menu: React.FC = () => {
   return <>
-    <NavLink to="/finance">Finance</NavLink>
+    <NavLink to="/charts">Charts</NavLink>
     <NavLink to="earn">Earn</NavLink>
     <NavLink to="/faucet">Faucet</NavLink>
     <NavLink to="/network">Network</NavLink>

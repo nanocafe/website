@@ -32,6 +32,6 @@ export const EarnScreen: React.FC = () => {
   return <div className={construction}>
     <IoConstructOutline size="5rem" color="var(--primary)"/>
     <h2>Under Construction</h2>
-    <p>The Earn Page is currently under construction, expected to be released sometime February - March 2022.</p>
+    <p>The Earn Page is currently under construction, expected to be released Summer 2022.</p>
   </div>
 }

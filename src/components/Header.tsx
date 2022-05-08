@@ -390,6 +390,6 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         ---
       </>}
     </section>
-    <section><h2>Notice: Earn & Finance page development is being pushed back for Apr-May 2022 Release!</h2></section>
+    {/* <section><h2>Notice: Earn & Finance page development is being pushed back for Apr-May 2022 Release!</h2></section> */}
   </header>;
 };

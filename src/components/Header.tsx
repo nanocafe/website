@@ -368,6 +368,7 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         <em>${formatSI(parseFloat(ticker.data.volume) * parseFloat(ticker.data.weightedAvgPrice))}</em>
 
         <span className="ticker separated" title="Nano Currency">1 Ӿ: </span>
+        <em title="XNOUSDT Price">USDT ${formatSI(parseFloat(ticker.data?.lastPrice))}</em>
         <em title="% Change in Price" className={isPositive ? 'positive' : 'negative'}>
           {isPositive ? '↑' : '↓'} {Number(ticker.data?.priceChange).toFixed(3)} {ticker.data?.priceChangePercent}%
         </em>

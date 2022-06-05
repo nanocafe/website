@@ -390,6 +390,6 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         ---
       </>}
     </section>
-    {/* <section><h2>Notice: Earn & Finance page development is being pushed back for Apr-May 2022 Release!</h2></section> */}
+    <section><h2>Notice: Charts page now displays XNO in INR, BRL, CAD, IDR and KRW! , Faucet payout increased to 0.0001 XNO!</h2></section>
   </header>;
 };

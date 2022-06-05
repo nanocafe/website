@@ -84,17 +84,13 @@ const construction = css`
 
     .left-side {
       min-height: 20rem;
-      // display: flex;
-      // justify-content: stretch;
-      // align-content: stretch;
+      width: 100%;
     }
 
     .right-side {
       min-height: 30rem;
       text-align: center;
-      // display: flex;
-      // justify-content: stretch;
-      // align-content: stretch;
+      width: 100%;
     }
   }
 `;

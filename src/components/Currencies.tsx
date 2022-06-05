@@ -17,7 +17,6 @@ const currencyStyles = css`
 
   .wrapper {
     display: grid;
-    overflow-x: auto;
     height: 35px;
     grid-template-columns: repeat(5, 1fr);
     position: relative;

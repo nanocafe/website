@@ -13,7 +13,7 @@ const currencyStyles = css`
   overflow: hidden;
   --offset: 0vw;
   --move-initial: calc(100% + var(--offset));
-  --move-final: calc(-150% + var(--offset));
+  --move-final: calc(-100% + var(--offset));
 
   .wrapper {
     display: grid;

@@ -23,6 +23,8 @@ const Container = styled.div`
 
   p {
     padding: 0.5rem;
+    font-weight: bold;
+    margin-top: 0.75rem;
   }
 
   main {
@@ -49,7 +51,7 @@ const Container = styled.div`
       padding: 1rem;
       border: 1px solid var(--primary-border);
       background: var(--bg);
-      width: 20rem;
+      width: 30rem;
       margin: auto;
       display: flex;
       flex-direction: column;
@@ -126,17 +128,8 @@ export const Donate: React.FC = () => {
         <button onClick={() => setActive(true)}>Donate or Set Representative</button>
         <main className={active ? 'active' : undefined} onClick={hideDonationPanel}>
             <section>
-                <div>
-                    <button onClick={() => setOption(Option.DONATE)}
-                            className={option === Option.DONATE ? 'active' : undefined}>Donate
-                    </button>
-                    <button onClick={() => setOption(Option.SET_REP)}
-                            className={option === Option.SET_REP ? 'active' : undefined}>Set Representative
-                    </button>
-                </div>
                 <article className={option === Option.DONATE ? 'active' : undefined}>
                     <p>Donate to Nanocafe.cc:</p>
-                    <img src={qrDonate} alt={'donate'}/>
                     <div style={{display: 'flex',alignItems: "center"}}>
                         <a href="nano://nano_1zj4y7h4xd5b7qu9se7t3y8p9647b1udkpg5yc6i96onkcxzhh57uubzmupi?label=nanocafe.cc">
                             nano_1zj4y7h4xd5b7qu9se7t3y8p9647b1udkpg5yc6i96onkcxzhh57uubzmupi
@@ -145,18 +138,16 @@ export const Donate: React.FC = () => {
                             copyToClipBoardHandler('nano_1zj4y7h4xd5b7qu9se7t3y8p9647b1udkpg5yc6i96onkcxzhh57uubzmupi')
                         }} style={{marginLeft: '1rem'}}/>
                     </div>
-                </article>
-                <article className={option === Option.SET_REP ? 'active' : undefined}>
-                    <p>Set your representative to Nanocafe.cc:</p>
-                    <img src={qrRep}/>
-                  <div style={{display: 'flex',alignItems: "center"}}>
-                    <a href="nano:nano_1cafe95a81ko3mq3oin4wnubsbw9z3w3tw5a95u47897wxy96r1zj9hxu1wb">
-                        nano_1cafe95a81ko3mq3oin4wnubsbw9z3w3tw5a95u47897wxy96r1zj9hxu1wb
-                    </a>
-                       <FaCopy size={35} onClick={() => {
+                    <p>Set Nanocafe As Your Representative!</p>
+                    <div style={{display: 'flex',alignItems: "center"}}>
+                        <a href="nano://nano_1cafe95a81ko3mq3oin4wnubsbw9z3w3tw5a95u47897wxy96r1zj9hxu1wb">
+                          nano_1cafe95a81ko3mq3oin4wnubsbw9z3w3tw5a95u47897wxy96r1zj9hxu1wb
+                        </a>
+                        <FaCopy size={35} onClick={() => {
                             copyToClipBoardHandler('nano_1cafe95a81ko3mq3oin4wnubsbw9z3w3tw5a95u47897wxy96r1zj9hxu1wb')
                         }} style={{marginLeft: '1rem'}}/>
-                  </div>
+                    </div>
+
                 </article>
             </section>
         </main>

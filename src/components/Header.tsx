@@ -382,33 +382,33 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         </em>
 
         <span style={{ padding: '0 0 0 1rem' }} className="">Market Cap:</span>
-        <em>${formatSI(133248290 * parseFloat(ticker.data.weightedAvgPrice))}</em>
-
-        <span style={{ padding: '0 0 0 1rem' }} className="">Volume:</span>
-        <em>${formatSI(parseFloat(ticker.data.volume) * parseFloat(ticker.data.weightedAvgPrice))}</em>
+        <em>${formatSI(133248297 * parseFloat(ticker.data?.lastPrice))}</em>
+{/*         Need to add all exchange trading volume, currently only displays XNO volume
+        <span style={{ padding: '0 0 0 1rem' }} className="" title="XNOUSDT Volume">Volume:</span>
+        <em>${formatSI(parseFloat(ticker.data.volume) * parseFloat(ticker.data.weightedAvgPrice))}</em> */}
 
         <span style={{ padding: '0 0 0 1rem' }} className="" title="Total Transactions Processed For The Nano Network from the last 24 hours.">24HR Total Network Transactions:</span>
         <em title="Total Transactions Processed For The Nano Network from the last 24 hours.">
           {(transactionCache?.current && transactionCache.current.length > 0) ? transactionCache.current.length : '...'}
         </em>
 
-        <span className="ticker separated" title="Nano Currency">1 Ӿ: </span>
-        <em title="XNOUSDT Price">USDT ${formatSI(parseFloat(ticker.data?.lastPrice))}</em>
+        <span className="separated" title="Nano Currency">1 Ӿ: </span>
+        <em title="XNOUSDT Price">USDT {parseFloat(ticker.data?.lastPrice).toFixed(2)}</em>
         <em title="% Change in Price" className={isPositive ? 'positive' : 'negative'}>
-          {isPositive ? '↑' : '↓'} {Number(ticker.data?.priceChange).toFixed(3)} {ticker.data?.priceChangePercent}%
+          {isPositive ? '↑' : '↓'} {Number(ticker.data?.priceChange).toFixed(2)} {Number(ticker.data?.priceChangePercent).toFixed(2)}%
         </em>
 
         <span className="separated" />
         <em title="NANOEUR Price">Euro €{nanoEur ? nanoEur.toFixed(2) : '---'}</em>
         <em title="% Change in Price" className={nanoEurPriceChangePercent > 0 ? 'positive' : 'negative'}>
-          {nanoEurPriceChangePercent > 0 ? '↑' : '↓'} {(nanoEurPriceChange).toFixed(3)} {nanoEurPriceChangePercent.toFixed(3)}%
+          {nanoEurPriceChangePercent > 0 ? '↑' : '↓'} {(nanoEurPriceChange).toFixed(2)} {nanoEurPriceChangePercent.toFixed(2)}%
         </em>
 
         <span className="separated" />
         <em title="NANOBTC Price">BTC {parseFloat(nanoBtcTicker.data ? nanoBtcTicker.data?.lastPrice : "")}</em>
 
         <em title="% Change in Price" className={isPositiveNanoBtc ? 'positive' : 'negative'}>
-          {isPositiveNanoBtc ? '↑' : '↓'} {nanoBtcTicker.data?.priceChange} {nanoBtcTicker.data?.priceChangePercent}%
+          {isPositiveNanoBtc ? '↑' : '↓'} {nanoBtcTicker.data?.priceChange} {Number(nanoBtcTicker.data?.priceChangePercent).toFixed(2)}%
         </em>
 
       </> : <>

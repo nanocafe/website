@@ -394,6 +394,6 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
         ---
       </>}
     </section>
-    {/*  <section><h2>Notice: The faucet payout will be increased again shortly!</h2></section>*/}
+      <section><h2>Notice: Explorer service is currently under maintenance, faucet service is functional</h2></section>
   </header>;
 };

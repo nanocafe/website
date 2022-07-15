@@ -122,8 +122,7 @@ const notify = () => toast.success('Address Copied');
 
 export const AccountScreen: React.FC = () => {
   const { address } = useParams<Params>();
-  
-  const ticker = useBinanceTicker('XNOUSDT');
+
   const accountInfoQuery = useAccountInfo(address);
   const mnnAccountQuery = useMNNAccount(address);
   const nodeAccountInfoQuery = useAccountInfo(process.env.NODE_ADDRESS!);
@@ -199,8 +198,8 @@ export const AccountScreen: React.FC = () => {
               <RawToMega amount={accountInfoQuery.data?.balance}/> <sub>NANO</sub>
               <sub>
                 {' '}
-                (formatSI(balance * parseFloat(ticker.data?.lastPrice)))
-              </sub><nav></nav>
+                (<RawToUSD raw={accountInfoQuery.data?.balance}/>)
+              </sub>
             </PropertiesItem>
 
             { accountInfoQuery.data?.pending !== '0' && <PropertiesItem label="Pending:" big>

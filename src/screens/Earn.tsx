@@ -10,12 +10,12 @@ const Container = styled.main`
   
   div {
     margin-top: 1rem;
-    text-align: center;
+    text-align: left;
   }
 `;
 
 const construction = css`
-  text-align: center;
+  text-align: left;
   padding: 3rem;
   height: 600px;
   h2 {
@@ -23,15 +23,17 @@ const construction = css`
     font-size: 2rem;
   }
 
-  p {
-    margin-top: 0.5rem;
-  }
+
 `;
 
 export const EarnScreen: React.FC = () => {
   return <div className={construction}>
-    <IoConstructOutline size="5rem" color="var(--primary)"/>
-    <h2>Under Construction</h2>
-    <p>The Earn Page is currently under construction, expected to be released Summer 2022.</p>
+      
+      
+   <a href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" title="Affiliate Link">
+     <img src={require('url:../../dist/playnano.png')} />
+   </a>
+
+
   </div>
 }

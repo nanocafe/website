@@ -31,7 +31,7 @@ export const EarnScreen: React.FC = () => {
       
       
    <a href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" title="Affiliate Link">
-     <img src={require('url:../../dist/playnano.png')} />
+     <img src={require('url:../../assets/playnano.png')} />
    </a>
 
 

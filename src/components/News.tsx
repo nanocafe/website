@@ -148,7 +148,7 @@ export const News: React.FC = () => {
         <div className="news-feed-container">
           {posts.map((item) => (
             <Card
-              sx={{ maxWidth: 260, minWidth: 260 }}
+              sx={{ maxWidth: 260 }}
               key={item.link}
               className={item.source}
               style={{ margin: "20px" }}
@@ -163,7 +163,7 @@ export const News: React.FC = () => {
               >
                 <CardMedia
                   component="img"
-                  height="140"
+                  height="100"
                   image={
                     item.source == "reddit"
                       ? require("url:../assets/rediit.png")
@@ -173,10 +173,17 @@ export const News: React.FC = () => {
                   }
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h6" component="div">
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    component="div"
+                    style={{ fontSize: "1rem" }}
+                  >
                     {item.title}
                   </Typography>
-                  <Typography>{item.date.format("L")}</Typography>
+                  <Typography style={{ fontWeight: "bold" }}>
+                    {item.date.format("L")}
+                  </Typography>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -186,11 +193,3 @@ export const News: React.FC = () => {
     </Indicator>
   );
 };
-
-// <NewsCard key={item.link} className={item.source}>
-//   <h3>
-//     { item.source === 'reddit' ? <FaReddit/> : item.source === 'forum' ? <FaDiscourse/> : <img src={require('url:../../assets/nano.png')}/> }
-//     <a href={item.link} target="_blank" rel="noopener noreferrer nofollow">{ item.title }</a>
-//     <sub>{ item.date.format('L') }</sub>
-//   </h3>
-// </NewsCard>

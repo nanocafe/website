@@ -14,7 +14,7 @@ const Container = styled.main`
   }
 `;
 
-const construction = css`
+const earnDesign = css`
   text-align: left;
   padding: 3rem;
   height: 600px;
@@ -22,12 +22,13 @@ const construction = css`
     margin-top: 1rem;
     font-size: 2rem;
   }
-
-
+  img {
+  max-width: 100%;
+  }
 `;
 
 export const EarnScreen: React.FC = () => {
-  return <div className={construction}>
+  return <div className={earnDesign}>
       
       
    <a href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" title="Affiliate Link">

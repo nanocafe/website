@@ -195,3 +195,10 @@ pre {
   flex-direction: column;
   flex: 1;
 }
+.news-feed-container{
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 15px;
+}

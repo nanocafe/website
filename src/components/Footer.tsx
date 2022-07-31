@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import { Donate } from './Donate';
 import dayjs from 'dayjs';
 import { css } from '@emotion/css';

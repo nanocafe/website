@@ -30,7 +30,7 @@ const earnDesign = css`
 export const EarnScreen: React.FC = () => {
   return <div className={earnDesign}>
       
-      
+    <h2>More Coming Soon! Page still under construction</h2>   
    <a href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" title="Affiliate Link">
      <img src={require('url:../../assets/playnano.png')} />
    </a>

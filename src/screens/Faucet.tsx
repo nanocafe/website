@@ -1,14 +1,7 @@
-import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import React, { useEffect, useRef, useState } from 'react';
-import { set, useForm, Controller } from 'react-hook-form';
-import isNanoAddress from 'nano-address-validator';
+import React from 'react';
 import { GiTap } from 'react-icons/gi';
-import { useFaucetMutation } from '../api';
-import { Indicator } from '../components/Indicator';
-import Loader from 'react-loader-spinner';
-import { Link } from 'react-router-dom';
-import { FaSearch, FaGlobe } from 'react-icons/fa';
+import { FaGlobe } from 'react-icons/fa';
 import { Nanodrop } from '../components/Nanodrop';
 
 const Container = styled.div`
@@ -97,7 +90,7 @@ export const FaucetScreen: React.FC = (props: any) => {
     <p>Experience Nano entirely free! First make a wallet <a href="https://natrium.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>
     
     <Nanodrop theme={props.theme} />
-    <p class="linkText">Click <a href="https://playnano.online/faucets" target="_blank">here</a> for a list of faucets.   ||   Weekly Payouts: 5x per IP &amp; 1x per Account.</p>
+    <p className="linkText">Click <a href="https://playnano.online/faucets" target="_blank">here</a> for a list of faucets.   ||   Weekly Payouts: 5x per IP &amp; 1x per Account.</p>
     
     <FaGlobe size="3rem" color="var(--primary)" />    
     <h3>Faucet Payout Map</h3>

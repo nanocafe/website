@@ -54,7 +54,7 @@ export const useBinanceTicker = (symbol: string, options?: UseQueryOptions<Binan
   const json = await res.json();
   return json as BinanceTicker;
 }, {
-  refetchInterval: 5000,
+  refetchInterval: 20000,
   ...options,
 });
 
@@ -63,7 +63,7 @@ export const useBinanceChart = (symbol: string, interval: Interval) => useQuery(
   const json = await res.json();
   return json as any[][];
 }, {
-  refetchInterval: INTERVAL_REFRESH[interval],
+  refetchInterval: INTERVAL_REFRESH['1h'],
 });
 
 async function _fetch<T>(action: string, payload?: any, convert?: (data: any) => T): Promise<T> {
@@ -594,17 +594,17 @@ export const useAccountHistory = (account: string) => useQuery([ 'account_histor
 export const usePending = (account: string) => useQuery([ 'pending', account ], () => getPending(account));
 export const useConfirmationQuorum = () => useQuery([ 'confirmation_quorum' ], () => getConfirmationQuorum());
 export const useTelemetry = () => useQuery([ 'telemetry' ], () => getTelemetry(), {
-  refetchInterval: 1000 * 60 * 1,
+  refetchInterval: 10000 * 60 * 1,
 });
 export const useNodeTelemetry = () => useQuery([ 'node_telemetry' ], () => getNodeTelemetry(), {
-  refetchInterval: 1000 * 10,
+  refetchInterval: 10000 * 10,
 });
 export const useTPS = () => useQuery([ 'tps' ], () => getTPS(), {
-  refetchInterval: 1000 * 5,
+  refetchInterval: 10000 * 5,
 });
 export const useActiveDifficulty = () => useQuery([ 'active_difficulty' ], () => getActiveDifficulty());
 export const useTelemetryStream = () => useQuery([ 'telemetry_stream' ], () => getTelemetryStream(), {
-  refetchInterval: 1000 * 20,
+  refetchInterval: 10000 * 20,
 });
 export const useAliases = () => useQuery([ 'aliases' ], () => getAliases());
 export const useMNNAccount = (address: string) => useQuery([ 'mnn_account', address ], () => getMNNAccount(address), {
@@ -612,7 +612,7 @@ export const useMNNAccount = (address: string) => useQuery([ 'mnn_account', addr
 });
 export const useRSS = (kind: 'nf' | 'reddit' | 'forum') => useQuery([ 'feed', kind ], () => getRSS(kind));
 export const useTransactions = (onSuccess: (data: Transaction[]) => void) => useQuery([ 'transactions' ], () => getTransactions(), {
-  refetchInterval: 1000 * 55,
+  refetchInterval: 10000 * 55,
   onSuccess,
 });
 export const useFaucetMutation = () => useMutation((address: string) => postFaucet(address));

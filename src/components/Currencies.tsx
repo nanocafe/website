@@ -116,7 +116,7 @@ export const Currencies = () => {
         { KRW: { value: krw, symbol: "₩" } },
       ]);
     }
-  }, [rates, ticker]);
+  }, []);
 
   console.log(rates);
   return (

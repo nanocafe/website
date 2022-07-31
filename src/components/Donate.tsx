@@ -1,11 +1,7 @@
 import styled from '@emotion/styled';
-import React, {useEffect, useState} from 'react';
-
-import qrDonate from 'url:../../assets/qr_donate.svg';
-import qrRep from 'url:../../assets/qr_rep.svg';
-import {Account} from './Account';
+import React, { useState} from 'react';
 import {FaCopy} from 'react-icons/fa';
-import toast, {Toaster} from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 const Container = styled.div`
   text-align: right;

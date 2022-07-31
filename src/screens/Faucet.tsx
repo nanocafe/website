@@ -1,14 +1,7 @@
-import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import React, { useEffect, useRef, useState } from 'react';
-import { set, useForm, Controller } from 'react-hook-form';
-import isNanoAddress from 'nano-address-validator';
+import React from 'react';
 import { GiTap } from 'react-icons/gi';
-import { useFaucetMutation } from '../api';
-import { Indicator } from '../components/Indicator';
-import Loader from 'react-loader-spinner';
-import { Link } from 'react-router-dom';
-import { FaSearch, FaGlobe } from 'react-icons/fa';
+import { FaGlobe } from 'react-icons/fa';
 import { Nanodrop } from '../components/Nanodrop';
 
 const Container = styled.div`

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRSS } from '../api';
 import { Card } from './Card';
 import { Indicator } from './Indicator';

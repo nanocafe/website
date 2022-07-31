@@ -282,7 +282,7 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
     return () => {
       document.removeEventListener('touchstart', hideMenu);
       document.removeEventListener('touchmove', alwaysHideMenu);
-      clearInterval(interval);
+      clearInterval(10000);
     };
   }, []);
 

@@ -14,7 +14,7 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
+  Legend
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 // @ts-ignore
@@ -95,27 +95,19 @@ const construction = css`
   }
 `;
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "top" as const,
+      position: "top" as const
     },
     title: {
       display: true,
-      text: "XNO Market Cap Chart",
-    },
-  },
+      text: "XNO Market Cap Chart"
+    }
+  }
 };
 
 export const ChartsScreen: React.FC = () => {
@@ -140,9 +132,9 @@ export const ChartsScreen: React.FC = () => {
         data: data,
         // data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
         borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
+        backgroundColor: "rgba(255, 99, 132, 0.5)"
+      }
+    ]
   };
 
   //todo - fetch the data

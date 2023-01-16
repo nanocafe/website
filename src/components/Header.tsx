@@ -1,11 +1,18 @@
-import React, { useContext, useEffect, useState, useRef} from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { css } from '@emotion/css';
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import React, { useContext, useEffect, useState, useRef } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { css } from "@emotion/css";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
-import { ConfirmationQuorumPeer, Telemetry, useBinanceTicker, useConfirmationQuorum, useTelemetry, useTPS } from '../api';
-import { formatSI, safeRawToMega } from '../utils';
-import { Search } from './Search';
+import {
+  ConfirmationQuorumPeer,
+  Telemetry,
+  useConfirmationQuorum,
+  useNanoTicker,
+  useTelemetry,
+  useTPS
+} from "../api";
+import { formatSI, safeRawToMega } from "../utils";
+import { Search } from "./Search";
 import { FaMoon } from "react-icons/fa";
 import { FaSun } from "react-icons/fa";
 import { ThemeContext } from "./Theme";
@@ -15,8 +22,9 @@ import * as math from "mathjs";
 
 const header = css`
   background: var(--header);
-  
-  & > nav, section {
+
+  & > nav,
+  section {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -80,7 +88,7 @@ const header = css`
             display: inline !important;
             border: none;
           }
-          
+
           button: {
             color: #c09a6b;
           }
@@ -95,12 +103,12 @@ const header = css`
     @media (max-width: 540px) {
       padding: 1rem;
     }
-    span, em {
+    span,
+    em {
       white-space: nowrap;
       font-family: sans-serif;
-      
     }
-    
+
     span {
       font-size: 0.8rem;
       color: var(--primary);
@@ -114,7 +122,7 @@ const header = css`
         margin-left: 1rem;
         &::before {
           display: block;
-          content: ' ';
+          content: " ";
           border-right: 1px solid var(--primary-border);
           height: 3.5rem;
           position: absolute;
@@ -141,7 +149,7 @@ const header = css`
   }
   h2 {
     color: var(--red);
-    font-weight: 500;   
+    font-weight: 500;
   }
   a {
     display: flex;
@@ -157,13 +165,15 @@ const header = css`
     &:first-of-type {
       padding-left: 0;
     }
-    &:hover, &.active {
+    &:hover,
+    &.active {
       border-bottom-color: var(--primary);
     }
     @media (max-width: 540px) {
       border-bottom: none;
       border-left: 2px solid transparent;
-      &:hover, &.active {
+      &:hover,
+      &.active {
         border-left-color: var(--primary);
       }
     }
@@ -183,21 +193,20 @@ const header = css`
   }
 `;
 
-
-
 const Menu: React.FC = () => {
-  return <>
-    <NavLink to="/charts">Charts</NavLink>
-    <NavLink to="earn">Earn</NavLink>
-    <NavLink to="/faucet">Faucet</NavLink>
-    <NavLink to="/network">Network</NavLink>
-
-  </>;
+  return (
+    <>
+      <NavLink to="/charts">Charts</NavLink>
+      <NavLink to="earn">Earn</NavLink>
+      <NavLink to="/faucet">Faucet</NavLink>
+      <NavLink to="/network">Network</NavLink>
+    </>
+  );
 };
 
 function checkParent(target: HTMLElement): boolean {
   let parent: HTMLElement | null = target;
-  while (parent = parent.parentElement) {
+  while ((parent = parent.parentElement)) {
     if (parent.classList.contains(header)) {
       return true;
     }
@@ -211,29 +220,21 @@ interface IHeader {
   setDark: () => void;
 }
 
-
 export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
-
-  const [nanoEur, setNanoEur] = useState<Number>(0);
-  const [nanoEurPriceChangePercent, setNanoEurPriceChangePercent] = useState<Number>(0)
-  const [nanoEurPriceChange, setNanoEurPriceChange] = useState<Number>(0)
   const [menuExpanded, setMenuExpanded] = useState<Boolean>(false);
   const tpsQuery = useTPS();
 
   const telemetryQuery = useTelemetry();
   const quorumQuery = useConfirmationQuorum();
-  const ticker = useBinanceTicker('XNOUSDT');
-  const nanoBtcTicker = useBinanceTicker('XNOBTC');
 
-  const isPositive = parseFloat(ticker.data?.priceChangePercent ?? '0') > 0;
-  const isPositiveNanoBtc = parseFloat(nanoBtcTicker.data?.priceChangePercent ?? '0') > 0;
+  const { data } = useNanoTicker("nano");
 
   const isSmallerThan600 = useMediaQuery({
-    query: '(max-width: 600px)'
-  })
+    query: "(max-width: 600px)"
+  });
 
   function hideMenu(e: TouchEvent) {
-    if ((e.target as HTMLElement).tagName === 'NAV') {
+    if ((e.target as HTMLElement).tagName === "NAV") {
       setMenuExpanded(false);
       return;
     }
@@ -253,94 +254,108 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
     return quorumQuery.data?.peers.find((peer) => peer.ip === `[${node.address}]:${node.port}`);
   }
 
-  const tpsData = tpsQuery.data ? Object.entries(tpsQuery.data).filter(([node]) => {
-    const telemetry = telemetryQuery.data?.metrics.find((telemetry) => telemetry.node_id === node);
-    const quorumNode = telemetry ? getQuorumNode(telemetry) : undefined;
-    const isPR = parseFloat(safeRawToMega(quorumNode?.weight)) / (parseFloat(safeRawToMega(quorumQuery.data?.online_stake_total)) || 1) * 100 > 0.01;
-    return isPR;
-  }).map(([_, tps]) => tps) : [];
+  const tpsData = tpsQuery.data
+    ? Object.entries(tpsQuery.data)
+        .filter(([node]) => {
+          const telemetry = telemetryQuery.data?.metrics.find(
+            (telemetry) => telemetry.node_id === node
+          );
+          const quorumNode = telemetry ? getQuorumNode(telemetry) : undefined;
+          const isPR =
+            (parseFloat(safeRawToMega(quorumNode?.weight)) /
+              (parseFloat(safeRawToMega(quorumQuery.data?.online_stake_total)) || 1)) *
+              100 >
+            0.01;
+          return isPR;
+        })
+        .map(([_, tps]) => tps)
+    : [];
 
   useEffect(() => {
-    document.addEventListener('touchstart', hideMenu);
-    document.addEventListener('touchmove', alwaysHideMenu);
-    fetch('https://api.kraken.com/0/public/Ticker?pair=NANOEUR')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setNanoEur(+data.result['NANOEUR'].c[0])
-        const currentPrice = +data.result['NANOEUR'].c[0];
-        const lastPrice = +data.result['NANOEUR'].o;
+    document.addEventListener("touchstart", hideMenu);
+    document.addEventListener("touchmove", alwaysHideMenu);
+    // fetch("https://api.kraken.com/0/public/Ticker?pair=NANOEUR")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     setNanoEur(+data.result["NANOEUR"].c[0]);
+    //     const currentPrice = +data.result["NANOEUR"].c[0];
+    //     const lastPrice = +data.result["NANOEUR"].o;
 
-        const priceChangePercent = (currentPrice - lastPrice) / currentPrice * 100;
-        const priceChange = (currentPrice - lastPrice);
+    //     const priceChangePercent = ((currentPrice - lastPrice) / currentPrice) * 100;
+    //     const priceChange = currentPrice - lastPrice;
 
-        setNanoEurPriceChangePercent(priceChangePercent);
-        setNanoEurPriceChange(priceChange);
-
-      })
+    //     setNanoEurPriceChangePercent(priceChangePercent);
+    //     setNanoEurPriceChange(priceChange);
+    //   });
 
     return () => {
-      document.removeEventListener('touchstart', hideMenu);
-      document.removeEventListener('touchmove', alwaysHideMenu);
+      document.removeEventListener("touchstart", hideMenu);
+      document.removeEventListener("touchmove", alwaysHideMenu);
       clearInterval(10000);
     };
   }, []);
 
-  return <header className={header}>
-    <Toaster
-      position="top-center"
-      reverseOrder={false}
-      gutter={8}
-      containerClassName=""
-      containerStyle={{}}
-      toastOptions={{
-        // Define default options
-        className: '',
-        duration: 5000,
-        style: {
-          background: '#363636',
-          color: '#fff',
-        },
-        // Default options for specific types
-        success: {
-          duration: 3000,
-          theme: {
-            primary: 'green',
-            secondary: 'black',
+  const isUsdPricePositive = data?.market_data.price_change_24h_in_currency.usd > 0 ?? false;
+  const isEurPricePositive = data?.market_data.price_change_24h_in_currency.eur > 0 ?? false;
+  const isBtcPricePositive = data?.market_data.price_change_24h_in_currency.btc > 0 ?? false;
+
+  return (
+    <header className={header}>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff"
           },
-        },
-      }}
-    />
-    <nav>
-      <Link to="/">
-        {
-          dark
-            ? <img src={require('url:../../assets/logo_dark.svg')} />
-            : <img src={require('url:../../assets/logo.svg')} />
-        }
-
-        <h1>Nanocafe</h1>
-      </Link>
-      <Menu />
-
-      <aside>
-        <Search />
-
-        <button onClick={() => setMenuExpanded(!menuExpanded)}>
-          {!menuExpanded
-            ? <AiOutlineMenu size="1.75rem" color="var(--primary)" />
-            : <AiOutlineClose size="1.75rem" color="var(--primary)" />
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black"
+            }
           }
-        </button>
+        }}
+      />
+      <nav>
+        <Link to="/">
+          {dark ? (
+            <img src={require("url:../../assets/logo_dark.svg")} />
+          ) : (
+            <img src={require("url:../../assets/logo.svg")} />
+          )}
 
-        <nav className={menuExpanded ? 'visible' : undefined}>
-          <Menu />
-        </nav>
-      </aside>
+          <h1>Nanocafe</h1>
+        </Link>
+        <Menu />
 
-      {
-        !isSmallerThan600 && (
-          dark ? (
+        <aside>
+          <Search />
+
+          <button onClick={() => setMenuExpanded(!menuExpanded)}>
+            {!menuExpanded ? (
+              <AiOutlineMenu size="1.75rem" color="var(--primary)" />
+            ) : (
+              <AiOutlineClose size="1.75rem" color="var(--primary)" />
+            )}
+          </button>
+
+          <nav className={menuExpanded ? "visible" : undefined}>
+            <Menu />
+          </nav>
+        </aside>
+
+        {!isSmallerThan600 &&
+          (dark ? (
             <button className={"modeToggle"} onClick={setDark}>
               <FaMoon size={25} />
             </button>
@@ -348,52 +363,74 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
             <button className={"modeToggle"} onClick={setDark}>
               <FaSun size={25} />
             </button>
+          ))}
+      </nav>
+      <section>
+        {data?.market_data ? (
+          <>
+            <span
+              style={{ padding: "0 0 0 1rem" }}
+              className=""
+              title="The Estimated Transactions Per Second (PR weighted) For The Nano Network"
+            >
+              Avg. TPS:
+            </span>
+            <em title="The Estimated Transactions Per Second (PR weighted) For The Nano Network">
+              {tpsData && tpsData.length > 0 ? math.mean(tpsData).toFixed(2) : "..."}
+            </em>
 
-          )
-        )
-
-      }
-
-
-    </nav>
-    <section>
-      {ticker.data ? <>
-
-        <span style={{ padding: '0 0 0 1rem' }} className="" title="The Estimated Transactions Per Second (PR weighted) For The Nano Network">Avg. TPS:</span>
-        <em title="The Estimated Transactions Per Second (PR weighted) For The Nano Network">
-          {(tpsData && tpsData.length > 0) ? math.mean(tpsData).toFixed(2) : '...'}
-        </em>
-
-        <span style={{ padding: '0 0 0 1rem' }} className="">Market Cap:</span>
-        <em>${formatSI(133248297 * parseFloat(ticker.data?.lastPrice))}</em>
-{/*         Need to add all exchange trading volume, currently only displays XNO volume
+            <span style={{ padding: "0 0 0 1rem" }} className="">
+              Market Cap:
+            </span>
+            <em>${formatSI(parseFloat(data?.market_data.market_cap.usd))}</em>
+            {/*         Need to add all exchange trading volume, currently only displays XNO volume
         <span style={{ padding: '0 0 0 1rem' }} className="" title="XNOUSDT Volume">Volume:</span>
         <em>${formatSI(parseFloat(ticker.data.volume) * parseFloat(ticker.data.weightedAvgPrice))}</em> */}
 
+            <span className="separated" title="Nano Currency">
+              1 Ӿ:{" "}
+            </span>
+            <em title="XNOUSDT Price">
+              USD {parseFloat(data?.market_data.current_price.usd || 0).toFixed(2)}
+            </em>
+            <em title="% Change in Price" className={isUsdPricePositive ? "positive" : "negative"}>
+              {isUsdPricePositive ? "↑" : "↓"}{" "}
+              {Number(data?.market_data.price_change_24h_in_currency.usd).toFixed(2)}{" "}
+              {Number(data?.market_data?.price_change_percentage_24h_in_currency.usd).toFixed(2)}%
+            </em>
 
-        <span className="separated" title="Nano Currency">1 Ӿ: </span>
-        <em title="XNOUSDT Price">USDT {parseFloat(ticker.data?.lastPrice).toFixed(2)}</em>
-        <em title="% Change in Price" className={isPositive ? 'positive' : 'negative'}>
-          {isPositive ? '↑' : '↓'} {Number(ticker.data?.priceChange).toFixed(2)} {Number(ticker.data?.priceChangePercent).toFixed(2)}%
-        </em>
+            <span className="separated" />
+            <em title="NANOEUR Price">
+              Euro €
+              {data?.market_data.current_price.eur
+                ? data?.market_data.current_price.eur.toFixed(2)
+                : "---"}
+            </em>
+            <em title="% Change in Price" className={isEurPricePositive ? "positive" : "negative"}>
+              {isEurPricePositive ? "↑" : "↓"}{" "}
+              {data?.market_data.price_change_24h_in_currency.eur.toFixed(2)}{" "}
+              {data?.market_data?.price_change_percentage_24h_in_currency.eur.toFixed(2)}%
+            </em>
 
-        <span className="separated" />
-        <em title="NANOEUR Price">Euro €{nanoEur ? nanoEur.toFixed(2) : '---'}</em>
-        <em title="% Change in Price" className={nanoEurPriceChangePercent > 0 ? 'positive' : 'negative'}>
-          {nanoEurPriceChangePercent > 0 ? '↑' : '↓'} {(nanoEurPriceChange).toFixed(2)} {nanoEurPriceChangePercent.toFixed(2)}%
-        </em>
+            <span className="separated" />
+            <em title="NANOBTC Price">
+              BTC{" "}
+              {parseFloat(
+                data?.market_data.current_price.btc ? data?.market_data.current_price.btc : ""
+              )}
+            </em>
 
-        <span className="separated" />
-        <em title="NANOBTC Price">BTC {parseFloat(nanoBtcTicker.data ? nanoBtcTicker.data?.lastPrice : "")}</em>
-
-        <em title="% Change in Price" className={isPositiveNanoBtc ? 'positive' : 'negative'}>
-          {isPositiveNanoBtc ? '↑' : '↓'} {nanoBtcTicker.data?.priceChange} {Number(nanoBtcTicker.data?.priceChangePercent).toFixed(2)}%
-        </em>
-
-      </> : <>
-        ---
-      </>}
-    </section>
-     {/* <section><h2>Notice: Explorer service is currently under maintenance, faucet service is functional</h2></section> */}
-  </header>;
+            <em title="% Change in Price" className={isBtcPricePositive ? "positive" : "negative"}>
+              {isBtcPricePositive ? "↑" : "↓"}{" "}
+              {data?.market_data.price_change_24h_in_currency.btc.toFixed(8)}{" "}
+              {Number(data?.market_data?.price_change_percentage_24h_in_currency.btc).toFixed(2)}%
+            </em>
+          </>
+        ) : (
+          <>---</>
+        )}
+      </section>
+      {/* <section><h2>Notice: Explorer service is currently under maintenance, faucet service is functional</h2></section> */}
+    </header>
+  );
 };

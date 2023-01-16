@@ -1,9 +1,9 @@
 import { useMutation, useQuery, UseQueryOptions } from "react-query";
-import Parser from 'rss-parser';
+import Parser from "rss-parser";
 
 const parser = new Parser();
 
-const API_URL = process.env.API_URL ?? '';
+const API_URL = process.env.API_URL ?? "";
 
 export interface BinanceTicker {
   symbol: string;
@@ -29,56 +29,105 @@ export interface BinanceTicker {
   count: number;
 }
 
-type Interval = '1m' | '3m' | '5m' | '15m' | '30m' | '1h' | '2h' | '4h' | '6h' | '8h' | '12h' | '1d' | '3d' | '1w' | '1M';
+type Interval =
+  | "1m"
+  | "3m"
+  | "5m"
+  | "15m"
+  | "30m"
+  | "1h"
+  | "2h"
+  | "4h"
+  | "6h"
+  | "8h"
+  | "12h"
+  | "1d"
+  | "3d"
+  | "1w"
+  | "1M";
 
 const INTERVAL_REFRESH: Record<Interval, number | false> = {
-  '1m': 1000 * 60,
-  '3m': 1000 * 60 * 3,
-  '5m': 1000 * 60 * 5,
-  '15m': 1000 * 60 * 15,
-  '30m': 1000 * 60 * 30,
-  '1h': 1000 * 60 * 60,
-  '2h': 1000 * 60 * 60 * 2,
-  '4h': 1000 * 60 * 60 * 4,
-  '6h': 1000 * 60 * 60 * 6,
-  '8h': 1000 * 60 * 60 * 8,
-  '12h': 1000 * 60 * 60 * 12,
-  '1d': false,
-  '3d': false,
-  '1w': false,
-  '1M': false,
-}
+  "1m": 1000 * 60,
+  "3m": 1000 * 60 * 3,
+  "5m": 1000 * 60 * 5,
+  "15m": 1000 * 60 * 15,
+  "30m": 1000 * 60 * 30,
+  "1h": 1000 * 60 * 60,
+  "2h": 1000 * 60 * 60 * 2,
+  "4h": 1000 * 60 * 60 * 4,
+  "6h": 1000 * 60 * 60 * 6,
+  "8h": 1000 * 60 * 60 * 8,
+  "12h": 1000 * 60 * 60 * 12,
+  "1d": false,
+  "3d": false,
+  "1w": false,
+  "1M": false
+};
 
-export const useBinanceTicker = (symbol: string, options?: UseQueryOptions<BinanceTicker, unknown, BinanceTicker, string[]>) => useQuery(['binance', 'ticker', symbol], async () => {
-  const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`);
-  const json = await res.json();
-  return json as BinanceTicker;
-}, {
-  refetchInterval: 20000,
-  ...options,
-});
+export const useBinanceTicker = (
+  symbol: string,
+  options?: UseQueryOptions<BinanceTicker, unknown, BinanceTicker, string[]>
+) =>
+  useQuery(
+    ["binance", "ticker", symbol],
+    async () => {
+      const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`);
+      const json = await res.json();
+      return json as BinanceTicker;
+    },
+    {
+      refetchInterval: 20000,
+      ...options
+    }
+  );
 
-export const useBinanceChart = (symbol: string, interval: Interval) => useQuery(['binance', 'chart', symbol, interval], async () => {
-  const res = await fetch(`https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=100`);
-  const json = await res.json();
-  return json as any[][];
-}, {
-  refetchInterval: INTERVAL_REFRESH['1h'],
-});
+export const useNanoTicker = (
+  symbol: string
+  // options?: UseQueryOptions<BinanceTicker, unknown, BinanceTicker, string[]>
+) =>
+  useQuery(
+    ["nano", "ticker", symbol],
+    async () => {
+      const res = await fetch(
+        `https://api.coingecko.com/api/v3/coins/nano?tickers=true&market_data=true`
+      );
+      const json = await res.json();
+      return json;
+    },
+    {
+      refetchInterval: 20000
+      // ...options
+    }
+  );
+
+export const useBinanceChart = (symbol: string, interval: Interval) =>
+  useQuery(
+    ["binance", "chart", symbol, interval],
+    async () => {
+      const res = await fetch(
+        `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=100`
+      );
+      const json = await res.json();
+      return json as any[][];
+    },
+    {
+      refetchInterval: INTERVAL_REFRESH["1h"]
+    }
+  );
 
 async function _fetch<T>(action: string, payload?: any, convert?: (data: any) => T): Promise<T> {
   const body = JSON.stringify({
     action,
-    ...payload,
+    ...payload
   });
   const res = await fetch(`${API_URL}/rpc`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'X-Auth': 'c49f14008b12f2104ed5f52f469921fabcc59b09a1a24a6b5b6facf5a8e90b69',
-      'Content-Type': 'application/json',
-      'Content-Length': body.length.toString(),
+      "X-Auth": "c49f14008b12f2104ed5f52f469921fabcc59b09a1a24a6b5b6facf5a8e90b69",
+      "Content-Type": "application/json",
+      "Content-Length": body.length.toString()
     },
-    body,
+    body
   });
   const obj = await res.json().then(convert ?? ((v) => v));
   return obj as T;
@@ -152,7 +201,7 @@ interface AccountInfo {
   pending: string;
 }
 
-interface HistoryBlock extends Omit<Block, 'link_as_account'> {
+interface HistoryBlock extends Omit<Block, "link_as_account"> {
   hash: string;
   height: number;
   local_timestamp: Date;
@@ -255,7 +304,7 @@ interface Stat {
   time: string;
   type: string;
   detail: string;
-  dir: 'in' | 'out';
+  dir: "in" | "out";
   value: string;
 }
 
@@ -288,8 +337,8 @@ export interface MNNUptimeOver {
   day: number;
   week: number;
   month: number;
-  '3_months': number;
-  '6_months': number;
+  "3_months": number;
+  "6_months": number;
   year: number;
 }
 
@@ -340,39 +389,39 @@ export interface Transaction {
 }
 
 async function getConfirmationHistory() {
-  return _fetch<ConfirmationHistory>('confirmation_history');
+  return _fetch<ConfirmationHistory>("confirmation_history");
 }
 
 async function getConfirmationActive() {
-  return _fetch<ConfirmationActive>('confirmation_active');
+  return _fetch<ConfirmationActive>("confirmation_active");
 }
 
 async function getUnchecked(count: number = 1) {
-  return _fetch<Unchecked>('unchecked', { count });
+  return _fetch<Unchecked>("unchecked", { count });
 }
 
 async function getBlockInfo(hash: string) {
   return _fetch<BlockInfo>(
-    'blocks_info',
+    "blocks_info",
     { hashes: [hash], json_block: true, source: true, pending: true, balance: true },
     ({ blocks }: { blocks: Record<string, Record<string, any>> }) => ({
       amount: blocks[hash].amount,
       balance: blocks[hash].balance,
       block_account: blocks[hash].block_account,
-      confirmed: blocks[hash].confirmed === 'true',
+      confirmed: blocks[hash].confirmed === "true",
       contents: blocks[hash].contents,
       height: parseInt(blocks[hash].height),
       local_timestamp: new Date(parseInt(blocks[hash].local_timestamp) * 1000),
       subtype: blocks[hash].subtype,
       source_account: blocks[hash].source_account,
-      pending: blocks[hash].pending === '1',
-    }),
+      pending: blocks[hash].pending === "1"
+    })
   );
 }
 
 async function getAccountInfo(account: string) {
   return _fetch<AccountInfo>(
-    'account_info',
+    "account_info",
     { account, representative: true, pending: true, weight: true },
     (o: Record<string, any>) => ({
       account_version: parseInt(o.account_version),
@@ -386,47 +435,46 @@ async function getAccountInfo(account: string) {
       representative_block: o.representative_block,
       representative: o.representative,
       pending: o.pending,
-      weight: o.weight,
-    }),
-  )
+      weight: o.weight
+    })
+  );
 }
 
 async function getAccountHistory(account: string) {
   return _fetch<AccountHistory>(
-    'account_history',
+    "account_history",
     { account, raw: true, count: 30 },
     (o: Record<string, any>) => ({
       account: o.account,
-      history: o.history.map((e: Record<string, any>): HistoryBlock => ({
-        account: e.account,
-        balance: e.balance,
-        hash: e.hash,
-        height: parseInt(e.height),
-        link: e.link,
-        local_timestamp: new Date(parseInt(e.local_timestamp) * 1000),
-        previous: e.previous,
-        representative: e.representative,
-        signature: e.signature,
-        subtype: e.subtype,
-        type: e.type,
-        work: e.work,
-        amount: e.amount,
-      })),
-      previous: o.previous,
-    }),
-  )
+      history: o.history.map(
+        (e: Record<string, any>): HistoryBlock => ({
+          account: e.account,
+          balance: e.balance,
+          hash: e.hash,
+          height: parseInt(e.height),
+          link: e.link,
+          local_timestamp: new Date(parseInt(e.local_timestamp) * 1000),
+          previous: e.previous,
+          representative: e.representative,
+          signature: e.signature,
+          subtype: e.subtype,
+          type: e.type,
+          work: e.work,
+          amount: e.amount
+        })
+      ),
+      previous: o.previous
+    })
+  );
 }
 
 async function getPending(account: string) {
-  return _fetch<Pending>(
-    'pending',
-    { account, count: 30, source: true }
-  );
+  return _fetch<Pending>("pending", { account, count: 30, source: true });
 }
 
 async function getConfirmationQuorum() {
   return _fetch<ConfirmationQuorum>(
-    'confirmation_quorum',
+    "confirmation_quorum",
     { peer_details: true },
     (o: Record<string, any>) => ({
       online_stake_total: o.online_stake_total,
@@ -435,16 +483,16 @@ async function getConfirmationQuorum() {
       peers: o.peers,
       peers_stake_required: o.peers_stake_required,
       peers_stake_total: o.peers_stake_total,
-      quorum_delta: o.quorum_delta,
-    }),
-  )
+      quorum_delta: o.quorum_delta
+    })
+  );
 }
 
 async function getTelemetry() {
   return _fetch<TelemetryRaw>(
-    'telemetry',
+    "telemetry",
     { raw: true },
-    (o : { metrics: Record<string, any>[] }) => ({
+    (o: { metrics: Record<string, any>[] }) => ({
       metrics: o.metrics.map((metric) => ({
         block_count: parseInt(metric.block_count),
         cemented_count: parseInt(metric.cemented_count),
@@ -465,16 +513,16 @@ async function getTelemetry() {
         node_id: metric.node_id,
         signature: metric.signature,
         address: metric.address,
-        port: metric.port,
-      })),
-    }),
+        port: metric.port
+      }))
+    })
   );
 }
 
 async function getNodeTelemetry() {
   return _fetch<Telemetry>(
-    'telemetry',
-    { address: '::1', port: 7075 },
+    "telemetry",
+    { address: "::1", port: 7075 },
     (metric: Record<string, any>) => ({
       block_count: parseInt(metric.block_count),
       cemented_count: parseInt(metric.cemented_count),
@@ -495,33 +543,29 @@ async function getNodeTelemetry() {
       node_id: metric.node_id,
       signature: metric.signature,
       address: metric.address,
-      port: metric.port,
-    }),
-  )
+      port: metric.port
+    })
+  );
 }
 
 async function getActiveDifficulty() {
-  return _fetch<ActiveDifficulty>(
-    'active_difficulty',
-    {},
-    (o: Record<string, any>) => ({
-      multiplier: parseFloat(o.multiplier),
-      network_current: o.network_current,
-      network_minimum: o.network_minimum,
-      network_receive_current: o.network_receive_current,
-      network_receive_minimum: o.network_receive_minimum,
-    }),
-  )
+  return _fetch<ActiveDifficulty>("active_difficulty", {}, (o: Record<string, any>) => ({
+    multiplier: parseFloat(o.multiplier),
+    network_current: o.network_current,
+    network_minimum: o.network_minimum,
+    network_receive_current: o.network_receive_current,
+    network_receive_minimum: o.network_receive_minimum
+  }));
 }
 
 async function getTelemetryStream(): Promise<TelemetryStream[]> {
-  const res = await fetch('/api/telemetry');
+  const res = await fetch("/api/telemetry");
   const json = await res.json();
   return json as TelemetryStream[];
 }
 
 async function getAliases(): Promise<Alias[]> {
-  const res = await fetch('https://mynano.ninja/api/accounts/aliases');
+  const res = await fetch("https://mynano.ninja/api/accounts/aliases");
   const json = await res.json();
   return json as Alias[];
 }
@@ -530,7 +574,7 @@ async function getMNNAccount(address: string): Promise<MNNAccount> {
   const res = await fetch(`https://mynano.ninja/api/accounts/${address}`);
   const json = await res.json();
   if (res.status === 404) {
-    throw new Error('404');
+    throw new Error("404");
   }
   return json as MNNAccount;
 }
@@ -545,7 +589,7 @@ async function getTPS(): Promise<TPS> {
   return json as TPS;
 }
 
-async function getRSS(kind: 'nf' | 'reddit' | 'forum'): Promise<any> {
+async function getRSS(kind: "nf" | "reddit" | "forum"): Promise<any> {
   const rss = await fetch(`${API_URL}/api/feed/${kind}`);
   return parser.parseString(await rss.text());
 }
@@ -553,27 +597,30 @@ async function getRSS(kind: 'nf' | 'reddit' | 'forum'): Promise<any> {
 async function getTransactions(): Promise<Transaction[]> {
   const res = await fetch(`${API_URL}/api/confirmations`);
   const json = await res.json();
-  return (json?.map((data: Record<string, any>) => ({
-    time: new Date(parseInt(data.time)),
-    amount: data.amount,
-    type: data.type,
-    subtype: data.subtype,
-    link: data.link,
-  } as Transaction)) ?? []) as Transaction[];
+  return (json?.map(
+    (data: Record<string, any>) =>
+      ({
+        time: new Date(parseInt(data.time)),
+        amount: data.amount,
+        type: data.type,
+        subtype: data.subtype,
+        link: data.link
+      } as Transaction)
+  ) ?? []) as Transaction[];
 }
 
 async function postFaucet(address: string): Promise<FaucetResponse> {
   const body = JSON.stringify({
-    address,
+    address
   });
   const res = await fetch(`${API_URL}/api/faucet`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'X-Auth': 'c49f14008b12f2104ed5f52f469921fabcc59b09a1a24a6b5b6facf5a8e90b69',
-      'Content-Type': 'application/json',
-      'Content-Length': body.length.toString(),
+      "X-Auth": "c49f14008b12f2104ed5f52f469921fabcc59b09a1a24a6b5b6facf5a8e90b69",
+      "Content-Type": "application/json",
+      "Content-Length": body.length.toString()
     },
-    body,
+    body
   });
   if (res.status >= 400) {
     throw new Error(res.statusText);
@@ -581,38 +628,53 @@ async function postFaucet(address: string): Promise<FaucetResponse> {
   return {} as FaucetResponse;
 }
 
-export const useConfirmationHistory = () => useQuery('confirmation_history', () => getConfirmationHistory());
-export const useConfirmationActive = () => useQuery('confirmation_active', () => getConfirmationActive());
-export const useUnchecked = () => useQuery('unchecked', () => getUnchecked());
-export const useBlockInfo = (hash: string) => useQuery([ 'block_info', hash ], () => getBlockInfo(hash));
-export const useAccountInfo = (account: string) => useQuery([ 'account_info', account ], () => getAccountInfo(account), {
-  retry: false,
-});
-export const useAccountHistory = (account: string) => useQuery([ 'account_history', account ], () => getAccountHistory(account), {
-  retry: false,
-});
-export const usePending = (account: string) => useQuery([ 'pending', account ], () => getPending(account));
-export const useConfirmationQuorum = () => useQuery([ 'confirmation_quorum' ], () => getConfirmationQuorum());
-export const useTelemetry = () => useQuery([ 'telemetry' ], () => getTelemetry(), {
-  refetchInterval: 10000 * 60 * 1,
-});
-export const useNodeTelemetry = () => useQuery([ 'node_telemetry' ], () => getNodeTelemetry(), {
-  refetchInterval: 10000 * 10,
-});
-export const useTPS = () => useQuery([ 'tps' ], () => getTPS(), {
-  refetchInterval: 10000 * 5,
-});
-export const useActiveDifficulty = () => useQuery([ 'active_difficulty' ], () => getActiveDifficulty());
-export const useTelemetryStream = () => useQuery([ 'telemetry_stream' ], () => getTelemetryStream(), {
-  refetchInterval: 10000 * 20,
-});
-export const useAliases = () => useQuery([ 'aliases' ], () => getAliases());
-export const useMNNAccount = (address: string) => useQuery([ 'mnn_account', address ], () => getMNNAccount(address), {
-  retry: false,
-});
-export const useRSS = (kind: 'nf' | 'reddit' | 'forum') => useQuery([ 'feed', kind ], () => getRSS(kind));
-export const useTransactions = (onSuccess: (data: Transaction[]) => void) => useQuery([ 'transactions' ], () => getTransactions(), {
-  refetchInterval: 10000 * 55,
-  onSuccess,
-});
+export const useConfirmationHistory = () =>
+  useQuery("confirmation_history", () => getConfirmationHistory());
+export const useConfirmationActive = () =>
+  useQuery("confirmation_active", () => getConfirmationActive());
+export const useUnchecked = () => useQuery("unchecked", () => getUnchecked());
+export const useBlockInfo = (hash: string) =>
+  useQuery(["block_info", hash], () => getBlockInfo(hash));
+export const useAccountInfo = (account: string) =>
+  useQuery(["account_info", account], () => getAccountInfo(account), {
+    retry: false
+  });
+export const useAccountHistory = (account: string) =>
+  useQuery(["account_history", account], () => getAccountHistory(account), {
+    retry: false
+  });
+export const usePending = (account: string) =>
+  useQuery(["pending", account], () => getPending(account));
+export const useConfirmationQuorum = () =>
+  useQuery(["confirmation_quorum"], () => getConfirmationQuorum());
+export const useTelemetry = () =>
+  useQuery(["telemetry"], () => getTelemetry(), {
+    refetchInterval: 10000 * 60 * 1
+  });
+export const useNodeTelemetry = () =>
+  useQuery(["node_telemetry"], () => getNodeTelemetry(), {
+    refetchInterval: 10000 * 10
+  });
+export const useTPS = () =>
+  useQuery(["tps"], () => getTPS(), {
+    refetchInterval: 10000 * 5
+  });
+export const useActiveDifficulty = () =>
+  useQuery(["active_difficulty"], () => getActiveDifficulty());
+export const useTelemetryStream = () =>
+  useQuery(["telemetry_stream"], () => getTelemetryStream(), {
+    refetchInterval: 10000 * 20
+  });
+export const useAliases = () => useQuery(["aliases"], () => getAliases());
+export const useMNNAccount = (address: string) =>
+  useQuery(["mnn_account", address], () => getMNNAccount(address), {
+    retry: false
+  });
+export const useRSS = (kind: "nf" | "reddit" | "forum") =>
+  useQuery(["feed", kind], () => getRSS(kind));
+export const useTransactions = (onSuccess: (data: Transaction[]) => void) =>
+  useQuery(["transactions"], () => getTransactions(), {
+    refetchInterval: 10000 * 55,
+    onSuccess
+  });
 export const useFaucetMutation = () => useMutation((address: string) => postFaucet(address));

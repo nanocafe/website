@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { Cashify } from "cashify";
 import axios from "axios";
-import { useBinanceTicker } from "../api";
+import { useNanoTicker } from "../api";
 import { css } from "@emotion/css";
 
 const currencyStyles = css`
@@ -38,6 +37,7 @@ const currencyStyles = css`
     display: flex;
     align-items: center;
     padding: 0 10px 0 10px;
+    gap: 30px;
   }
   .currency:not(:first-child):before {
     content: "";
@@ -52,7 +52,7 @@ const currencyStyles = css`
     padding-bottom: 10;
     display: flex;
     justify-content: space-between;
-    gap: 30px;
+    gap: 10px;
   }
   .currency-inner div:first-child {
     color: #616161;
@@ -60,16 +60,7 @@ const currencyStyles = css`
 `;
 
 export const Currencies = () => {
-  const ticker = useBinanceTicker("XNOUSDT");
   const [rates, setRates] = React.useState<any>();
-  const [currencies, setCurrencies] = React.useState<
-    {
-      [key: string]: {
-        value: string;
-        symbol: string;
-      };
-    }[]
-  >([]);
 
   useEffect(() => {
     axios.get("https://api.exchangerate-api.com/v4/latest/usd").then((res) => {
@@ -77,52 +68,37 @@ export const Currencies = () => {
     });
   }, []);
 
-  useEffect(() => {
-    // @ts-ignore
-    const usdt = parseFloat(ticker?.data?.lastPrice);
-    if (rates && usdt) {
-      const cashify = new Cashify({ base: "USD", from: "USD", rates: rates });
+  const { data } = useNanoTicker("nano");
 
-      const inr = cashify
-        .convert(usdt, {
-          to: "INR",
-        })
-        .toFixed(2);
-      const brl = cashify
-        .convert(usdt, {
-          to: "BRL",
-        })
-        .toFixed(2);
-      const cad = cashify
-        .convert(usdt, {
-          to: "CAD",
-        })
-        .toFixed(2);
-      const idr = cashify
-        .convert(usdt, {
-          to: "IDR",
-        })
-        .toFixed(2);
-      const krw = cashify
-        .convert(usdt, {
-          to: "KRW",
-        })
-        .toFixed(2);
-      setCurrencies([
-        { INR: { value: inr, symbol: "₹" } },
-        { BRL: { value: brl, symbol: "R$" } },
-        { CAD: { value: cad, symbol: "CA$" } },
-        { IDR: { value: idr, symbol: "Rp" } },
-        { KRW: { value: krw, symbol: "₩" } },
-      ]);
+  const cryptoCurrencies = [
+    {
+      inr: {
+        value: data?.market_data.current_price.inr,
+        symbol: "₹"
+      },
+      brl: {
+        value: data?.market_data.current_price.brl,
+        symbol: "R$"
+      },
+      cad: {
+        value: data?.market_data.current_price.cad,
+        symbol: "CA$"
+      },
+      idr: {
+        value: data?.market_data.current_price.idr,
+        symbol: "Rp"
+      },
+      krw: {
+        value: data?.market_data.current_price.krw,
+        symbol: "₩"
+      }
     }
-  }, []);
+  ];
 
-  console.log(rates);
   return (
     <div className={currencyStyles}>
       <div className="wrapper">
-        {currencies.map((currency, index) => {
+        {cryptoCurrencies.map((currency, index) => {
           return (
             <div key={index} className="currency">
               {Object.keys(currency).map((key, index) => {

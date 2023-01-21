@@ -379,18 +379,18 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
               {tpsData && tpsData.length > 0 ? math.mean(tpsData).toFixed(2) : "..."}
             </em>
 
-            <span style={{ padding: "0 0 0 1rem" }} className="">
+            <span style={{ padding: "0 0 0 1rem" }} className="" title="XNO Market Cap USD">
               Market Cap:
             </span>
             <em>${formatSI(parseFloat(data?.market_data.market_cap.usd))}</em>
-            {/*         Need to add all exchange trading volume, currently only displays XNO volume
-        <span style={{ padding: '0 0 0 1rem' }} className="" title="XNOUSDT Volume">Volume:</span>
-        <em>${formatSI(parseFloat(ticker.data.volume) * parseFloat(ticker.data.weightedAvgPrice))}</em> */}
+            
+			<span style={{ padding: '0 0 0 1rem' }} className="" title="XNO Volume">Volume:</span>
+			<em>${formatSI(parseFloat(data?.market_data.total_volume.usd))}</em>
 
             <span className="separated" title="Nano Currency">
               1 Ӿ:{" "}
             </span>
-            <em title="XNOUSDT Price">
+            <em title="XNOUSD Price">
               USD {parseFloat(data?.market_data.current_price.usd || 0).toFixed(2)}
             </em>
             <em title="% Change in Price" className={isUsdPricePositive ? "positive" : "negative"}>
@@ -430,7 +430,7 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
           <>---</>
         )}
       </section>
-      {/* <section><h2>Notice: Explorer service is currently under maintenance, faucet service is functional</h2></section> */}
+      {/*<section><h2>Notice: API has been changed to CoinGecko, tickers and pairs are now refreshed every 5 minutes.</h2></section>*/}
     </header>
   );
 };

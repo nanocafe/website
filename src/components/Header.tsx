@@ -274,20 +274,6 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
   useEffect(() => {
     document.addEventListener("touchstart", hideMenu);
     document.addEventListener("touchmove", alwaysHideMenu);
-    // fetch("https://api.kraken.com/0/public/Ticker?pair=NANOEUR")
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     setNanoEur(+data.result["NANOEUR"].c[0]);
-    //     const currentPrice = +data.result["NANOEUR"].c[0];
-    //     const lastPrice = +data.result["NANOEUR"].o;
-
-    //     const priceChangePercent = ((currentPrice - lastPrice) / currentPrice) * 100;
-    //     const priceChange = currentPrice - lastPrice;
-
-    //     setNanoEurPriceChangePercent(priceChangePercent);
-    //     setNanoEurPriceChange(priceChange);
-    //   });
 
     return () => {
       document.removeEventListener("touchstart", hideMenu);
@@ -299,6 +285,7 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
   const isUsdPricePositive = data?.market_data.price_change_24h_in_currency.usd > 0 ?? false;
   const isEurPricePositive = data?.market_data.price_change_24h_in_currency.eur > 0 ?? false;
   const isBtcPricePositive = data?.market_data.price_change_24h_in_currency.btc > 0 ?? false;
+  const isEthPricePositive = data?.market_data.price_change_24h_in_currency.eth > 0 ?? false;
 
   return (
     <header className={header}>
@@ -379,12 +366,12 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
               {tpsData && tpsData.length > 0 ? math.mean(tpsData).toFixed(2) : "..."}
             </em>
 
-            <span style={{ padding: "0 0 0 1rem" }} className="" title="XNO Market Cap USD">
+            <span style={{ padding: "0 0 0 1rem" }} className="" title="XNO Market Cap. in USD">
               Market Cap:
             </span>
             <em>${formatSI(parseFloat(data?.market_data.market_cap.usd))}</em>
             
-			<span style={{ padding: '0 0 0 1rem' }} className="" title="XNO Volume">Volume:</span>
+			<span style={{ padding: '0 0 0 1rem' }} className="" title="XNO 24HR Exchange Volume in USD">Volume:</span>
 			<em>${formatSI(parseFloat(data?.market_data.total_volume.usd))}</em>
 
             <span className="separated" title="Nano Currency">
@@ -393,44 +380,57 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
             <em title="XNOUSD Price">
               USD {parseFloat(data?.market_data.current_price.usd || 0).toFixed(2)}
             </em>
-            <em title="% Change in Price" className={isUsdPricePositive ? "positive" : "negative"}>
+            <em title="24HR Change in Price" className={isUsdPricePositive ? "positive" : "negative"}>
               {isUsdPricePositive ? "↑" : "↓"}{" "}
               {Number(data?.market_data.price_change_24h_in_currency.usd).toFixed(2)}{" "}
               {Number(data?.market_data?.price_change_percentage_24h_in_currency.usd).toFixed(2)}%
             </em>
 
             <span className="separated" />
-            <em title="NANOEUR Price">
+            <em title="XNOEUR Price">
               Euro €
               {data?.market_data.current_price.eur
                 ? data?.market_data.current_price.eur.toFixed(2)
                 : "---"}
             </em>
-            <em title="% Change in Price" className={isEurPricePositive ? "positive" : "negative"}>
+            <em title="24HR Change in Price" className={isEurPricePositive ? "positive" : "negative"}>
               {isEurPricePositive ? "↑" : "↓"}{" "}
               {data?.market_data.price_change_24h_in_currency.eur.toFixed(2)}{" "}
               {data?.market_data?.price_change_percentage_24h_in_currency.eur.toFixed(2)}%
             </em>
 
             <span className="separated" />
-            <em title="NANOBTC Price">
+            <em title="XNOBTC Price">
               BTC{" "}
               {parseFloat(
                 data?.market_data.current_price.btc ? data?.market_data.current_price.btc : ""
               )}
             </em>
 
-            <em title="% Change in Price" className={isBtcPricePositive ? "positive" : "negative"}>
+            <em title="24HR Change in Price" className={isBtcPricePositive ? "positive" : "negative"}>
               {isBtcPricePositive ? "↑" : "↓"}{" "}
               {data?.market_data.price_change_24h_in_currency.btc.toFixed(8)}{" "}
               {Number(data?.market_data?.price_change_percentage_24h_in_currency.btc).toFixed(2)}%
+            </em>
+            <span className="separated" />
+            <em title="XNOETH Price">
+              ETH{" "}
+              {parseFloat(
+                data?.market_data.current_price.eth ? data?.market_data.current_price.eth : ""
+              )}
+            </em>
+
+            <em title="24HR Change in Price" className={isEthPricePositive ? "positive" : "negative"}>
+              {isEthPricePositive ? "↑" : "↓"}{" "}
+              {data?.market_data.price_change_24h_in_currency.eth.toFixed(8)}{" "}
+              {Number(data?.market_data?.price_change_percentage_24h_in_currency.eth).toFixed(2)}%
             </em>
           </>
         ) : (
           <>---</>
         )}
       </section>
-      {/*<section><h2>Notice: API has been changed to CoinGecko, tickers and pairs are now refreshed every 5 minutes.</h2></section>*/}
+      {/*<section><h2>Notice: </h2></section>*/}
     </header>
   );
 };

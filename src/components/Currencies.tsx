@@ -60,37 +60,30 @@ const currencyStyles = css`
 `;
 
 export const Currencies = () => {
-  const [rates, setRates] = React.useState<any>();
-
-  useEffect(() => {
-    axios.get("https://api.exchangerate-api.com/v4/latest/usd").then((res) => {
-      setRates(res.data.rates);
-    });
-  }, []);
 
   const { data } = useNanoTicker("nano");
 
   const cryptoCurrencies = [
     {
-      inr: {
-        value: data?.market_data.current_price.inr,
-        symbol: "₹"
+      cad: {
+        value: data?.market_data.current_price.cad,
+        symbol: "CA$"
       },
       brl: {
         value: data?.market_data.current_price.brl,
         symbol: "R$"
       },
-      cad: {
-        value: data?.market_data.current_price.cad,
-        symbol: "CA$"
-      },
-      idr: {
-        value: data?.market_data.current_price.idr,
-        symbol: "Rp"
+      inr: {
+        value: data?.market_data.current_price.inr,
+        symbol: "₹"
       },
       krw: {
         value: data?.market_data.current_price.krw,
         symbol: "₩"
+      },
+      idr: {
+        value: data?.market_data.current_price.idr,
+        symbol: "Rp"
       }
     }
   ];

@@ -20,23 +20,6 @@ import { Line } from "react-chartjs-2";
 // @ts-ignore
 import { Currencies } from "../components/Currencies";
 
-// const Container = styled.main`
-//   flex: 1;
-//
-//   div {
-//     margin-top: 1rem;
-//     text-align: center;
-//   }
-// `;
-// const Paragraph = styled.main`
-//   color: #000;
-//   text-align: center;
-//   margin-top: 2rem;
-//   font-size: 16px;
-//   padding: 5px;
-//   background-color: #F3695F;
-// `;
-
 const construction = css`
   padding: 3rem;
   //height: 600px;
@@ -159,7 +142,7 @@ export const ChartsScreen: React.FC = () => {
   return (
     <div className={construction}>
       <div className="currencies-container">
-        <h1 style={{ fontSize: "1.2rem" }}>XNO Fx Rates</h1>
+        <h1 style={{ fontSize: "1.2rem" }}>XNO Currency Pairs</h1>
         <Currencies />
       </div>
       <div className="charts-container">

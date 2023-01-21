@@ -5,29 +5,7 @@ const parser = new Parser();
 
 const API_URL = process.env.API_URL ?? "";
 
-export interface BinanceTicker {
-  symbol: string;
-  priceChange: string;
-  priceChangePercent: string;
-  weightedAvgPrice: string;
-  prevClosePrice: string;
-  lastPrice: string;
-  lastQty: string;
-  bidPrice: string;
-  bidQty: string;
-  askPrice: string;
-  askQty: string;
-  openPrice: string;
-  highPrice: string;
-  lowPrice: string;
-  volume: string;
-  quoteVolume: string;
-  openTime: number;
-  closeTime: number;
-  firstId: number;
-  lastId: number;
-  count: number;
-}
+
 
 type Interval =
   | "1m"
@@ -64,22 +42,7 @@ const INTERVAL_REFRESH: Record<Interval, number | false> = {
   "1M": false
 };
 
-export const useBinanceTicker = (
-  symbol: string,
-  options?: UseQueryOptions<BinanceTicker, unknown, BinanceTicker, string[]>
-) =>
-  useQuery(
-    ["binance", "ticker", symbol],
-    async () => {
-      const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`);
-      const json = await res.json();
-      return json as BinanceTicker;
-    },
-    {
-      refetchInterval: 20000,
-      ...options
-    }
-  );
+
 
 export const useNanoTicker = (
   symbol: string
@@ -100,20 +63,6 @@ export const useNanoTicker = (
     }
   );
 
-export const useBinanceChart = (symbol: string, interval: Interval) =>
-  useQuery(
-    ["binance", "chart", symbol, interval],
-    async () => {
-      const res = await fetch(
-        `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=100`
-      );
-      const json = await res.json();
-      return json as any[][];
-    },
-    {
-      refetchInterval: INTERVAL_REFRESH["1h"]
-    }
-  );
 
 async function _fetch<T>(action: string, payload?: any, convert?: (data: any) => T): Promise<T> {
   const body = JSON.stringify({

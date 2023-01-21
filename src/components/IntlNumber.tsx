@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { useBinanceTicker } from '../api';
+import { useNanoTicker } from '../api';
+
 import { safeRawToMega } from '../utils';
 
 interface Props {
@@ -22,8 +23,9 @@ interface RawToUSDProps {
 }
 
 export const RawToUSD: React.FC<RawToUSDProps> = ({ raw }) => {
-  const tickerQuery = useBinanceTicker('NANOUSDT', { enabled: false });
-  const value = parseFloat(safeRawToMega(raw)) * (parseFloat(tickerQuery.data?.lastPrice ?? ''));
+  const { data } = useNanoTicker("nano");
+ 
+  const value = parseFloat(safeRawToMega(raw)) * (parseFloat(data?.market_data.current_price.usd?? ''));
 
   return <IntlNumber number={value} options={{ style: 'currency', currency: 'USD' }}/>
 }

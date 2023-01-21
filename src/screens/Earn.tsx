@@ -30,11 +30,20 @@ const earnDesign = css`
 export const EarnScreen: React.FC = () => {
   return <div className={earnDesign}>
       
-    <h2>More Coming Soon! Page still under construction</h2>   
+
+{/*     <a href="#" title="This will be available February 1st!">
+     <img src={require('url:../../assets/febreward.png')} />
+   </a> */}
+  
+    <br></br>
    <a href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" title="Affiliate Link">
      <img src={require('url:../../assets/playnano.png')} />
    </a>
-
+   <br></br>
+    <br></br>
+   <a href="https://cryptovision.live" title="Cryptovision.live">
+     <img src={require('url:../../assets/cvn.png')} />
+   </a>
 
   </div>
 }

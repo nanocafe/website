@@ -430,7 +430,7 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
           <>---</>
         )}
       </section>
-      {/*<section><h2>Notice: </h2></section>*/}
+      <section><h2>Notice: EOM Competition is now available! Try your chance to win 20+XNO over at the earn page!</h2></section>
     </header>
   );
 };

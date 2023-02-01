@@ -65,7 +65,7 @@ const SmallBanner = styled.a`
 export const EarnScreen: React.FC = () => {
   return (
     <Container>
-      <LargeBanner class="Banner" href="#" title="This will be available February 1st!">
+      <LargeBanner class="Banner" href="https://xno.bet/" title="Available Now!">
         <img src={require('url:../../assets/febreward.png')} />
       </LargeBanner>
       <SmallBanner class="Banner">      <a href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" title="Affiliate Link">

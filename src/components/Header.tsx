@@ -430,7 +430,7 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
           <>---</>
         )}
       </section>
-      <section><h2>Notice: EOM Competition is now available! Try your chance to win 20+XNO over at the earn page!</h2></section>
+      <section><h2>Notice: EOM Contest is now closed, view current rankings & total reward available at xno.bet</h2></section>
     </header>
   );
 };

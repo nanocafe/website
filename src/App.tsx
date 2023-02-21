@@ -18,6 +18,7 @@ import { NodeScreen } from './screens/Node';
 import { Footer } from './components/Footer';
 import Theme from "./components/Theme";
 
+ReactGA.initialize("G-QFJTHTGN0Z");
 const queryClient = new QueryClient();
 
 declare const process : {
@@ -29,7 +30,7 @@ function usePageViews() {
     const location = useLocation()
     const { pathname, search } = location
     useEffect(() => {
- 
+        ReactGA.send({ hitType: "pageview"});
     }, [location])
 }
 

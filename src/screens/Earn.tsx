@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
 import styled from '@emotion/styled';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import "../screens/modal.css";
 
 const Container = styled.main`
   margin: auto;
@@ -79,23 +80,58 @@ const Button = styled.a`
   &:hover {
     background-color: #2864ff;
   }
-`;
+`
+
 
 export const EarnScreen: React.FC = () => {
+  const [modal, setModal] = useState(false);
+  const [link, setLink] = useState('');
+
+  const toggleModal = (link: string) => {
+    setLink(link);
+    setModal(!modal);
+
+  };
+
+  if (modal) {
+    document.body.classList.add('active-modal');
+  } else {
+    document.body.classList.remove('active-modal');
+  }
 
   return (
     <Container>
+    {modal && (
+      <div className="modal">
+        <div onClick={toggleModal} className="overlay"></div>
+        <div className="modal-content">
+          <h2>You are now leaving Nanocafe.cc</h2>
+          <p>
+          Nanocafe.cc is not responsible for the content of external sites and services.
+          </p>
+          <div className="modal-buttons">
+            <button className="cancel-button" onClick={toggleModal}>
+              Cancel
+            </button>
+            <a href={link} target="_blank" rel="noopener noreferrer">
+              <button className="confirm-button">Confirm</button>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    )}
       <Banner>
         <IconContainer>
           <Icon src="https://xno.bet/icons/logo.png" />
         </IconContainer>
         <div>
           <Title>XNO.BET</Title>
-          <Subtitle>Monthly high reward 20+XNO available for less than 0.07XNO entry</Subtitle>
+          <Subtitle>20+XNO Monthly Reward</Subtitle>
           <Description>
-          Make a guess on what the price of XNO will be at the end of the month and if you get it closest or exact, you win!
+          Win XNO each month if you guess the closest/exact price at the end of the month! No account or login required.
           </Description>
-          <Button href="https://xno.bet/" target="_blank" title="By clicking this you are exiting the website and entering a 3rd party site.">Enter</Button>
+          <Button href="https://xno.bet/" className="btn-modal" target="_blank">Enter</Button>
         </div>
       </Banner>
       <Banner>
@@ -109,7 +145,7 @@ export const EarnScreen: React.FC = () => {
           See why Nano is the best cryptocurrency, with feeless and instant use cases.
 Earn, play, bet, and spend - no account or login required.
           </Description>
-          <Button href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" target="_blank">Enter</Button>
+          <Button onClick={() => toggleModal("https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk")}className="btn-modal" target="_blank">Enter</Button>
         </div>
       </Banner>
       <Banner>
@@ -121,8 +157,9 @@ Earn, play, bet, and spend - no account or login required.
           <Subtitle></Subtitle>
           <Description>
             xno.ai is an eco-friendly alternative to proof-of-work mining. Instead of hashing, workers use AI to generate data. Workers are awarded for their contributions. Although we use the term 'mining,' no actual mining of cryptocurrency takes place.
+            Login & registration required.
           </Description>
-          <Button href="https://xno.ai?ref=Nanocafe" target="_blank">Enter</Button>
+          <Button onClick={() => toggleModal("https://xno.ai?ref=Nanocafe")}className="btn-modal" target="_blank">Enter</Button>
         </div>
       </Banner>
       <Banner>
@@ -135,10 +172,10 @@ Earn, play, bet, and spend - no account or login required.
           <Description>
           CryptoVision is a crypto-centric video sharing platform where the rewards are just a bonus. Visionaries queue YouTube videos and the community watches the ever-evolving playlist together. Earn XNO for watching queued videos as an additional reward.
           </Description>
-          <Button href="https://cryptovision.live/" target="_blank">Enter</Button>
+          <Button onClick={() => toggleModal("https://cryptovision.live/")}className="btn-modal" target="_blank">Enter</Button>
         </div>
       </Banner>
-
+      
     </Container>
   );
 };

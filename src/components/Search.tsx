@@ -115,7 +115,7 @@ export const Search: React.FC = () => {
       spellCheck="false"
       className={[ errors.search ? 'invalid' : '',  ].join(' ')}
       type="text"
-      placeholder="Search an XNO Address / Block"
+      placeholder="Search Address/Block"
       { ...register(
         'search',
         { 

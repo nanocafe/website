@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 
 import { Header } from './components/Header';
 import { AccountScreen } from './screens/Account';
@@ -29,7 +29,7 @@ function usePageViews() {
     const location = useLocation()
     const { pathname, search } = location
     useEffect(() => {
-        ReactGA.pageview(pathname + search)
+ 
     }, [location])
 }
 

@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { GiTap } from 'react-icons/gi';
-import { FaGlobe } from 'react-icons/fa';
 import { Nanodrop } from '../components/Nanodrop';
 
 const Container = styled.div`
@@ -92,10 +91,5 @@ export const FaucetScreen: React.FC = (props: any) => {
     <Nanodrop theme={props.theme} />
     <p className="linkText">Click <a href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" target="_blank" title="Affiliate Link">here</a> for a list of faucets.   ||   Weekly Payouts: 5x per IP &amp; 1x per Account.</p>
     
-{/*     <FaGlobe size="3rem" color="var(--primary)" />    
-    <h3>Faucet Payout Map</h3>
-    <iframe src="https://drop.nanocafe.cc/api/countries" width="940px" height="370"
-      style={{position: "relative", border: 0, maxWidth: "100%", marginTop: 5, marginBottom: 5}} > \
-    </iframe> */}
   </Container>
 }

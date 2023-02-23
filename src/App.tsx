@@ -39,7 +39,7 @@ const AppComponent: React.FC = () => {
   const location = useLocation()
 
   useEffect(() => {
-    ReactGA.send({ hitType: 'pageview' })
+    ReactGA.send({ hitType: 'pageview', page: location.pathname })
   }, [location])
 
   return (

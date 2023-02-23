@@ -1,16 +1,31 @@
-import styled from '@emotion/styled';
-import dayjs from 'dayjs';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { CellProps, Column, useSortBy, UseSortByHooks, useTable } from 'react-table';
-import * as math from 'mathjs';
+import styled from "@emotion/styled";
+import dayjs from "dayjs";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+  CellProps,
+  Column,
+  useSortBy,
+  UseSortByHooks,
+  useTable,
+} from "react-table";
+import * as math from "mathjs";
 
-import { ConfirmationQuorumPeer, Telemetry, useActiveDifficulty, useConfirmationHistory, useConfirmationQuorum, useNodeTelemetry, useTelemetry, useTPS } from '../api';
-import { Account } from '../components/Account';
-import { Card } from '../components/Card';
-import { Indicator } from '../components/Indicator';
-import { IntlNumber } from '../components/IntlNumber';
-import { Properties, PropertiesItem } from '../components/Properties';
-import { safeRawToMega } from '../utils';
+import {
+  ConfirmationQuorumPeer,
+  Telemetry,
+  useActiveDifficulty,
+  useConfirmationHistory,
+  useConfirmationQuorum,
+  useNodeTelemetry,
+  useTelemetry,
+  useTPS,
+} from "../api";
+import { Account } from "../components/Account";
+import { Card } from "../components/Card";
+import { Indicator } from "../components/Indicator";
+import { IntlNumber } from "../components/IntlNumber";
+import { Properties, PropertiesItem } from "../components/Properties";
+import { safeRawToMega } from "../utils";
 
 const Container = styled.main`
   display: flex;
@@ -28,7 +43,8 @@ const Container = styled.main`
     border-spacing: 0 0.25rem;
     border-collapse: separate;
 
-    td, th {
+    td,
+    th {
       padding: 0.5rem;
       min-width: 150px;
     }
@@ -40,9 +56,11 @@ const Container = styled.main`
 `;
 
 const NumberCell: React.FC<CellProps<Telemetry, number>> = ({ value }) => {
-  return <span className="right">
-    <IntlNumber number={value}/>
-  </span>;
+  return (
+    <span className="right">
+      <IntlNumber number={value} />
+    </span>
+  );
 };
 
 const SplitProperties = styled(Properties)`
@@ -70,185 +88,257 @@ export const NetworkScreen: React.FC = () => {
   const confirmationHistoryQuery = useConfirmationHistory();
 
   function getQuorumNode(node: Telemetry): ConfirmationQuorumPeer | undefined {
-    return quorumQuery.data?.peers.find((peer) => peer.ip === `[${node.address}]:${node.port}`);
+    return quorumQuery.data?.peers.find(
+      (peer) => peer.ip === `[${node.address}]:${node.port}`
+    );
   }
 
-  const columns = useMemo<Column<Telemetry>[]>(() => [
-    {
-      Header: 'Node',
-      id: 'node',
-      accessor(row) {
-        const fromQuorum = getQuorumNode(row);
-        return fromQuorum ? <Account account={fromQuorum.account}/> : row.node_id;
-      }
-    },
-    {
-      Header: 'PR Node',
-      id: 'pr',
-      className: 'right',
-      accessor(row) {
-        const fromQuorum = getQuorumNode(row);
-        const isPR = parseFloat(safeRawToMega(fromQuorum?.weight)) / (parseFloat(safeRawToMega(quorumQuery.data?.online_stake_total)) || 1) * 100 > 0.01;
-        return isPR ? 'Yes' : 'No';
+  const columns = useMemo<Column<Telemetry>[]>(
+    () => [
+      {
+        Header: "Node",
+        id: "node",
+        accessor(row) {
+          const fromQuorum = getQuorumNode(row);
+          return fromQuorum ? (
+            <Account account={fromQuorum.account} />
+          ) : (
+            row.node_id
+          );
+        },
       },
-    },
-    {
-      Header: 'Blocks',
-      accessor: 'block_count',
-      Cell: NumberCell,
-      sortType: 'basic',
-      className: 'right',
-      sortable: true,
-      right: true,
-    },
-    {
-      Header: 'Cemented blocks',
-      accessor: 'cemented_count',
-      Cell: NumberCell,
-      sortType: 'basic',
-      className: 'right',
-      sortable: true,
-      right: true,
-    },
-    {
-      Header: 'Unchecked blocks',
-      accessor: 'unchecked_count',
-      Cell: NumberCell,
-      sortType: 'basic',
-      className: 'right',
-      sortable: true,
-      right: true,
-    },
-    {
-      Header: 'Uptime',
-      accessor: 'uptime',
-      sortType: 'basic',
-      className: 'right',
-      Cell({ value }) {
-        return dayjs.duration(value, 'seconds').humanize();
+      {
+        Header: "PR Node",
+        id: "pr",
+        className: "right",
+        accessor(row) {
+          const fromQuorum = getQuorumNode(row);
+          const isPR =
+            (parseFloat(safeRawToMega(fromQuorum?.weight)) /
+              (parseFloat(
+                safeRawToMega(quorumQuery.data?.online_stake_total)
+              ) || 1)) *
+              100 >
+            0.01;
+          return isPR ? "Yes" : "No";
+        },
       },
-      sortable: true,
-      right: true,
-    },
-    {
-      Header: 'Version',
-      id: 'version',
-      sortable: true,
-      className: 'right',
-      accessor(row) {
-        return `${row.major_version}.${row.minor_version}.${row.patch_version}${row.pre_release_version !== '0' ? `-rc${row.pre_release_version}` : ''}`;
+      {
+        Header: "Blocks",
+        accessor: "block_count",
+        Cell: NumberCell,
+        sortType: "basic",
+        className: "right",
+        sortable: true,
+        right: true,
       },
-      right: true,
-    }
-  ], [ quorumQuery.data ]);
+      {
+        Header: "Cemented blocks",
+        accessor: "cemented_count",
+        Cell: NumberCell,
+        sortType: "basic",
+        className: "right",
+        sortable: true,
+        right: true,
+      },
+      {
+        Header: "Unchecked blocks",
+        accessor: "unchecked_count",
+        Cell: NumberCell,
+        sortType: "basic",
+        className: "right",
+        sortable: true,
+        right: true,
+      },
+      {
+        Header: "Uptime",
+        accessor: "uptime",
+        sortType: "basic",
+        className: "right",
+        Cell({ value }) {
+          return dayjs.duration(value, "seconds").humanize();
+        },
+        sortable: true,
+        right: true,
+      },
+      {
+        Header: "Version",
+        id: "version",
+        sortable: true,
+        className: "right",
+        accessor(row) {
+          return `${row.major_version}.${row.minor_version}.${
+            row.patch_version
+          }${
+            row.pre_release_version !== "0"
+              ? `-rc${row.pre_release_version}`
+              : ""
+          }`;
+        },
+        right: true,
+      },
+    ],
+    [quorumQuery.data]
+  );
 
   const unchecked = useMemo(() => {
     if (!telemetryQuery.data) {
       return 0;
     }
 
-    return math.chain(telemetryQuery.data.metrics.map((metric) => metric.unchecked_count)).median().floor().done();
-  }, [ telemetryQuery.data ]);
+    return math
+      .chain(
+        telemetryQuery.data.metrics.map((metric) => metric.unchecked_count)
+      )
+      .median()
+      .floor()
+      .done();
+  }, [telemetryQuery.data]);
   const blocks = useMemo(() => {
     if (!telemetryQuery.data) {
       return 0;
     }
 
-    return math.max(telemetryQuery.data.metrics.map((metric) => metric.block_count));
-  }, [ telemetryQuery.data ]);
+    return math.max(
+      telemetryQuery.data.metrics.map((metric) => metric.block_count)
+    );
+  }, [telemetryQuery.data]);
   const medianConfirmationTime = useMemo(() => {
     if (!confirmationHistoryQuery.data) {
       return 0;
     }
 
-    return math.chain(confirmationHistoryQuery.data.confirmations.map((confirmation) => confirmation.duration)).median().divide(1000).done();
-  }, [ confirmationHistoryQuery.data ]);
+    return math
+      .chain(
+        confirmationHistoryQuery.data.confirmations.map(
+          (confirmation) => confirmation.duration
+        )
+      )
+      .median()
+      .divide(1000)
+      .done();
+  }, [confirmationHistoryQuery.data]);
 
-  const tpsData = tpsQuery.data ? Object.entries(tpsQuery.data).filter(([ node ]) => {
-    const telemetry = telemetryQuery.data?.metrics.find((telemetry) => telemetry.node_id === node);
-    const quorumNode = telemetry ? getQuorumNode(telemetry) : undefined;
-    const isPR = parseFloat(safeRawToMega(quorumNode?.weight)) / (parseFloat(safeRawToMega(quorumQuery.data?.online_stake_total)) || 1) * 100 > 0.01; 
-    return isPR;
-  }).map(([ _, tps ]) => tps) : [];
+  const tpsData = tpsQuery.data
+    ? Object.entries(tpsQuery.data)
+        .filter(([node]) => {
+          const telemetry = telemetryQuery.data?.metrics.find(
+            (telemetry) => telemetry.node_id === node
+          );
+          const quorumNode = telemetry ? getQuorumNode(telemetry) : undefined;
+          const isPR =
+            (parseFloat(safeRawToMega(quorumNode?.weight)) /
+              (parseFloat(
+                safeRawToMega(quorumQuery.data?.online_stake_total)
+              ) || 1)) *
+              100 >
+            0.01;
+          return isPR;
+        })
+        .map(([_, tps]) => tps)
+    : [];
 
   // console.log(tpsData);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headers,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns,
-    data: telemetryQuery.data?.metrics ?? EMPTY_DATA,
-    initialState: {
-      sortBy: [{ id: 'node' }]
-    } as any,
-  }, useSortBy);
+  const { getTableProps, getTableBodyProps, headers, rows, prepareRow } =
+    useTable(
+      {
+        columns,
+        data: telemetryQuery.data?.metrics ?? EMPTY_DATA,
+        initialState: {
+          sortBy: [{ id: "node" }],
+        } as any,
+      },
+      useSortBy
+    );
 
-  return <Indicator show={telemetryQuery.isLoading || quorumQuery.isLoading || activeDifficultyQuery.isLoading || confirmationHistoryQuery.isLoading}>
-    <Container>
-      <h2>Nano network stats:</h2>
-      <SplitProperties>
-        <Card>
-          <PropertiesItem label="Average PR TPS:" big>
-            {/* {tps ? tps.toFixed(2) : '...'} */}
-            { (tpsData && tpsData.length > 0) ? math.mean(tpsData).toFixed(2) : '...' }
-          </PropertiesItem>
-        </Card>
-        <Card>
-          <PropertiesItem label="Median confirmation time:" big>
-            { medianConfirmationTime.toFixed(3) } seconds
-          </PropertiesItem>
-        </Card>
-        <Card>
-          <PropertiesItem label="Blocks:" big>
-            <IntlNumber number={blocks}/>
-          </PropertiesItem>
-        </Card>
-        <Card>
-          <PropertiesItem label="Median unchecked blocks:" big>
-            <IntlNumber number={unchecked}/>
-          </PropertiesItem>
-        </Card>
-        <Card>
-          <PropertiesItem label="Difficulty multiplier:" big>
-            x{ activeDifficultyQuery.data?.multiplier.toFixed(2) }
-          </PropertiesItem>
-        </Card>
-      </SplitProperties>
-      <h2>Connected peers ({ telemetryQuery.data?.metrics.length }):</h2>
-      <section>
-        <table {...getTableProps()}>
-          <thead>
-            <tr>
-              { headers.map((column) => <th {...column.getHeaderProps([{ className: (column as any).className }, (column as any).getSortByToggleProps() ])}>
-                { column.render('Header') }
-                <span>
-                  { (column as any).isSorted
-                    ? (column as any).isSortedDesc
-                      ? ' ↓'
-                      : ' ↑'
-                    : ''
-                  }
-                </span>
-              </th>) }
-            </tr>
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            { rows.map((row, i) => {
-              prepareRow(row);
+  return (
+    <Indicator
+      show={
+        telemetryQuery.isLoading ||
+        quorumQuery.isLoading ||
+        activeDifficultyQuery.isLoading ||
+        confirmationHistoryQuery.isLoading
+      }
+    >
+      <Container>
+        <h2>Nano network stats:</h2>
+        <SplitProperties>
+          <Card>
+            <PropertiesItem label="Average PR TPS:" big>
+              {/* {tps ? tps.toFixed(2) : '...'} */}
+              {tpsData && tpsData.length > 0
+                ? math.mean(tpsData).toFixed(2)
+                : "..."}
+            </PropertiesItem>
+          </Card>
+          <Card>
+            <PropertiesItem label="Median confirmation time:" big>
+              {medianConfirmationTime.toFixed(3)} seconds
+            </PropertiesItem>
+          </Card>
+          <Card>
+            <PropertiesItem label="Blocks:" big>
+              <IntlNumber number={blocks} />
+            </PropertiesItem>
+          </Card>
+          <Card>
+            <PropertiesItem label="Median unchecked blocks:" big>
+              <IntlNumber number={unchecked} />
+            </PropertiesItem>
+          </Card>
+          <Card>
+            <PropertiesItem label="Difficulty multiplier:" big>
+              x{activeDifficultyQuery.data?.multiplier.toFixed(2)}
+            </PropertiesItem>
+          </Card>
+        </SplitProperties>
+        <h2>Connected peers ({telemetryQuery.data?.metrics.length}):</h2>
+        <section>
+          <table {...getTableProps()}>
+            <thead>
+              <tr>
+                {headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps([
+                      { className: (column as any).className },
+                      (column as any).getSortByToggleProps(),
+                    ])}
+                  >
+                    {column.render("Header")}
+                    <span>
+                      {(column as any).isSorted
+                        ? (column as any).isSortedDesc
+                          ? " ↓"
+                          : " ↑"
+                        : ""}
+                    </span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row, i) => {
+                prepareRow(row);
 
-              return <Card as="tr" {...row.getRowProps()}>
-                { row.cells.map((cell) => <td {...cell.getCellProps([{ className: (cell.column as any).className }])}>
-                  { cell.render('Cell') }
-                </td>) }
-              </Card>;
-            }) }
-          </tbody>
-        </table>
-      </section>
-    </Container>
-  </Indicator>;
+                return (
+                  <Card as="tr" {...row.getRowProps()}>
+                    {row.cells.map((cell) => (
+                      <td
+                        {...cell.getCellProps([
+                          { className: (cell.column as any).className },
+                        ])}
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    ))}
+                  </Card>
+                );
+              })}
+            </tbody>
+          </table>
+        </section>
+      </Container>
+    </Indicator>
+  );
 };

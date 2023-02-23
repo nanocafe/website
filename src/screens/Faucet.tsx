@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
-import React from 'react';
-import { GiTap } from 'react-icons/gi';
-import { Nanodrop } from '../components/Nanodrop';
+import styled from "@emotion/styled";
+import React from "react";
+import { GiTap } from "react-icons/gi";
+import { Nanodrop } from "../components/Nanodrop";
 
 const Container = styled.div`
   text-align: center;
-  padding: 3rem .5rem;
+  padding: 3rem 0.5rem;
   flex: 1;
 
   h2 {
@@ -15,13 +15,13 @@ const Container = styled.div`
 
   h3 {
     margin-top: 2rem;
-    font-size: 1.50rem;
+    font-size: 1.5rem;
   }
 
   p {
     margin-top: 1rem;
   }
-  .linkText{
+  .linkText {
     margin-bottom: 2rem;
   }
   form {
@@ -64,7 +64,8 @@ const Container = styled.div`
       font-family: var(--font);
     }
 
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
       outline: none;
     }
   }
@@ -75,20 +76,41 @@ const Container = styled.div`
 `;
 
 interface IFaucet {
-  theme: 'light' | 'dark';
+  theme: "light" | "dark";
 }
 
-export function FaucetScreen ({ theme }: IFaucet) {
+export function FaucetScreen({ theme }: IFaucet) {
+  return (
+    <Container>
+      <GiTap size="5rem" color="var(--primary)" />
 
-  return <Container>
-    <GiTap size="5rem" color="var(--primary)" />
-    
-    <h2>Faucet</h2>
-    
-    <p>Experience Nano entirely free! First make a wallet <a href="https://nautilus.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>
-    
-    <Nanodrop theme={theme} />
-    <p className="linkText">Click <a href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" target="_blank" title="Affiliate Link">here</a> for a list of faucets.   ||   Weekly Payouts: 5x per IP &amp; 1x per Account.</p>
-    
-  </Container>
+      <h2>Faucet</h2>
+
+      <p>
+        Experience Nano entirely free! First make a wallet{" "}
+        <a href="https://nautilus.io/" target="_blank">
+          here
+        </a>{" "}
+        (mobile) or{" "}
+        <a href="https://nault.cc" target="_blank">
+          here
+        </a>{" "}
+        (desktop), then place your address below and enjoy!
+      </p>
+
+      <Nanodrop theme={theme} />
+      <p className="linkText">
+        Click{" "}
+        <a
+          href="https://playnano.online/faucets?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk"
+          target="_blank"
+          title="Affiliate Link"
+        >
+          here
+        </a>{" "}
+        for a list of faucets. || Weekly Payouts: 5x per IP &amp; 1x per
+        Account.
+      </p>
+    </Container>
+  );
 }

@@ -1,6 +1,6 @@
-import { css } from '@emotion/css';
-import React from 'react';
-import { BsQuestionDiamond } from 'react-icons/bs';
+import { css } from "@emotion/css";
+import React from "react";
+import { BsQuestionDiamond } from "react-icons/bs";
 
 const notFound = css`
   text-align: center;
@@ -17,9 +17,11 @@ const notFound = css`
 `;
 
 export const NotFoundScreen: React.FC = () => {
-  return <div className={notFound}>
-    <BsQuestionDiamond size="5rem" color="var(--primary)"/>
-    <h2>404 Not Found</h2>
-    <p>The page you are looking for doesn't exist. Is the URL correct?</p>
-  </div>
-}
+  return (
+    <div className={notFound}>
+      <BsQuestionDiamond size="5rem" color="var(--primary)" />
+      <h2>404 Not Found</h2>
+      <p>The page you are looking for doesn't exist. Is the URL correct?</p>
+    </div>
+  );
+};

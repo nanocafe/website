@@ -1,11 +1,11 @@
-import styled from '@emotion/styled'
-import React, { useState } from 'react'
-import './modal.css'
+import styled from "@emotion/styled";
+import React, { useState } from "react";
+import "./modal.css";
 
 const Container = styled.main`
   margin: auto;
   width: 100%;
-`
+`;
 
 const Banner = styled.div`
   display: grid;
@@ -22,7 +22,7 @@ const Banner = styled.div`
   &:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
   }
-`
+`;
 
 const IconContainer = styled.div`
   display: flex;
@@ -33,14 +33,14 @@ const IconContainer = styled.div`
   background-color: #4a4a4a;
   border-radius: 50%;
   margin-left: -15px;
-`
+`;
 const textContainer = styled.div`
   padding-left: 5px;
-`
+`;
 const Icon = styled.img`
   width: 50%;
   height: 50%;
-`
+`;
 
 const Title = styled.h2`
   padding-left: 5px;
@@ -48,21 +48,21 @@ const Title = styled.h2`
   font-weight: bold;
   color: white;
   margin-top: 0;
-`
+`;
 
 const Subtitle = styled.h3`
   padding-left: 5px;
   font-size: 1.2rem;
   color: #308a08;
   margin-top: 0;
-`
+`;
 
 const Description = styled.p`
   padding-left: 5px;
   font-size: 1rem;
   color: white;
   margin-bottom: 0;
-`
+`;
 
 const Button = styled.a`
   display: block;
@@ -78,28 +78,28 @@ const Button = styled.a`
   &:hover {
     background-color: #2864ff;
   }
-`
+`;
 
 export const EarnScreen: React.FC = () => {
-  const [modal, setModal] = useState(false)
-  const [link, setLink] = useState('')
+  const [modal, setModal] = useState(false);
+  const [link, setLink] = useState("");
 
   const toggleModal = (link: string) => {
-    setLink(link)
-    setModal(!modal)
-  }
+    setLink(link);
+    setModal(!modal);
+  };
 
   if (modal) {
-    document.body.classList.add('active-modal')
+    document.body.classList.add("active-modal");
   } else {
-    document.body.classList.remove('active-modal')
+    document.body.classList.remove("active-modal");
   }
 
   return (
     <Container>
       {modal && (
         <div className="modal">
-          <div onClick={() => toggleModal('')} className="overlay"></div>
+          <div onClick={() => toggleModal("")} className="overlay"></div>
           <div className="modal-content">
             <h2>You are now leaving Nanocafe.cc</h2>
             <p>
@@ -107,7 +107,7 @@ export const EarnScreen: React.FC = () => {
               and services.
             </p>
             <div className="modal-buttons">
-              <button className="cancel-button" onClick={() => toggleModal('')}>
+              <button className="cancel-button" onClick={() => toggleModal("")}>
                 Cancel
               </button>
               <a href={link} target="_blank" rel="noopener noreferrer">
@@ -148,7 +148,7 @@ export const EarnScreen: React.FC = () => {
           <Button
             onClick={() =>
               toggleModal(
-                'https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk',
+                "https://playnano.online/?ref=https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk"
               )
             }
             className="btn-modal"
@@ -173,7 +173,7 @@ export const EarnScreen: React.FC = () => {
             required.
           </Description>
           <Button
-            onClick={() => toggleModal('https://xno.ai?ref=Nanocafe')}
+            onClick={() => toggleModal("https://xno.ai?ref=Nanocafe")}
             className="btn-modal"
             target="_blank"
           >
@@ -195,7 +195,7 @@ export const EarnScreen: React.FC = () => {
             watching queued videos as an additional reward.
           </Description>
           <Button
-            onClick={() => toggleModal('https://cryptovision.live/')}
+            onClick={() => toggleModal("https://cryptovision.live/")}
             className="btn-modal"
             target="_blank"
           >
@@ -204,5 +204,5 @@ export const EarnScreen: React.FC = () => {
         </div>
       </Banner>
     </Container>
-  )
-}
+  );
+};

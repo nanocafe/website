@@ -74,12 +74,11 @@ const Container = styled.div`
   }
 `;
 
-const ErrorMessageContainer = styled.div`
-  margin-top: .5rem;
-  color: red;
-`;
+interface IFaucet {
+  theme: 'light' | 'dark';
+}
 
-export const FaucetScreen: React.FC = (props: any) => {
+export function FaucetScreen ({ theme }: IFaucet) {
 
   return <Container>
     <GiTap size="5rem" color="var(--primary)" />
@@ -88,7 +87,7 @@ export const FaucetScreen: React.FC = (props: any) => {
     
     <p>Experience Nano entirely free! First make a wallet <a href="https://nautilus.io/" target="_blank">here</a> (mobile) or <a href="https://nault.cc" target="_blank">here</a> (desktop), then place your address below and enjoy!</p>
     
-    <Nanodrop theme={props.theme} />
+    <Nanodrop theme={theme} />
     <p className="linkText">Click <a href="https://playnano.online/?ref=nano_3odatubif8zuemhgtmdh465somyy9hmdeab6sa15od79cbdu79zgnndx7ozk" target="_blank" title="Affiliate Link">here</a> for a list of faucets.   ||   Weekly Payouts: 5x per IP &amp; 1x per Account.</p>
     
   </Container>

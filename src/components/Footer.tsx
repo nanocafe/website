@@ -75,6 +75,7 @@ const footer = css`
 
 interface IHeader {
     dark: Boolean;
+    setDark: () => void;
 }
 
 

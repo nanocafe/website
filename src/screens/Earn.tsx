@@ -123,10 +123,21 @@ export const EarnScreen: React.FC = () => {
         </IconContainer>
         <div>
           <Title>XNO.BET</Title>
-          <Subtitle>20+XNO Monthly Reward</Subtitle>
+          <Subtitle>56.84+XNO March Reward</Subtitle>
           <Description>
             Win XNO each month if you guess the closest/exact price at the end
-            of the month! No account or login required.
+            of the month!
+            <br />
+            <br />
+            No install or login required if using the{" "}
+            <a href="https://nautilus.io/" target="_blank">
+              Nautilus (mobile)
+            </a>{" "}
+            wallet. Available also with the{" "}
+            <a href="https://nanobytepay.com/" target="_blank">
+              nanobyte (desktop)
+            </a>{" "}
+            wallet.
           </Description>
           <Button href="https://xno.bet/" className="btn-modal" target="_blank">
             Enter

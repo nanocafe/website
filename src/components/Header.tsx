@@ -9,7 +9,7 @@ import {
   useConfirmationQuorum,
   useNanoTicker,
   useTelemetry,
-  useTPS
+  useTPS,
 } from "../api";
 import { formatSI, safeRawToMega } from "../utils";
 import { Search } from "./Search";
@@ -148,7 +148,6 @@ const header = css`
     }
   }
   h2 {
-    color: var(--red);
     font-weight: 500;
   }
   a {
@@ -230,7 +229,7 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
   const { data } = useNanoTicker("nano");
 
   const isSmallerThan600 = useMediaQuery({
-    query: "(max-width: 600px)"
+    query: "(max-width: 600px)",
   });
 
   function hideMenu(e: TouchEvent) {
@@ -251,7 +250,9 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
   }
 
   function getQuorumNode(node: Telemetry): ConfirmationQuorumPeer | undefined {
-    return quorumQuery.data?.peers.find((peer) => peer.ip === `[${node.address}]:${node.port}`);
+    return quorumQuery.data?.peers.find(
+      (peer) => peer.ip === `[${node.address}]:${node.port}`
+    );
   }
 
   const tpsData = tpsQuery.data
@@ -263,7 +264,9 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
           const quorumNode = telemetry ? getQuorumNode(telemetry) : undefined;
           const isPR =
             (parseFloat(safeRawToMega(quorumNode?.weight)) /
-              (parseFloat(safeRawToMega(quorumQuery.data?.online_stake_total)) || 1)) *
+              (parseFloat(
+                safeRawToMega(quorumQuery.data?.online_stake_total)
+              ) || 1)) *
               100 >
             0.01;
           return isPR;
@@ -282,10 +285,14 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
     };
   }, []);
 
-  const isUsdPricePositive = data?.market_data.price_change_24h_in_currency.usd > 0 ?? false;
-  const isEurPricePositive = data?.market_data.price_change_24h_in_currency.eur > 0 ?? false;
-  const isBtcPricePositive = data?.market_data.price_change_24h_in_currency.btc > 0 ?? false;
-  const isEthPricePositive = data?.market_data.price_change_24h_in_currency.eth > 0 ?? false;
+  const isUsdPricePositive =
+    data?.market_data.price_change_24h_in_currency.usd > 0 ?? false;
+  const isEurPricePositive =
+    data?.market_data.price_change_24h_in_currency.eur > 0 ?? false;
+  const isBtcPricePositive =
+    data?.market_data.price_change_24h_in_currency.btc > 0 ?? false;
+  const isEthPricePositive =
+    data?.market_data.price_change_24h_in_currency.eth > 0 ?? false;
 
   return (
     <header className={header}>
@@ -301,16 +308,16 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
           duration: 5000,
           style: {
             background: "#363636",
-            color: "#fff"
+            color: "#fff",
           },
           // Default options for specific types
           success: {
             duration: 3000,
             theme: {
               primary: "green",
-              secondary: "black"
-            }
-          }
+              secondary: "black",
+            },
+          },
         }}
       />
       <nav>
@@ -363,27 +370,48 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
               Avg. TPS:
             </span>
             <em title="The Estimated Transactions Per Second (PR weighted) For The Nano Network">
-              {tpsData && tpsData.length > 0 ? math.mean(tpsData).toFixed(2) : "..."}
+              {tpsData && tpsData.length > 0
+                ? math.mean(tpsData).toFixed(2)
+                : "..."}
             </em>
 
-            <span style={{ padding: "0 0 0 1rem" }} className="" title="XNO Market Cap. in USD">
+            <span
+              style={{ padding: "0 0 0 1rem" }}
+              className=""
+              title="XNO Market Cap. in USD"
+            >
               Market Cap:
             </span>
             <em>${formatSI(parseFloat(data?.market_data.market_cap.usd))}</em>
-            
-			<span style={{ padding: '0 0 0 1rem' }} className="" title="XNO 24HR Exchange Volume in USD">Volume:</span>
-			<em>${formatSI(parseFloat(data?.market_data.total_volume.usd))}</em>
+
+            <span
+              style={{ padding: "0 0 0 1rem" }}
+              className=""
+              title="XNO 24HR Exchange Volume in USD"
+            >
+              Volume:
+            </span>
+            <em>${formatSI(parseFloat(data?.market_data.total_volume.usd))}</em>
 
             <span className="separated" title="Nano Currency">
               1 Ӿ:{" "}
             </span>
             <em title="XNOUSD Price">
-              USD {parseFloat(data?.market_data.current_price.usd || 0).toFixed(2)}
+              USD{" "}
+              {parseFloat(data?.market_data.current_price.usd || 0).toFixed(2)}
             </em>
-            <em title="24HR Change in Price" className={isUsdPricePositive ? "positive" : "negative"}>
+            <em
+              title="24HR Change in Price"
+              className={isUsdPricePositive ? "positive" : "negative"}
+            >
               {isUsdPricePositive ? "↑" : "↓"}{" "}
-              {Number(data?.market_data.price_change_24h_in_currency.usd).toFixed(2)}{" "}
-              {Number(data?.market_data?.price_change_percentage_24h_in_currency.usd).toFixed(2)}%
+              {Number(
+                data?.market_data.price_change_24h_in_currency.usd
+              ).toFixed(2)}{" "}
+              {Number(
+                data?.market_data?.price_change_percentage_24h_in_currency.usd
+              ).toFixed(2)}
+              %
             </em>
 
             <span className="separated" />
@@ -393,44 +421,71 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
                 ? data?.market_data.current_price.eur.toFixed(2)
                 : "---"}
             </em>
-            <em title="24HR Change in Price" className={isEurPricePositive ? "positive" : "negative"}>
+            <em
+              title="24HR Change in Price"
+              className={isEurPricePositive ? "positive" : "negative"}
+            >
               {isEurPricePositive ? "↑" : "↓"}{" "}
               {data?.market_data.price_change_24h_in_currency.eur.toFixed(2)}{" "}
-              {data?.market_data?.price_change_percentage_24h_in_currency.eur.toFixed(2)}%
+              {data?.market_data?.price_change_percentage_24h_in_currency.eur.toFixed(
+                2
+              )}
+              %
             </em>
 
             <span className="separated" />
             <em title="XNOBTC Price">
               BTC{" "}
               {parseFloat(
-                data?.market_data.current_price.btc ? data?.market_data.current_price.btc : ""
+                data?.market_data.current_price.btc
+                  ? data?.market_data.current_price.btc
+                  : ""
               )}
             </em>
 
-            <em title="24HR Change in Price" className={isBtcPricePositive ? "positive" : "negative"}>
+            <em
+              title="24HR Change in Price"
+              className={isBtcPricePositive ? "positive" : "negative"}
+            >
               {isBtcPricePositive ? "↑" : "↓"}{" "}
               {data?.market_data.price_change_24h_in_currency.btc.toFixed(8)}{" "}
-              {Number(data?.market_data?.price_change_percentage_24h_in_currency.btc).toFixed(2)}%
+              {Number(
+                data?.market_data?.price_change_percentage_24h_in_currency.btc
+              ).toFixed(2)}
+              %
             </em>
             <span className="separated" />
             <em title="XNOETH Price">
               ETH{" "}
               {parseFloat(
-                data?.market_data.current_price.eth ? data?.market_data.current_price.eth : ""
+                data?.market_data.current_price.eth
+                  ? data?.market_data.current_price.eth
+                  : ""
               )}
             </em>
 
-            <em title="24HR Change in Price" className={isEthPricePositive ? "positive" : "negative"}>
+            <em
+              title="24HR Change in Price"
+              className={isEthPricePositive ? "positive" : "negative"}
+            >
               {isEthPricePositive ? "↑" : "↓"}{" "}
               {data?.market_data.price_change_24h_in_currency.eth.toFixed(8)}{" "}
-              {Number(data?.market_data?.price_change_percentage_24h_in_currency.eth).toFixed(2)}%
+              {Number(
+                data?.market_data?.price_change_percentage_24h_in_currency.eth
+              ).toFixed(2)}
+              %
             </em>
           </>
         ) : (
           <>---</>
         )}
       </section>
-{/*       <section><h2>Notice: EOM Contest is now closed, view current rankings & total reward available at xno.bet</h2></section> */}
+      <section>
+        <h2>
+          Notice: Win 56.84XNO+ for the March EOM contest, opening soon - check
+          out the earn page for more details.
+        </h2>
+      </section>
     </header>
   );
 };

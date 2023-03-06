@@ -129,11 +129,7 @@ export const EarnScreen: React.FC = () => {
             of the month!
             <br />
             <br />
-            No install or login required if using the{" "}
-            <a href="https://nautilus.io/" target="_blank">
-              Nautilus (mobile)
-            </a>{" "}
-            wallet. Available also with the{" "}
+            Currently ONLY Available with the{" "}
             <a href="https://nanobytepay.com/" target="_blank">
               nanobyte (desktop)
             </a>{" "}

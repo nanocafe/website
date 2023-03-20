@@ -480,12 +480,6 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
           <>---</>
         )}
       </section>
-      <section>
-        <h2>
-          Notice: Win 56.84XNO+ for the March EOM contest, opening soon - check
-          out the earn page for more details.
-        </h2>
-      </section>
     </header>
   );
 };

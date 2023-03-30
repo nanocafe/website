@@ -123,13 +123,24 @@ export const EarnScreen: React.FC = () => {
         </IconContainer>
         <div>
           <Title>XNO.BET</Title>
-          <Subtitle>56.84+XNO March Reward</Subtitle>
+          <Subtitle>57.19XNO Final March Reward</Subtitle>
           <Description>
-            Win XNO each month if you guess the closest/exact price at the end
-            of the month!
+            Win XNO each month if you guess the closest or exact price at the
+            end of the month (EOM).
             <br />
             <br />
-            Currently ONLY Available with the{" "}
+            EOM game mechanics require a winner every contest meaning regardless
+            of what price XNO is at the end of the month, One lucky user's guess
+            by default wins due to having the closest distance to the price of
+            XNO at the last day of the month; Verifiable and Full Transparency
+            Open-Source Initiative.
+            <br />
+            <br />
+            No login required if using the{" "}
+            <a href="https://nautilus.io/" target="_blank">
+              Nautilus (mobile)
+            </a>{" "}
+            wallet. Available also with the{" "}
             <a href="https://nanobytepay.com/" target="_blank">
               nanobyte (desktop)
             </a>{" "}

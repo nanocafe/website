@@ -123,28 +123,17 @@ export const EarnScreen: React.FC = () => {
         </IconContainer>
         <div>
           <Title>XNO.BET</Title>
-          <Subtitle>57.19XNO Final March Reward</Subtitle>
+          <Subtitle>Win 100+ XNO each month!</Subtitle>
           <Description>
-            Win XNO each month if you guess the closest or exact price at the
-            end of the month (EOM).
+            Simply submit a guess at what you think will be the price of XNO at
+            the last day of the month, closest guess in distance wins on the
+            final day of the month; 0.05XNO entry fee.
             <br />
             <br />
-            EOM game mechanics require a winner every contest meaning regardless
-            of what price XNO is at the end of the month, One lucky user's guess
-            by default wins due to having the closest distance to the price of
-            XNO at the last day of the month; Verifiable and Full Transparency
-            Open-Source Initiative.
+            Contest Phases: Guess period, Locked period, Final Day of the Month.
             <br />
             <br />
-            No login required if using the{" "}
-            <a href="https://nautilus.io/" target="_blank">
-              Nautilus (mobile)
-            </a>{" "}
-            wallet. Available also with the{" "}
-            <a href="https://nanobytepay.com/" target="_blank">
-              nanobyte (desktop)
-            </a>{" "}
-            wallet.
+            No account or login required; open-source and verifiable.
           </Description>
           <Button href="https://xno.bet/" className="btn-modal" target="_blank">
             Enter
@@ -176,29 +165,7 @@ export const EarnScreen: React.FC = () => {
           </Button>
         </div>
       </Banner>
-      <Banner>
-        <IconContainer>
-          <Icon src="https://xno.ai/assets/favicon-32x32.png" />
-        </IconContainer>
-        <div>
-          <Title>XNO.AI</Title>
-          <Subtitle></Subtitle>
-          <Description>
-            xno.ai is an eco-friendly alternative to proof-of-work mining.
-            Instead of hashing, workers use AI to generate data. Workers are
-            awarded for their contributions. Although we use the term 'mining,'
-            no actual mining of cryptocurrency takes place. Login & registration
-            required.
-          </Description>
-          <Button
-            onClick={() => toggleModal("https://xno.ai?ref=Nanocafe")}
-            className="btn-modal"
-            target="_blank"
-          >
-            Enter
-          </Button>
-        </div>
-      </Banner>
+
       <Banner>
         <IconContainer>
           <Icon src="https://cryptovision.live/favicon.png" />

@@ -63,7 +63,6 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/react-table": "^7.0.29",
     "babel-plugin-jsx-pragmatic": "^1.0.2",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
-    "parcel": "2.0.0-nightly.642"
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3"
   }
 }

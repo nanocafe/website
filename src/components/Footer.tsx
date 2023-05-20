@@ -5,10 +5,7 @@ import { css } from '@emotion/css';
 import { useMediaQuery } from 'react-responsive'
 import {
     FaEnvelopeSquare,
-    FaReddit,
     FaRedditSquare,
-    FaTwitter,
-    FaTwitterSquare,
     FaRunning,
     FaGithub,
     FaMoon, FaSun

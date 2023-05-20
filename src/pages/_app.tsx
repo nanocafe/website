@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import ReactGA from "react-ga4";
 import { Header } from "../components/Header";
 import { AccountScreen } from "./Account";
-import { HomeScreen } from "./home";
 import { NotFoundScreen } from "./NotFound";
 import { BlockScreen } from "./Block";
 import { NetworkScreen } from "./Network";
@@ -47,8 +46,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <Theme dark={dark} setDark={setDark}>
-        <Header dark={dark} setDark={setDark} /> */}
+      <Theme dark={dark} setDark={setDark}>
+        <Header dark={dark} setDark={setDark} />
 
         {/* <Switch>
           <Route path="/" exact component={HomeScreen} />
@@ -71,8 +70,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
         <Component {...pageProps} />
 
-        {/* <Footer dark={dark} setDark={setDark}></Footer>
-      </Theme> */}
+        <Footer dark={dark} setDark={setDark}></Footer>
+      </Theme>
     </QueryClientProvider>
   );
 }

@@ -2,14 +2,15 @@ import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { Link, useParams } from "react-router-dom";
 
-import { useBlockInfo } from "../api";
-import { Indicator } from "../components/Indicator";
-import { Properties, PropertiesItem } from "../components/Properties";
-import { Account } from "../components/Account";
-import { RawToMega } from "../utils";
-import { RawToUSD } from "../components/IntlNumber";
+import { useBlockInfo } from "../../api";
+import { Indicator } from "../../components/Indicator";
+import { Properties, PropertiesItem } from "../../components/Properties";
+import { Account } from "../../components/Account";
+import { RawToMega, isBlockHash } from "../../utils";
+import { RawToUSD } from "../../components/IntlNumber";
 import dayjs from "dayjs";
-import { Card } from "../components/Card";
+import { Card } from "../../components/Card";
+import { useRouter } from "next/router";
 
 const Container = styled.main`
   padding: 1rem;
@@ -40,8 +41,21 @@ interface Params {
   hash: string;
 }
 
-export const BlockScreen: React.FC = () => {
-  const { hash } = useParams<Params>();
+export default function BlockScreen () {
+
+  const { query } = useRouter();
+
+  const { hash } = query;
+
+  if (typeof hash !== 'string' || !isBlockHash(hash)) {
+    return (
+      <Indicator>
+        <main>
+          <h2>Invalid Address</h2>
+        </main>
+      </Indicator>
+    );
+  }
 
   const blockInfoQuery = useBlockInfo(hash);
 

@@ -31,8 +31,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
         {/* <Switch>
           <Route path="/" exact component={HomeScreen} />
-          <Route path="/:address(xrb_[a-zA-Z0-9]+)" component={AccountScreen} />
-          <Route path="/:hash([a-fA-F0-9]{64})" component={BlockScreen} />
         </Switch> */}
 
         <Component {...pageProps} />

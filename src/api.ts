@@ -342,7 +342,7 @@ async function getUnchecked(count: number = 1) {
   return _fetch<Unchecked>("unchecked", { count });
 }
 
-async function getBlockInfo(hash: string) {
+export async function getBlockInfo(hash: string) {
   return _fetch<BlockInfo>(
     "blocks_info",
     { hashes: [hash], json_block: true, source: true, pending: true, balance: true },
@@ -560,8 +560,7 @@ export const useConfirmationHistory = () =>
 export const useConfirmationActive = () =>
   useQuery("confirmation_active", () => getConfirmationActive());
 export const useUnchecked = () => useQuery("unchecked", () => getUnchecked());
-export const useBlockInfo = (hash: string) =>
-  useQuery(["block_info", hash], () => getBlockInfo(hash));
+
 export const useAccountInfo = (account: string) =>
   useQuery(["account_info", account], () => getAccountInfo(account), {
     retry: false

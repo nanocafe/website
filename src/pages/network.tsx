@@ -73,7 +73,7 @@ const SplitProperties = styled(Properties)`
 
 const EMPTY_DATA: Telemetry[] = [];
 
-export default function NetworkScreen () {
+export default function NetworkScreen() {
   const telemetryQuery = useTelemetry();
   const tpsQuery = useTPS();
   const quorumQuery = useConfirmationQuorum();
@@ -291,12 +291,13 @@ export default function NetworkScreen () {
           <table {...getTableProps()}>
             <thead>
               <tr>
-                {headers.map((column) => (
+                {headers.map((column, index) => (
                   <th
                     {...column.getHeaderProps([
                       { className: (column as any).className },
                       (column as any).getSortByToggleProps(),
                     ])}
+                    key={index}
                   >
                     {column.render("Header")}
                     <span>
@@ -313,14 +314,14 @@ export default function NetworkScreen () {
             <tbody {...getTableBodyProps()}>
               {rows.map((row, i) => {
                 prepareRow(row);
-
                 return (
-                  <Card as="tr" {...row.getRowProps()}>
-                    {row.cells.map((cell) => (
+                  <Card as="tr" {...row.getRowProps()} key={i}>
+                    {row.cells.map((cell, index) => (
                       <td
                         {...cell.getCellProps([
                           { className: (cell.column as any).className },
                         ])}
+                        key={index}
                       >
                         {cell.render("Cell")}
                       </td>
@@ -334,4 +335,4 @@ export default function NetworkScreen () {
       </Container>
     </Indicator>
   );
-};
+}

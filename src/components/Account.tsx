@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { useAliases } from '../api';
+import Link from 'next/link';
 
 interface Props {
   account?: string;
@@ -14,7 +14,7 @@ export const Account: React.FC<Props> = ({ account }) => {
   }, [ account, aliases.data ]);
 
   return <div>
-    <Link to={`/${account}`}>{ account }</Link>
+    <Link href={`/${account}`}>{ account }</Link>
     { alias && <>
       <br/>
       { alias }

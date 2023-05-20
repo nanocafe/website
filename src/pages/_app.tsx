@@ -4,9 +4,11 @@ import ReactGA from "react-ga4";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import Theme from "../components/Theme";
-import "../styles/modal.css";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
+
+import "../styles/globals.scss";
+import "../styles/modal.css";
 
 const queryClient = new QueryClient();
 

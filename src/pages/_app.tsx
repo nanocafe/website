@@ -28,13 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <Header />
-
-        {/* <Switch>
-          <Route path="/" exact component={HomeScreen} />
-        </Switch> */}
-
         <Component {...pageProps} />
-
         <Footer />
       </ThemeProvider>
     </QueryClientProvider>

@@ -131,7 +131,7 @@ export default function AccountScreen() {
 
   const { address: _address } = query;
 
-  const address = _address as string;
+  const address = _address as string || '';
 
   const accountInfoQuery = useAccountInfo(address);
   const mnnAccountQuery = useMNNAccount(address);

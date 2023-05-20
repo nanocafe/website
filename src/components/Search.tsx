@@ -1,9 +1,10 @@
-import React from 'react';
-import { css } from '@emotion/css';
-import { useForm } from 'react-hook-form';
-import isNanoAddress from 'nano-address-validator';
-import { FaSearch } from 'react-icons/fa';
-import { useRouter } from 'next/router';
+import React from "react";
+import { css } from "@emotion/css";
+import { useForm } from "react-hook-form";
+import isNanoAddress from "nano-address-validator";
+import { FaSearch } from "react-icons/fa";
+import { useRouter } from "next/router";
+import { isBlockHash } from "@/utils";
 
 const search = css`
   display: flex;
@@ -80,7 +81,8 @@ const search = css`
       font-size: 0.8rem;
     }
 
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
       transform: translateX(0);
       outline: none;
     }
@@ -91,43 +93,48 @@ interface Form {
   search: string;
 }
 
-function isHex(str: string): boolean {
-  return /^[A-F0-9]+$/i.test(str)
-}
-
 export const Search: React.FC = () => {
-
   const router = useRouter();
 
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm<Form>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<Form>({
     defaultValues: {
-      search: '',
+      search: "",
     },
   });
 
   const onSubmit = (values: Form) => {
-    router.push(`/account/${values.search}`);
-  }
+    if (isNanoAddress(values.search, ["nano", "xrb"])) {
+      router.push(`/account/${values.search}`);
+    } else if (isBlockHash(values.search)) {
+      router.push(`/block/${values.search}`);
+    } else {
+      router.push(`/search/${values.search}`);
+    }
+  };
 
-  return <form className={search} onSubmit={handleSubmit(onSubmit)}>
-    <input
-      autoComplete="off"
-      autoCorrect="off"
-      autoCapitalize="off"
-      spellCheck="false"
-      className={[ errors.search ? 'invalid' : '',  ].join(' ')}
-      type="text"
-      placeholder="Search Address/Block"
-      { ...register(
-        'search',
-        { 
+  return (
+    <form className={search} onSubmit={handleSubmit(onSubmit)}>
+      <input
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck="false"
+        className={[errors.search ? "invalid" : ""].join(" ")}
+        type="text"
+        placeholder="Search Address/Block"
+        {...register("search", {
           validate(value) {
-            return isNanoAddress(value, ['nano', 'xrb']) || (isHex(value) && value.length === 64);
-          }
-        }
-      )}/>
-    <button>
-      <FaSearch/>
-    </button>
-  </form>;
+            return isNanoAddress(value, ["nano", "xrb"]) || isBlockHash(value);
+          },
+        })}
+      />
+      <button>
+        <FaSearch />
+      </button>
+    </form>
+  );
 };

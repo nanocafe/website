@@ -136,10 +136,10 @@ export default function AccountScreen() {
 
   const { address } = query;
 
-  if (typeof address !== 'string') {
+  if (typeof address !== 'string' || !isNanoAddress(address, ['nano', 'xrb'])) {
     return (
       <Indicator>
-        <main className={account}>
+        <main>
           <h2>Invalid Address</h2>
         </main>
       </Indicator>

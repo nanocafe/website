@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Container = styled.main`
   margin: auto;
@@ -79,7 +79,7 @@ const Button = styled.a`
   }
 `;
 
-export const EarnScreen: React.FC = () => {
+export default function EarnScreen() {
   const [modal, setModal] = useState(false);
   const [link, setLink] = useState("");
 
@@ -88,11 +88,13 @@ export const EarnScreen: React.FC = () => {
     setModal(!modal);
   };
 
-  if (modal) {
-    document.body.classList.add("active-modal");
-  } else {
-    document.body.classList.remove("active-modal");
-  }
+  useEffect(() => {
+    if (modal) {
+      document.body.classList.add("active-modal");
+    } else {
+      document.body.classList.remove("active-modal");
+    }
+  }, [modal]);
 
   return (
     <Container>
@@ -189,4 +191,4 @@ export const EarnScreen: React.FC = () => {
       </Banner>
     </Container>
   );
-};
+}

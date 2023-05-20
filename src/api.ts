@@ -329,13 +329,6 @@ export interface MNNAccount {
 interface FaucetResponse {
   block: string;
 }
-export interface Transaction {
-  time: Date;
-  amount: string;
-  type: string;
-  subtype: string;
-  link: string;
-}
 
 async function getConfirmationHistory() {
   return _fetch<ConfirmationHistory>("confirmation_history");
@@ -543,21 +536,6 @@ async function getRSS(kind: "nf" | "reddit" | "forum"): Promise<any> {
   return parser.parseString(await rss.text());
 }
 
-async function getTransactions(): Promise<Transaction[]> {
-  const res = await fetch(`${API_URL}/api/confirmations`);
-  const json = await res.json();
-  return (json?.map(
-    (data: Record<string, any>) =>
-      ({
-        time: new Date(parseInt(data.time)),
-        amount: data.amount,
-        type: data.type,
-        subtype: data.subtype,
-        link: data.link
-      } as Transaction)
-  ) ?? []) as Transaction[];
-}
-
 async function postFaucet(address: string): Promise<FaucetResponse> {
   const body = JSON.stringify({
     address
@@ -621,9 +599,5 @@ export const useMNNAccount = (address: string) =>
   });
 export const useRSS = (kind: "nf" | "reddit" | "forum") =>
   useQuery(["feed", kind], () => getRSS(kind));
-export const useTransactions = (onSuccess: (data: Transaction[]) => void) =>
-  useQuery(["transactions"], () => getTransactions(), {
-    refetchInterval: 10000 * 55,
-    onSuccess
-  });
+ 
 export const useFaucetMutation = () => useMutation((address: string) => postFaucet(address));

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import React, { useEffect, useRef, useState } from 'react';
-import { Transaction, useTransactions } from '../api';
 import { BiCoffeeTogo } from 'react-icons/bi';
 import { SiBuymeacoffee } from 'react-icons/si';
 import { safeRawToMega } from '../utils';
-import { Link } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { Transaction } from '@/types';
 
 const Container = styled.div`
   padding: 0.5rem;
@@ -71,19 +71,38 @@ const Container = styled.div`
   }
 `;
 
-export const Visualization: React.FC = () => {
+export function Visualization () {
   const [ transactionTimestamp, setTransactionTimestamp ] = useState(Date.now() - 1000 * 60);
   const transactionCache = useRef<Transaction[]>([]);
-  const transactionsQuery = useTransactions((transactions) => {
-    const lastValue = transactionCache.current[transactionCache.current.length - 1];
-    const sorted = [ ...transactions ].filter((v) => !transactionCache.current.find((tx) => tx.link === v.link)).sort((a, b) => a.time.getTime() - b.time.getTime());
 
-    if (!lastValue) {
-      transactionCache.current = sorted;
-      return;
-    }
+  async function getTransactions(): Promise<Transaction[]> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/confirmations`);
+    const json = await res.json();
+    return (json?.map(
+      (data: Record<string, any>) =>
+        ({
+          time: new Date(parseInt(data.time)),
+          amount: data.amount,
+          type: data.type,
+          subtype: data.subtype,
+          link: data.link
+        } as Transaction)
+    ) ?? []) as Transaction[];
+  }
 
-    transactionCache.current.push(...sorted.filter((val) => val.time.getTime() > lastValue.time.getTime()));
+  useQuery(["transactions"], () => getTransactions(), {
+    refetchInterval: 10000 * 55,
+    onSuccess: (transactions => {
+      const lastValue = transactionCache.current[transactionCache.current.length - 1];
+      const sorted = [ ...transactions ].filter((v) => !transactionCache.current.find((tx) => tx.link === v.link)).sort((a, b) => a.time.getTime() - b.time.getTime());
+  
+      if (!lastValue) {
+        transactionCache.current = sorted;
+        return;
+      }
+  
+      transactionCache.current.push(...sorted.filter((val) => val.time.getTime() > lastValue.time.getTime()));
+    })
   });
 
   useEffect(() => {

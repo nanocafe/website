@@ -1,10 +1,6 @@
 import { css } from '@emotion/css';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Loader from 'react-loader-spinner';
-
-interface Props {
-  show: boolean;
-}
 
 const loader = css`
   position: absolute;
@@ -15,7 +11,12 @@ const loader = css`
   text-align: center;
 `;
 
-export const Indicator: React.FC<Props> = ({ show, children }) => {
+interface IndicatorProps {
+  children: ReactNode;
+  show?: boolean;
+}
+
+export function Indicator ({ show, children }: IndicatorProps) {
   if (!show) {
     return <>{ children }</>;
   }

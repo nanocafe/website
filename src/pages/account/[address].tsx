@@ -1,24 +1,24 @@
 import { css } from "@emotion/css";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import isNanoAddress from "nano-address-validator";
-import { Link, useParams } from "react-router-dom";
 import {
   useAccountHistory,
   useAccountInfo,
   useAliases,
-  useNanoTicker,
   useConfirmationQuorum,
   useMNNAccount,
   usePending,
-} from "../api";
-import { Card } from "../components/Card";
-import { Indicator } from "../components/Indicator";
-import { IntlNumber, RawToUSD } from "../components/IntlNumber";
-import { Properties, PropertiesItem } from "../components/Properties";
-import { RawToMega, safeRawToMega } from "../utils";
+} from "../../api";
+import { Card } from "../../components/Card";
+import { Indicator } from "../../components/Indicator";
+import { RawToUSD } from "../../components/IntlNumber";
+import { Properties, PropertiesItem } from "../../components/Properties";
+import { RawToMega, safeRawToMega } from "../../utils";
 import { FaCopy } from "react-icons/fa";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 interface Params {
   address: string;
@@ -130,18 +130,31 @@ const account = css`
 
 const notify = () => toast.success("Address Copied");
 
-export const AccountScreen: React.FC = () => {
-  const { address } = useParams<Params>();
+export default function AccountScreen() {
+
+  const { query } = useRouter();
+
+  const { address } = query;
+
+  if (typeof address !== 'string') {
+    return (
+      <Indicator>
+        <main className={account}>
+          <h2>Invalid Address</h2>
+        </main>
+      </Indicator>
+    );
+  }
 
   const accountInfoQuery = useAccountInfo(address);
   const mnnAccountQuery = useMNNAccount(address);
-  const nodeAccountInfoQuery = useAccountInfo(process.env.NEXT_PUBLIC_NODE_ADDRESS!);
+  const nodeAccountInfoQuery = useAccountInfo(
+    process.env.NEXT_PUBLIC_NODE_ADDRESS!
+  );
   const accountHistoryQuery = useAccountHistory(address);
   const pendingQuery = usePending(address);
   const quorumQuery = useConfirmationQuorum();
   const aliases = useAliases();
-  const [textToCopy, setTextToCopy] = useState<String | null>(null);
-  const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const pending = Object.entries(pendingQuery.data?.blocks ?? {});
   const alias = aliases.data?.find(
@@ -291,7 +304,7 @@ export const AccountScreen: React.FC = () => {
 
                 <PropertiesItem label="Representative:">
                   <span>
-                    <Link to={`/${accountInfoQuery.data?.representative}`}>
+                    <Link href={`/${accountInfoQuery.data?.representative}`}>
                       {accountInfoQuery.data?.representative}
                     </Link>
                     <br />
@@ -380,10 +393,10 @@ export const AccountScreen: React.FC = () => {
                             </>
                           )}
                         </strong>
-                        <Link to={`/${hash}`} className="hash">
+                        <Link href={`/${hash}`} className="hash">
                           {hash}
                         </Link>
-                        <Link to={`/${block.source}`}>{block.source}</Link>
+                        <Link href={`/${block.source}`}>{block.source}</Link>
                       </li>
                     ))}
                   </ul>
@@ -413,10 +426,10 @@ export const AccountScreen: React.FC = () => {
                       ? dayjs(block.local_timestamp).format("LLL")
                       : "Unknown"}
                   </span>
-                  <Link to={`/${block.hash}`} className="hash">
+                  <Link href={`/${block.hash}`} className="hash">
                     {block.hash}
                   </Link>
-                  <Link to={`/${block.account}`}>{block.account}</Link>
+                  <Link href={`/${block.account}`}>{block.account}</Link>
                 </li>
               ))}
             </ul>
@@ -425,4 +438,4 @@ export const AccountScreen: React.FC = () => {
       </main>
     </Indicator>
   );
-};
+}

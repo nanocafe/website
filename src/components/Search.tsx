@@ -2,8 +2,8 @@ import React from 'react';
 import { css } from '@emotion/css';
 import { useForm } from 'react-hook-form';
 import isNanoAddress from 'nano-address-validator';
-import { useHistory } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 const search = css`
   display: flex;
@@ -96,15 +96,17 @@ function isHex(str: string): boolean {
 }
 
 export const Search: React.FC = () => {
+
+  const router = useRouter();
+
   const { register, handleSubmit, formState: { errors, isValid } } = useForm<Form>({
     defaultValues: {
       search: '',
     },
   });
-  const history = useHistory();
 
-  function onSubmit(values: Form) {
-    history.push(`/${values.search}`);
+  const onSubmit = (values: Form) => {
+    router.push(`/account/${values.search}`);
   }
 
   return <form className={search} onSubmit={handleSubmit(onSubmit)}>

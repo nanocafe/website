@@ -17,7 +17,7 @@ const construction = css`
   }
 `;
 
-export const UnderConstruction: React.FC = () => {
+export default function UnderConstruction () {
   return <div className={construction}>
     <IoConstructOutline size="5rem" color="var(--primary)"/>
     <h2>Under Construction</h2>

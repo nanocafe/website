@@ -51,7 +51,7 @@ const SplitProperties = styled(Properties)`
   }
 `;
 
-export const NodeScreen: React.FC = () => {
+export default function NodeScreen () {
   const nodeTelemetryQuery = useNodeTelemetry();
   const lastBlocks = useRef(0);
   const lastTimestamp = useRef(new Date());

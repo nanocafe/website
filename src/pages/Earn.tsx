@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
-import "./modal.css";
 
 const Container = styled.main`
   margin: auto;

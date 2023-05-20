@@ -133,7 +133,7 @@ export const News: React.FC = () => {
               ) : item.source === "forum" ? (
                 <FaDiscourse />
               ) : (
-                <img src={require("url:../../assets/nano.png")} />
+                <img src={require("../../assets/nano.png")} />
               )}
               <a
                 href={item.link}

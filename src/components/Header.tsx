@@ -323,9 +323,9 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
       <nav>
         <Link to="/">
           {dark ? (
-            <img src={require("url:../../assets/logo_dark.svg")} />
+            <img src={require("../../assets/logo_dark.svg")} />
           ) : (
-            <img src={require("url:../../assets/logo.svg")} />
+            <img src={require("../../assets/logo.svg")} />
           )}
 
           <h1>Nanocafe</h1>

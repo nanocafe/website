@@ -1,4 +1,3 @@
-import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import React from "react";
 import { News } from "../components/News";
@@ -13,7 +12,7 @@ const Container = styled.main`
   }
 `;
 
-export const HomeScreen: React.FC = () => {
+export default function () {
   return (
     <Container>
       <Visualization />

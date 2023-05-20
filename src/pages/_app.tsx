@@ -12,7 +12,7 @@ import "../styles/modal.css";
 
 const queryClient = new QueryClient();
 
-ReactGA.initialize("G-QFJTHTGN0Z");
+ReactGA.initialize(process.env.NEXT_PUBLIC_GA_UID || '');
 
 export default function App({ Component, pageProps }: AppProps) {
   // Enable dark mode accordding to device / browser configuration.

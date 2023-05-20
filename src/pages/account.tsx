@@ -135,7 +135,7 @@ export const AccountScreen: React.FC = () => {
 
   const accountInfoQuery = useAccountInfo(address);
   const mnnAccountQuery = useMNNAccount(address);
-  const nodeAccountInfoQuery = useAccountInfo(process.env.NODE_ADDRESS!);
+  const nodeAccountInfoQuery = useAccountInfo(process.env.NEXT_PUBLIC_NODE_ADDRESS!);
   const accountHistoryQuery = useAccountHistory(address);
   const pendingQuery = usePending(address);
   const quorumQuery = useConfirmationQuorum();
@@ -152,7 +152,7 @@ export const AccountScreen: React.FC = () => {
     const repWeight = parseFloat(
       safeRawToMega(
         (account &&
-          (account === process.env.NODE_ADDRESS
+          (account === process.env.NEXT_PUBLIC_NODE_ADDRESS
             ? nodeAccountInfoQuery.data?.weight
             : quorumQuery.data?.peers.find((peer) => peer.account === account)
                 ?.weight)) ||
@@ -297,7 +297,7 @@ export const AccountScreen: React.FC = () => {
                     <br />
                     <sub>
                       {accountInfoQuery.data?.representative ===
-                        process.env.NODE_ADDRESS ||
+                        process.env.NEXT_PUBLIC_NODE_ADDRESS ||
                       !!quorumQuery.data?.peers.find(
                         (rep) =>
                           rep.account === accountInfoQuery.data?.representative

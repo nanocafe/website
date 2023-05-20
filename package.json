@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "NODE_ADDRESS=nano_1cafe95a81ko3mq3oin4wnubsbw9z3w3tw5a95u47897wxy96r1zj9hxu1wb API_URL=https://nanocafe.cc next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },

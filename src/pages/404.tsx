@@ -16,7 +16,7 @@ const notFound = css`
   }
 `;
 
-export const NotFoundScreen: React.FC = () => {
+export default function () {
   return (
     <div className={notFound}>
       <BsQuestionDiamond size="5rem" color="var(--primary)" />

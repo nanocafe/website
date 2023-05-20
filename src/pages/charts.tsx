@@ -19,7 +19,6 @@ import { Currencies } from "../components/Currencies";
 
 const construction = css`
   padding: 3rem;
-  //height: 600px;
 
   @media only screen and (max-width: 600px) {
     padding: 1rem;
@@ -98,7 +97,7 @@ const options = {
   },
 };
 
-export const ChartsScreen: React.FC = () => {
+export default function ChartsScreen() {
   const [data, setData] = useState<any>([]);
 
   let prev30Days: any = Array.from(Array(365).keys()).reverse();
@@ -183,4 +182,4 @@ export const ChartsScreen: React.FC = () => {
       </div>
     </div>
   );
-};
+}

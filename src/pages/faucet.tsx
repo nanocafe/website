@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import { GiTap } from "react-icons/gi";
 import { Nanodrop } from "../components/Nanodrop";
+import { useTheme } from "@/contexts/Theme";
 
 const Container = styled.div`
   text-align: center;
@@ -79,7 +80,9 @@ interface IFaucet {
   theme: "light" | "dark";
 }
 
-export function FaucetScreen({ theme }: IFaucet) {
+export default function FaucetScreen() {
+  const { isDark } = useTheme();
+
   return (
     <Container>
       <GiTap size="5rem" color="var(--primary)" />
@@ -97,8 +100,8 @@ export function FaucetScreen({ theme }: IFaucet) {
         </a>{" "}
         (desktop), then place your address below and enjoy!
       </p>
-
-      <Nanodrop theme={theme} />
+      {isDark ? "dark" : "light"}
+      <Nanodrop theme={isDark ? "dark" : "light"} />
       <p className="linkText">
         Click{" "}
         <a

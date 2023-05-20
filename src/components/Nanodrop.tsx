@@ -82,7 +82,7 @@ function isHex(str: string): boolean {
     return /^[A-F0-9]+$/i.test(str)
 }
 interface INanoDrop {
-    theme?: string
+    theme?: 'light' | 'dark'
 }
 
 export const Nanodrop = ({ theme = 'light' }: INanoDrop) => {
@@ -123,7 +123,7 @@ export const Nanodrop = ({ theme = 'light' }: INanoDrop) => {
         if (theme != theme && nanodrop) {
             nanodrop.changeTheme(theme)
         }
-    }, [theme])
+    }, [theme, nanodrop])
 
     const validate = (value: string) => isNanoAddress(value, ['nano', 'xrb']) || (isHex(value) && value.length === 64);
 

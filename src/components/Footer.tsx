@@ -10,6 +10,7 @@ import {
     FaGithub,
     FaMoon, FaSun
 } from 'react-icons/fa';
+import { useTheme } from '@/contexts/Theme';
 
 const footer = css`
   background: var(--header);
@@ -70,13 +71,9 @@ const footer = css`
   }
 `;
 
-interface IHeader {
-    dark: Boolean;
-    setDark: () => void;
-}
+export default function Footer () {
 
-
-export const Footer: React.FC<IHeader> = ({ dark, setDark }) => {
+    const { isDark, toggle: setDark } = useTheme();
 
     const isSmallerThan600 = useMediaQuery({
         query: '(max-width: 600px)'
@@ -93,7 +90,7 @@ export const Footer: React.FC<IHeader> = ({ dark, setDark }) => {
         <main>
             {
                 isSmallerThan600 && (
-                    dark ? (
+                    isDark ? (
                         <button className={"modeToggle"} onClick={setDark}>
                             <FaMoon size={25} />
                         </button>

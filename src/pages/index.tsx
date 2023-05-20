@@ -12,7 +12,7 @@ const Container = styled.main`
   }
 `;
 
-export default function () {
+export default function Home () {
   return (
     <Container>
       <Visualization />

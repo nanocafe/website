@@ -16,12 +16,12 @@ const notFound = css`
   }
 `;
 
-export default function () {
+export default function NotFound () {
   return (
     <div className={notFound}>
       <BsQuestionDiamond size="5rem" color="var(--primary)" />
       <h2>404 Not Found</h2>
-      <p>The page you are looking for doesn't exist. Is the URL correct?</p>
+      <p>The page you are looking for doesn&apos;t exist. Is the URL correct?</p>
     </div>
   );
 };

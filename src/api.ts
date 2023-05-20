@@ -361,7 +361,7 @@ export async function getBlockInfo(hash: string) {
   );
 }
 
-async function getAccountInfo(account: string) {
+export async function getAccountInfo(account: string) {
   return _fetch<AccountInfo>(
     "account_info",
     { account, representative: true, pending: true, weight: true },
@@ -598,5 +598,5 @@ export const useMNNAccount = (address: string) =>
   });
 export const useRSS = (kind: "nf" | "reddit" | "forum") =>
   useQuery(["feed", kind], () => getRSS(kind));
- 
+
 export const useFaucetMutation = () => useMutation((address: string) => postFaucet(address));

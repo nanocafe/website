@@ -16,13 +16,9 @@ import { RawToUSD } from "../../components/IntlNumber";
 import { Properties, PropertiesItem } from "../../components/Properties";
 import { RawToMega, safeRawToMega } from "../../utils";
 import { FaCopy } from "react-icons/fa";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
-interface Params {
-  address: string;
-}
 
 const account = css`
   padding: 1rem;
@@ -131,20 +127,11 @@ const account = css`
 const notify = () => toast.success("Address Copied");
 
 export default function AccountScreen() {
-
   const { query } = useRouter();
 
-  const { address } = query;
+  const { address: _address } = query;
 
-  if (typeof address !== 'string' || !isNanoAddress(address, ['nano', 'xrb'])) {
-    return (
-      <Indicator>
-        <main>
-          <h2>Invalid Address</h2>
-        </main>
-      </Indicator>
-    );
-  }
+  const address = _address as string;
 
   const accountInfoQuery = useAccountInfo(address);
   const mnnAccountQuery = useMNNAccount(address);
@@ -201,6 +188,16 @@ export default function AccountScreen() {
     });
   };
 
+  if (typeof address !== 'string' || !isNanoAddress(address, ['nano', 'xrb'])) {
+    return (
+      <Indicator>
+        <main>
+          <h2>Invalid Address</h2>
+        </main>
+      </Indicator>
+    );
+  }
+
   return (
     <Indicator>
       <main className={account}>
@@ -231,23 +228,23 @@ export default function AccountScreen() {
                     screen:
                   </h4>
                   <p>
-                    (1) The account you're searching has recently been created
+                    (1) The account you&apos;re searching has recently been created
                     and you have yet to receive a transaction into your account.
                   </p>
                   <p>
-                    (2) The transaction you're searching has yet to be fully
+                    (2) The transaction you&apos;re searching has yet to be fully
                     received.
                   </p>
                   <p>(3) This account is invalid and does not exist.</p>
                   <p>
                     You can also try searching the block hash of the transaction
-                    if the account address isn't working.
+                    if the account address isn&apos;t working.
                   </p>
                   <p>
-                    IMPORTANT: When a transaction is pending "ready to receive",
+                    IMPORTANT: When a transaction is pending &apos;ready to receive&apos;,
                     the transaction is inside your account, it is not lost or in
                     any other account, simply open your wallet to confirm the
-                    pending "ready to receive".
+                    pending &apos;ready to receive&apos;.
                   </p>
                 </>
               ) : (

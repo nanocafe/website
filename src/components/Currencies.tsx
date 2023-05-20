@@ -60,32 +60,36 @@ const currencyStyles = css`
 `;
 
 export const Currencies = () => {
-
   const { data } = useNanoTicker("nano");
 
-  const cryptoCurrencies = [
+  interface Currency {
+    value: number;
+    symbol: string;
+  }
+
+  const cryptoCurrencies: Record<string, Currency>[] = [
     {
       cad: {
         value: data?.market_data.current_price.cad,
-        symbol: "CA$"
+        symbol: "CA$",
       },
       brl: {
         value: data?.market_data.current_price.brl,
-        symbol: "R$"
+        symbol: "R$",
       },
       inr: {
         value: data?.market_data.current_price.inr,
-        symbol: "₹"
+        symbol: "₹",
       },
       krw: {
         value: data?.market_data.current_price.krw,
-        symbol: "₩"
+        symbol: "₩",
       },
       idr: {
         value: data?.market_data.current_price.idr,
-        symbol: "Rp"
-      }
-    }
+        symbol: "Rp",
+      },
+    },
   ];
 
   return (

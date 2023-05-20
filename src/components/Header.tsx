@@ -311,10 +311,6 @@ export default function Header() {
           // Default options for specific types
           success: {
             duration: 3000,
-            theme: {
-              primary: "green",
-              secondary: "black",
-            },
           },
         }}
       />

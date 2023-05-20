@@ -11,6 +11,7 @@ import {
     FaMoon, FaSun
 } from 'react-icons/fa';
 import { useTheme } from '@/contexts/Theme';
+import Link from 'next/link';
 
 const footer = css`
   background: var(--header);
@@ -81,7 +82,7 @@ export default function Footer () {
 
     return <footer className={footer}>
         <div style={{ textAlign: 'right' }}>
-            <a href="/node">Node Info</a>
+            <Link href="/node">Node Info</Link>
         </div>
         <div style={{ textAlign: 'center' }}>
             <a href="https://nano.community/introduction/basics" target="_blank" rel="noreferrer noopener">What is Nano?</a>

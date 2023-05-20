@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import ReactGA from "react-ga4";
 import { Header } from "../components/Header";
-import { AccountScreen } from "./Account";
-import { NotFoundScreen } from "./NotFound";
-import { BlockScreen } from "./Block";
-import { NetworkScreen } from "./Network";
-import { FaucetScreen } from "./Faucet";
-import { ChartsScreen } from "./Charts";
-import { EarnScreen } from "./Earn";
-import { NodeScreen } from "./Node";
 import { Footer } from "../components/Footer";
 import Theme from "../components/Theme";
 import "../styles/modal.css";
@@ -57,10 +48,6 @@ export default function App({ Component, pageProps }: AppProps) {
           />
           <Route path="/:address(xrb_[a-zA-Z0-9]+)" component={AccountScreen} />
           <Route path="/:hash([a-fA-F0-9]{64})" component={BlockScreen} />
-          <Route path="/network" component={NetworkScreen} />
-          <Route path="/node" component={NodeScreen} />
-          <Route path="/charts" component={ChartsScreen} />
-          <Route path="/earn" component={EarnScreen} />
           <Route
             path="/faucet"
             render={(props) => <FaucetScreen theme={dark ? "dark" : "light"} />}

@@ -480,6 +480,7 @@ export const Header: React.FC<IHeader> = ({ dark, setDark }) => {
           <>---</>
         )}
       </section>
+      <section><h2>Notice: The Faucet service is currently not working!</h2></section>
     </header>
   );
 };
